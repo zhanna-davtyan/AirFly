@@ -1,0 +1,196 @@
+<p-confirmDialog
+  [baseZIndex]="10000"
+  [dismissableMask]="true"
+  defaultFocus="reject"
+  rejectButtonStyleClass="p-button-text"
+  acceptButtonStyleClass="p-button-text"
+  rejectLabel="NEIN"
+  acceptLabel="JA"
+>
+</p-confirmDialog>
+<div class="flex justify-content-between align-items-center mt-2">
+  <h2>
+    {{ formGroup.get('id')?.value === 0 ? 'Flug erstellen' : 'Flug editieren' }}
+  </h2>
+  <i
+    class="pi pi-times close-icon"
+    (click)="closeDialogWithoutSaving(false)">
+  </i></div>
+
+@if (dtoAlreadyExistsError) {
+  <p style="color: red; font-weight: 700; padding-top: 0">Ein Flug mit dieser Flugnummer existiert bereits</p>
+}
+<div>
+  <form (ngSubmit)="submit()">
+    <div [formGroup]="formGroup">
+      <p-fieldset legend="Informationen" class="col">
+        <div class="flex flex-column">
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">Name</p>
+            <input
+              formControlName="flightNumber"
+              type="text"
+              maxlength="6"
+              pInputText
+              [readonly]="!editMode"
+              class="w-full"
+            />
+            <div style="min-height: 20px;">
+              <small *ngIf="!formGroup.get('flightNumber')!.valid" class="p-error">Bitte validen Wert angeben</small>
+            </div>
+          </div>
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">Abflughafen</p>
+            <p-dropdown
+              [style]="{width: '80vw'}"
+              formControlName="departureAirportId"
+              [readonly]="!editMode"
+              [options]="filteredDepartureOptions"
+              appendTo="body"
+              [ngClass]="{'my-readonly': !editMode}"
+            >
+            </p-dropdown>
+            <div style="min-height: 20px;">
+              <small *ngIf="!formGroup.get('departureAirportId')!.valid" class="p-error">Bitte validen Wert
+                angeben</small>
+            </div>
+          </div>
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">Zielflughafen</p>
+            <p-dropdown
+              [style]="{width: '80vw'}"
+              formControlName="arrivalAirportId"
+              [readonly]="!editMode"
+              [options]="filteredArrivalOptions"
+              appendTo="body"
+              [ngClass]="{'my-readonly': !editMode}"
+            >
+            </p-dropdown>
+            <div style="min-height: 20px;">
+              <small *ngIf="!formGroup.get('arrivalAirportId')!.valid" class="p-error">Bitte validen Wert
+                angeben</small>
+            </div>
+          </div>
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">Flugzeug</p>
+            <p-dropdown
+              [style]="{width: '80vw'}"
+              formControlName="airplaneId"
+              [readonly]="!editMode"
+              [options]="airplaneOptions"
+              appendTo="body"
+              [ngClass]="{'my-readonly': !editMode}"
+            >
+            </p-dropdown>
+            <div style="min-height: 20px;">
+              <small *ngIf="!formGroup.get('airplaneId')!.valid" class="p-error">Bitte validen Wert angeben</small>
+            </div>
+          </div>
+          <div class="flex flex-row justify-content-between">
+            <div>
+              <p class="w-full" style="margin: 0 0 7px">Preis</p>
+              <p-inputNumber
+                formControlName="price"
+                [readonly]="!editMode"
+                mode="currency"
+                currency="EUR"
+                locale="de-DE"
+                [min]="0"
+              />
+              <div style="min-height: 20px;">
+                <small *ngIf="!formGroup.get('price')!.valid" class="p-error">Bitte validen Wert angeben</small>
+              </div>
+            </div>
+            @if (this.formGroup.get('id')?.getRawValue() != 0) {
+              <div>
+                <p class="w-full" style="margin: 0 0 7px">Kapazität:</p>
+                <div *ngIf="dto" class="mt-4">
+                  {{ this.dto.bookedSeats }} / {{ this.dto.airplane.capacity }}
+                </div>
+                <div style="min-height: 20px;">
+                </div>
+              </div>
+            }
+          </div>
+          <div>
+            <p class="w-full" style="margin: 0 0 7px">Ablugzeit</p>
+            <p-calendar
+              [style]="{width: '100%'}"
+              [showIcon]="true"
+              [iconDisplay]="'input'"
+              [ngClass]="{'my-readonly': !editMode}"
+              formControlName="departureTime"
+              [showTime]="true"
+              [hourFormat]="'24'"
+              dateFormat="dd.mm.yy"
+              [touchUI]="true"
+            />
+            <div style="min-height: 20px;">
+              <small *ngIf="!formGroup.get('price')!.valid || dateInvalid" class="p-error">Bitte validen Wert
+                angeben</small>
+            </div>
+          </div>
+          <div>
+            <p class="w-full" style="margin: 0 0 7px">Ankunftszeit</p>
+            <p-calendar
+              [style]="{width: '100%'}"
+              [showIcon]="true"
+              [iconDisplay]="'input'"
+              [ngClass]="{'my-readonly': !editMode}"
+              formControlName="arrivalTime"
+              [showTime]="true"
+              [hourFormat]="'24'"
+              dateFormat="dd.mm.yy"
+              [touchUI]="true"
+            />
+            <div style="min-height: 20px;">
+              <small *ngIf="!formGroup.get('price')!.valid || dateInvalid" class="p-error">Bitte validen Wert
+                angeben</small>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
+
+      <div class="flex justify-content-between">
+        <div class="flex flex-column">
+          <div class="flex align-items-center">
+            <p class="mx-2" *ngIf="editModeButtonVisible" translate>Editieren?</p>
+            <p-inputSwitch
+              id="editMode"
+              *ngIf="editModeButtonVisible"
+              [(ngModel)]="editMode"
+              [ngModelOptions]="{standalone: true}"
+              pTooltip="Edtieren?"
+              tooltipPosition="top"
+            >
+            </p-inputSwitch>
+          </div>
+        </div>
+        <div>
+          <span class="flex flex-column" *ngIf="actionButtonsVisible">
+            <button
+              *ngIf="actionButtonsVisible && dto"
+              type="button"
+              pButton
+              icon="pi pi-trash"
+              class="p-button-outlined"
+              label="Löschen"
+              aria-label="Löschen"
+              (click)="confirmDelete()"
+            ></button>
+            <button
+              type="button"
+              class="mt-4"
+              pButton
+              icon="pi pi-save"
+              aria-label="Speichern"
+              label="Speichern"
+              [disabled]="formGroup.invalid || saveButtonDisabled"
+              (click)="saveWithConfirmation()"
+            ></button>
+          </span>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

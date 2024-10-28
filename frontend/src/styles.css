@@ -1,5 +1,185 @@
-@import 'primeicons/primeicons.css';
-@import 'primeflex/primeflex.css';
-@import 'primeflex/themes/primeone-light.css';
 @import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import "primeicons/primeicons.css";
+@import 'primeflex/primeflex.css';
 
+th p {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+filtericon {
+  margin-top: 5px;
+}
+
+.p-inputnumber-input:disabled {
+  background-color: #f0f1f2 !important;
+  opacity: 1;
+}
+
+.p-disabled {
+  opacity: 0.8 !important;
+}
+
+.p-inputnumber-input {
+  width: 100px !important;
+  height: 37.5px;
+}
+
+html {
+  min-height: 100vh;
+  min-width: 100vw;
+  overflow-x: hidden;
+  margin-right: calc(-1 * (100vw - 100%));
+  font-size: 13px;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+/*Readonly style for all input texts*/
+
+.p-inputtext:read-only {
+  background-color: #f0f1f2;
+  pointer-events: none;
+}
+
+.my-readonly .p-button {
+  background-color: #3f51b5 !important;
+  opacity: 0.6 !important;
+  border: 1px solid #3f51b5;
+}
+
+.my-readonly button{
+  background-color: black !important;
+}
+
+.my-readonly .p-autocomplete-dropdown {
+  background-color: #3f51b5 !important;
+  opacity: 0.6 !important;
+  border: 1px solid #3f51b5;
+  cursor: default !important;
+  pointer-events: none;
+}
+
+.my-readonly .p-calendar .p-inputtext {
+  background-color: #f0f1f2;
+}
+
+.my-readonly .p-datepicker-trigger {
+  background-color: #3f51b5 !important;
+  opacity: 0.6 !important;
+}
+
+.my-readonly .p-inputnumber-button {
+  background-color: #3f51b5 !important;
+  opacity: 0.6 !important;
+  border: none;
+  pointer-events: none;
+}
+
+.my-readonly {
+  pointer-events: none;
+}
+
+.my-readonly .p-multiselect.p-component.p-inputwrapper {
+  background-color: #f0f1f2 !important;
+  pointer-events: none;
+}
+
+.my-readonly .p-checkbox-box:read-only {
+  background-color: #f0f1f2 !important;
+}
+
+/* Not highlighted, not read-only */
+.p-checkbox-box:not(:read-only) {
+  background-color: white !important;
+}
+
+/* Highlighted, read-only */
+.my-readonly .p-checkbox-box.p-highlight:read-only {
+  background-color: #3f51b5 !important;
+  opacity: 0.6 !important;
+  border: 1px solid #3f51b5;
+  pointer-events: none;
+}
+
+/* Highlighted, not read-only */
+.p-checkbox-box.p-highlight:not(:read-only) {
+  background-color: #3b82f6 !important;
+  border: none;
+}
+
+.my-readonly .p-radiobutton .p-radiobutton-box {
+  background: #f0f1f2;
+}
+
+.my-readonly .p-radiobutton .p-radiobutton-box.p-highlight {
+  border-color: #3f51b5;
+  background: #3f51b5;
+  opacity: 0.6 !important;
+}
+
+/*Consider the rounded corners on the right*/
+.my-readonly .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled {
+  background-color: #f0f1f2 !important;
+  pointer-events: none;
+}
+
+/*Readonly style for dropdown input texts*/
+.my-readonly .p-dropdown-label.p-inputtext:read-only {
+  background-color: #f0f1f2 !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  pointer-events: none;
+}
+
+/*Readonly style for dropdown buttons*/
+.my-readonly .p-dropdown-trigger:read-only {
+  background-color: #f0f1f2 !important;
+  pointer-events: none;
+}
+
+/*Non-readonly style for dropdown input texts*/
+.p-dropdown-label.p-inputtext {
+  background-color: white !important;
+}
+
+.p-fieldset .p-fieldset-legend {
+  padding: 0 5px 0 5px;
+  border: none;
+  background: none;
+  font-weight: 600;
+  border-radius: unset;
+}
+
+* .my-invisible {
+  visibility: hidden !important;
+}
+
+.p-dynamic-dialog > .p-dialog-header *{
+  display: none;
+}
+
+.p-dynamic-dialog > .p-dialog-header{
+  padding: 0;
+  height: 8px;
+  border-bottom: none;
+}
+
+.close-icon {
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 100%;
+  font-size: 1.1em;
+}
+
+.close-icon:hover {
+  background-color: RGB(230, 231, 250, 0.5);
+}

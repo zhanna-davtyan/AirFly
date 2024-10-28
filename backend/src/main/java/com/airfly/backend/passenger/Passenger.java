@@ -18,9 +18,6 @@ public class Passenger {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "booking_id")
-    private Long bookingId;
-
     @Column(name = "first_name")
     private String firstname;
 

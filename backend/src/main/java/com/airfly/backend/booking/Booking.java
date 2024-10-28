@@ -3,6 +3,7 @@ package com.airfly.backend.booking;
 import com.airfly.backend.bookingflightmapping.BookingFlightMapping;
 import com.airfly.backend.category.Category;
 import com.airfly.backend.passenger.Passenger;
+import com.airfly.backend.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,14 +21,12 @@ public class Booking {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Column(name = "total_price")
     private Double totalPrice;
-
-    @Column(name = "category_id")
-    private Long categoryId;
 
     @Column(name = "travel_insurance")
     private Boolean travelInsurance;

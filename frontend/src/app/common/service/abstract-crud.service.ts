@@ -2,7 +2,7 @@ import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 
-export abstract class AbstractCrudService<DTO, SERVICE> {
+export abstract class AbstractCrudService<DTO> {
 
   readonly ROOT_URL_WITH_SLASHES = '/api/';
   readonly URL_FOR_TYPE;
@@ -36,9 +36,9 @@ export abstract class AbstractCrudService<DTO, SERVICE> {
       .pipe(map((json: any) => this.jsonToDto(json)));
   }
 
-  update(id: number, dto: DTO): Observable<any> {
+  update(dto: DTO): Observable<any> {
     return this.httpClient
-      .put(this.URL_FOR_TYPE + '/update/' + id, dto);
+      .put(this.URL_FOR_TYPE + '/update', dto);
   }
 
   delete(id: number): Observable<any> {

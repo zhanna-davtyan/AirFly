@@ -23,7 +23,4 @@ public class Airplane {
 
     @Column(name = "capacity")
     private Long capacity;
-
-    @OneToMany(mappedBy = "airplane")
-    private List<Flight> flights;
 }

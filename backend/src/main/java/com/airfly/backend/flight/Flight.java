@@ -22,15 +22,6 @@ public class Flight {
     @Column(name = "flight_number")
     private String flightNumber;
 
-    @Column(name = "departure_airport_id")
-    private Long departureAirportId;
-
-    @Column(name = "arrival_airport_id")
-    private Long arrivalAirportId;
-
-    @Column(name = "airplane_id")
-    private Long airplaneId;
-
     @Column(name = "departure_time")
     private Timestamp departureTime;
 
@@ -39,6 +30,9 @@ public class Flight {
 
     @Column(name = "price")
     private Double price;
+
+    @Column(name = "booked_seats")
+    private Long bookedSeats;
 
     @ManyToOne
     @JoinColumn(name = "departure_airport_id")

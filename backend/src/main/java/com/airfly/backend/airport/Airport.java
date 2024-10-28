@@ -29,11 +29,5 @@ public class Airport {
 
     @Column(name = "code")
     private String code;
-
-    @OneToMany(mappedBy = "departureAirport")
-    private List<Flight> departureFlights;
-
-    @OneToMany(mappedBy = "arrivalAirport")
-    private List<Flight> arrivalFlights;
 }
 

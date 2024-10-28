@@ -2,13 +2,11 @@ import {ApplicationConfig, importProvidersFrom, isDevMode} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {BrowserAnimationsModule, provideAnimations} from "@angular/platform-browser/animations";
-import {HttpClient, HttpClientModule } from "@angular/common/http";
+import { provideAnimations} from "@angular/platform-browser/animations";
+import {HttpClient, provideHttpClient} from "@angular/common/http";
 import {ConfirmationService, MessageService} from "primeng/api";
 import {DialogService} from "primeng/dynamicdialog";
 import { provideServiceWorker } from '@angular/service-worker';
-import {CommonModule} from "@angular/common";
-import {BrowserModule} from "@angular/platform-browser";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 
@@ -28,12 +26,8 @@ export const provideTranslation = () => ({
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(BrowserModule),
-    importProvidersFrom(BrowserAnimationsModule),
-    importProvidersFrom(CommonModule),
-    importProvidersFrom(HttpClientModule),
     provideAnimations(),
-    importProvidersFrom(TranslateModule.forRoot(provideTranslation())),
+    provideHttpClient(),
     MessageService,
     DialogService,
     ConfirmationService,

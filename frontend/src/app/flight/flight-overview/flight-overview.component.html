@@ -1,0 +1,145 @@
+<p-toolbar class="mr-2">
+  <div class="p-toolbar-group-left">
+    <span class="p-input-icon-left">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        type="text"
+        [(ngModel)]="filter"
+        (input)="applyFilterGlobal($event, 'contains')"
+        placeholder="Suchen"
+      />
+    </span>
+    <span class="mx-4">
+      <button
+        pButton
+        type="button"
+        class="p-button-text"
+        icon="pi pi-sync"
+        tooltipPosition="top"
+        pTooltip="Tabelle neu laden"
+        aria-label="Tabelle neu laden"
+        (click)="refreshData()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        class="p-button-text"
+        icon="pi pi-filter-slash"
+        tooltipPosition="top"
+        pTooltip="Filter und Sortierung zurücksetzen"
+        aria-label="Filter und Sortierung zurücksetzen"
+        (click)="clearTableWithMultiSort(table)"
+      ></button>
+    </span>
+  </div>
+  <div class="p-toolbar-group-right">
+    <button
+      pButton
+      type="button"
+      class="p-button-text"
+      icon="pi pi-plus"
+      label="Neuen Artikel erstellen"
+      aria-label="Neuen Flug erstellen"
+      (click)="openDynamicDialogDetails(true, null)"
+    ></button>
+  </div>
+</p-toolbar>
+
+<p-table
+  [value]="dtos"
+  #table
+  [autoLayout]="true"
+  [tableStyle]="{ 'min-width': '50rem' }"
+  [columns]="columns"
+  sortMode="multiple"
+  [paginator]="true"
+  [rowHover]="true"
+  paginatorPosition="bottom"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 15, 20, 25]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate="Zeige {first} bis {last} von {totalRecords} Einträgen"
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="flightNumber">
+        <p>
+          Flugnummer
+          <p-sortIcon field="flightNumber"></p-sortIcon>
+        </p>
+      </th>
+      <th pSortableColumn="departureAirport.name" class="flex align-items-center">
+        <p>
+          Abflughafen
+          <p-sortIcon field="departureAirport.name"></p-sortIcon>
+          <p-columnFilter
+            field="name"
+            matchMode="in"
+            display="menu"
+            [hideOnClear]="true"
+            [showOperator]="false"
+            [showAddButton]="false"
+            [showMatchModes]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="departureAirportOptions"
+                placeholder="All"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+                optionValue="value"
+                appendTo="body"
+              >
+                <ng-template let-option pTemplate="item">
+                  <span>{{ option.label }}</span>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </p>
+      </th>
+      <th pSortableColumn="arrivalAirport.name">
+        <p>
+          Zielflughafen
+          <p-sortIcon field="arrivalAirport.name"></p-sortIcon>
+          <p-columnFilter
+            field="price"
+            matchMode="in"
+            display="menu"
+            [hideOnClear]="true"
+            [showOperator]="false"
+            [showAddButton]="false"
+            [showMatchModes]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="arrivalAirportOptions"
+                placeholder="All"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+                optionValue="value"
+                appendTo="body"
+              >
+                <ng-template let-option pTemplate="item">
+                  <span>{{ option.label }}</span>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </p>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row let-columns="columns">
+    <tr [pSelectableRow]="row">
+      <td *ngFor="let column of columns" [ngSwitch]="column.field" (click)="this.openDynamicDialogDetails(false, row)">
+        <span *ngSwitchCase="'flightNumber'">{{ row.flightNumber }}</span>
+        <span *ngSwitchCase="'departureAirport.name'">{{ row.departureAirport?.code }} - {{ row.departureAirport?.name }}</span>
+        <span *ngSwitchCase="'arrivalAirport.name'">{{ row.arrivalAirport?.code }} - {{ row.arrivalAirport?.name }}</span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

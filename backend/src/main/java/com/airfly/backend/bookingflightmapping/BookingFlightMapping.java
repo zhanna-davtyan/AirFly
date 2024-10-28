@@ -17,12 +17,6 @@ public class BookingFlightMapping {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "booking_id")
-    private Long bookingId;
-
-    @Column(name = "flight_id")
-    private Long flightId;
-
     @ManyToOne
     @JoinColumn(name = "booking_id")
     private Booking booking;
