@@ -23,11 +23,6 @@ filtericon {
   opacity: 0.8 !important;
 }
 
-.p-inputnumber-input {
-  width: 100px !important;
-  height: 37.5px;
-}
-
 html {
   min-height: 100vh;
   min-width: 100vw;
@@ -200,9 +195,56 @@ body {
   color: #ff5757;
 }
 
-@media (max-width: 400px) {
-  .p-dropdown {
-    max-width: 290px;
-  }
+.p-inputnumber-buttons-horizontal .p-inputnumber-input {
+  text-align: center;
+  width: 50px;
+}
 
+.p-sidebar-header{
+  background: #f4f4f4;
+  padding-bottom: 0;
+  padding-top: 0;
+}
+
+@media (max-width: 450px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 270px;
+  }
+}
+
+@media (max-width: 370px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 350px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 315px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 200px;
+  }
+}
+
+.p-datepicker-calendar td {
+  font-weight: bold;
+}
+
+.p-datepicker-calendar td .p-disabled{
+  opacity: 0.3!important;
+  font-weight: normal;
+}
+
+.hide-today-button {
+  display: none;
 }

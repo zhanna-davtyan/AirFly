@@ -89,7 +89,6 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
         airport => airport.value !== selectedArrivalId
       );
     this.changeDetectorRef.detectChanges();
-
   }
 
   ngOnInit(): void {
@@ -230,7 +229,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
     } else {
       // INSERT
       this.flightService.insert(dtoToInsertOrUpdate).subscribe({
-        next: (response: Flight) => {
+        next: () => {
           this.messageService.add({
             severity: 'success',
             summary: this.translateService.instant('the-flight') + ' ' + this.translateService.instant('was-created-successfully'),

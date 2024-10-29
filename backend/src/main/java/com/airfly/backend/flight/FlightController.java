@@ -61,4 +61,13 @@ public class FlightController {
         }
     }
 
+    @PostMapping("get-by-airport-ids")
+    public ResponseEntity<List<Flight>> getByAirportIds(@RequestBody final FlightSearchByAirports dto) {
+        if (dto == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(flightService.getByDepartureAirportIdAndArrivalAirportId(dto));
+        }
+    }
+
 }

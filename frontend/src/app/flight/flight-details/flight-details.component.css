@@ -1,0 +1,10 @@
+::ng-deep .p-inputnumber-input {
+  width: 100px !important;
+  height: 37.5px;
+}
+
+@media (max-width: 400px) {
+  .p-dropdown {
+    max-width: 290px;
+  }
+}
