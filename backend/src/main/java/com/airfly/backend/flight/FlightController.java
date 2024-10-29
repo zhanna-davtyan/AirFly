@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("flights")
@@ -28,23 +29,35 @@ public class FlightController {
         }
         if (flightService.existsByFlightNumber(dto.getFlightNumber())) {
             return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
-        }
-        else {
+        } else {
             return ResponseEntity.status(HttpStatus.CREATED).body(flightService.insert(dto));
         }
     }
 
     @PutMapping("update")
     public ResponseEntity<Flight> update(@RequestBody final Flight dto) {
-        if (dto == null) {
+        if (dto == null || dto.getBookedSeats() != 0) {
             return ResponseEntity.badRequest().build();
         } else {
             if (!flightService.existsById(dto.getId())) {
                 return ResponseEntity.notFound().build();
             }
-            else {
+            Optional<Flight> flight = flightService.getByFlightNumber(dto.getFlightNumber());
+            if (flight.isPresent() && flight.get().getId() != dto.getId()) {
+                return ResponseEntity.status(HttpStatus.METHOD_NOT_ALLOWED).build();
+            } else {
                 return ResponseEntity.status(HttpStatus.OK).body(flightService.update(dto));
             }
+        }
+    }
+
+    @DeleteMapping(value = "delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable("id") final long id) {
+        if (!flightService.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        } else {
+            flightService.deleteById(id);
+            return ResponseEntity.noContent().build();
         }
     }
 

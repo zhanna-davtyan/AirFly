@@ -4,6 +4,7 @@ import {DialogService, DynamicDialogConfig, DynamicDialogRef} from 'primeng/dyna
 import {ConfirmationService, MessageService} from 'primeng/api';
 import {BaseComponent} from '../base/base.component';
 import {Utilities} from '../../utilities';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   standalone: true,
@@ -32,16 +33,17 @@ export abstract class BaseDetailComponent<DTO, DTO_FOR_COMPARISON> extends BaseC
     public dynamicDialogRef: DynamicDialogRef,
     public dynamicDialogConfig: DynamicDialogConfig,
     public formBuilder: FormBuilder,
-    public changeDetectorRef: ChangeDetectorRef
+    public changeDetectorRef: ChangeDetectorRef,
+    protected translateService: TranslateService
   ) {
     super();
   }
 
   closeDialogWithoutSaving(destroyPendingDialogs: boolean) {
     this.confirmationService.confirm({
-      header: 'Bestätigung',
+      header: this.translateService.instant('confirm'),
       icon: 'pi pi-question-circle',
-      message: 'Wircklich abbrechen?',
+      message: this.translateService.instant('confirm-cancel'),
       accept: () => {
         if (destroyPendingDialogs) {
           Utilities.destroyPendingDialogs(this.dialogService);

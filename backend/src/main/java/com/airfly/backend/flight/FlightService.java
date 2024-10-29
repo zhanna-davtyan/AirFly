@@ -7,6 +7,7 @@ import com.airfly.backend.common.service.EntityNotUpdatedException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class FlightService {
@@ -49,6 +50,14 @@ public class FlightService {
         } catch (Exception e) {
             throw new EntityNotUpdatedException("Could not update flight", e);
         }
+    }
+
+    Optional<Flight> getByFlightNumber(String flightNumber){
+        return flightRepository.findByFlightNumber(flightNumber);
+    }
+
+    void deleteById(long id){
+        flightRepository.deleteById(id);
     }
 
 }

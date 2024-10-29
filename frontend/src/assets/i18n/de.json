@@ -3,6 +3,43 @@
     "language": {
       "de": "Deutsch",
       "en": "Englisch"
-    }
-  }
+    },
+    "yes": "Ja",
+    "no": "Nein"
+  },
+  "table": {
+    "search": "Suche",
+    "refresh-table": "Tabelle neu Laden",
+    "clear-sorting-and-filters": "Sortierung und Filter zurücksetzen"
+  },
+  "informations": "Informationen",
+  "add-flight": "Neuen Flug erstellen",
+  "flight-number": "Flugnummer",
+  "departure-airport": "Abflughafen",
+  "arrival-airport": "Ankunftshafen",
+  "create-flight": "Flug erstellen",
+  "edit-flight": "Flug editieren",
+  "flight-already-exists": "Ein Flug mit dieser Flugnummer existiert bereits",
+  "enter-valid-value": "Bitte validen Wert angeben",
+  "airplane": "Flugzeug",
+  "price": "Preis",
+  "capacity": "Kapazität",
+  "departure-time": "Ablfugzeit",
+  "arrival-time": "Anflugzeit",
+  "edit?": "Bearbeiten?",
+  "delete": "Löschen",
+  "save": "Speichern",
+  "confirm": "Bestätigen",
+  "the-flight-with-id": "Der Flug mit der ID",
+  "the-flight": "Der Flug",
+  "was-updated-successfully": "wurde erfolgreich aktualisiert",
+  "was-not-updated-successfully": "konnte nicht aktualisiert werden",
+  "was-created-successfully": "wurde erfolgreich erstellt",
+  "was-not-created": "konnte nicht erstellt werden",
+  "was-deleted-successfully": "wurde erfolgreich gelöscht",
+  "was-not-deleted": "konnte nicht gelöscht werden",
+  "confirm-edit": "Wircklich editieren?",
+  "confirm-save": "Wircklich speichern?",
+  "confirm-cancel": "Wircklich abbrechen?",
+  "unable-to-alter": "Dieser Flug hat bereits bestehende Buchungen, weshalb nicht editiert oder gelöscht werden kann. Bitte melden Sie sich bei Ihren Kollegen aus der Flugstornierungsabteilung."
 }

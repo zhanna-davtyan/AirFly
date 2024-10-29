@@ -4,13 +4,13 @@
   defaultFocus="reject"
   rejectButtonStyleClass="p-button-text"
   acceptButtonStyleClass="p-button-text"
-  rejectLabel="NEIN"
-  acceptLabel="JA"
+  rejectLabel="{{ 'base.no' | translate }}"
+  acceptLabel="{{ 'base.yes' | translate }}"
 >
 </p-confirmDialog>
 <div class="flex justify-content-between align-items-center mt-2">
   <h2>
-    {{ formGroup.get('id')?.value === 0 ? 'Flug erstellen' : 'Flug editieren' }}
+    {{ formGroup.get('id')?.value === 0 ? ('create-flight' | translate) : ('edit-flight' | translate) }}
   </h2>
   <i
     class="pi pi-times close-icon"
@@ -18,29 +18,31 @@
   </i></div>
 
 @if (dtoAlreadyExistsError) {
-  <p style="color: red; font-weight: 700; padding-top: 0">Ein Flug mit dieser Flugnummer existiert bereits</p>
+  <p style="color: red; font-weight: 700; padding-top: 0">{{ 'flight-already-exists' | translate }}</p>
 }
 <div>
   <form (ngSubmit)="submit()">
     <div [formGroup]="formGroup">
-      <p-fieldset legend="Informationen" class="col">
+      <p-fieldset legend="{{'informations'|translate}}" class="col">
         <div class="flex flex-column">
           <div>
-            <p style="margin: 0 0 7px" class="w-full">Flugnummer</p>
+            <p style="margin: 0 0 7px" class="w-full">{{ 'flight-number' | translate }}</p>
             <input
               formControlName="flightNumber"
               type="text"
+              minlength="6"
               maxlength="6"
               pInputText
               [readonly]="!editMode"
               class="w-full"
             />
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('flightNumber')!.valid" class="p-error">Bitte validen Wert angeben</small>
+              <small *ngIf="!formGroup.get('flightNumber')!.valid"
+                     class="p-error">{{ 'enter-valid-value' | translate }}</small>
             </div>
           </div>
           <div>
-            <p style="margin: 0 0 7px" class="w-full">Abflughafen</p>
+            <p style="margin: 0 0 7px" class="w-full">{{ 'departure-airport' | translate }}</p>
             <p-dropdown
               [style]="{ width: '100%'}"
               formControlName="departureAirportId"
@@ -52,12 +54,12 @@
             >
             </p-dropdown>
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('departureAirportId')!.valid" class="p-error">Bitte validen Wert
-                angeben</small>
+              <small *ngIf="!formGroup.get('departureAirportId')!.valid"
+                     class="p-error">{{ 'enter-valid-value' | translate }}</small>
             </div>
           </div>
           <div>
-            <p style="margin: 0 0 7px" class="w-full">Zielflughafen</p>
+            <p style="margin: 0 0 7px" class="w-full">{{ 'arrival-airport' | translate }}</p>
             <p-dropdown
               [style]="{width: '100%'}"
               formControlName="arrivalAirportId"
@@ -68,12 +70,12 @@
             >
             </p-dropdown>
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('arrivalAirportId')!.valid" class="p-error">Bitte validen Wert
-                angeben</small>
+              <small *ngIf="!formGroup.get('arrivalAirportId')!.valid"
+                     class="p-error">{{ 'enter-valid-value' | translate }}</small>
             </div>
           </div>
           <div>
-            <p style="margin: 0 0 7px" class="w-full">Flugzeug</p>
+            <p style="margin: 0 0 7px" class="w-full">{{ 'airplane' | translate }}</p>
             <p-dropdown
               [style]="{width: '100%'}"
               formControlName="airplaneId"
@@ -84,12 +86,13 @@
             >
             </p-dropdown>
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('airplaneId')!.valid" class="p-error">Bitte validen Wert angeben</small>
+              <small *ngIf="!formGroup.get('airplaneId')!.valid"
+                     class="p-error">{{ 'enter-valid-value' | translate }}</small>
             </div>
           </div>
           <div class="flex flex-row justify-content-between">
             <div>
-              <p class="w-full" style="margin: 0 0 7px">Preis</p>
+              <p class="w-full" style="margin: 0 0 7px">{{ 'price' | translate }}</p>
               <p-inputNumber
                 formControlName="price"
                 [readonly]="!editMode"
@@ -99,12 +102,13 @@
                 [min]="0"
               />
               <div style="min-height: 20px;">
-                <small *ngIf="!formGroup.get('price')!.valid" class="p-error">Bitte validen Wert angeben</small>
+                <small *ngIf="!formGroup.get('price')!.valid"
+                       class="p-error">{{ 'enter-valid-value' | translate }}</small>
               </div>
             </div>
             @if (this.formGroup.get('id')?.getRawValue() != 0) {
               <div>
-                <p class="w-full" style="margin: 0 0 7px">Kapazität:</p>
+                <p class="w-full" style="margin: 0 0 7px">{{ 'capacity' | translate }}:</p>
                 <div *ngIf="dto" class="mt-4">
                   {{ this.dto.bookedSeats }} / {{ this.dto.airplane.capacity }}
                 </div>
@@ -114,7 +118,7 @@
             }
           </div>
           <div>
-            <p class="w-full" style="margin: 0 0 7px">Ablugzeit</p>
+            <p class="w-full" style="margin: 0 0 7px">{{ 'departure-time' | translate }}</p>
             <p-calendar
               [style]="{width: '100%'}"
               [showIcon]="true"
@@ -127,12 +131,12 @@
               [touchUI]="true"
             />
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('departureTime')!.valid || dateInvalid" class="p-error">Bitte validen Wert
-                angeben</small>
+              <small *ngIf="!formGroup.get('departureTime')!.valid || dateInvalid"
+                     class="p-error">{{ 'enter-valid-value' | translate }}</small>
             </div>
           </div>
           <div>
-            <p class="w-full" style="margin: 0 0 7px">Ankunftszeit</p>
+            <p class="w-full" style="margin: 0 0 7px">{{ 'arrival-time' | translate }}</p>
             <p-calendar
               [style]="{width: '100%'}"
               [showIcon]="true"
@@ -145,23 +149,41 @@
               [touchUI]="true"
             />
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('arrivalTime')!.valid || dateInvalid" class="p-error">Bitte validen Wert
-                angeben</small>
+              <small *ngIf="!formGroup.get('arrivalTime')!.valid || dateInvalid"
+                     class="p-error">{{ 'enter-valid-value' | translate }}</small>
             </div>
           </div>
         </div>
       </p-fieldset>
 
-      <div class="flex justify-content-between">
+      <div *ngIf="(this.dto && this.dto.bookedSeats > 0)">
+      <span>
+        {{ "unable-to-alter" | translate }}
+      </span>
+      </div>
+
+      <div *ngIf="formGroup.get('id')!.getRawValue() === 0" class="w-full flex flex-row-reverse">
+        <button
+          type="button"
+          class="mt-4"
+          pButton
+          icon="pi pi-save"
+          label="{{'save' | translate }}"
+          [disabled]="formGroup.invalid || saveButtonDisabled"
+          (click)="saveWithConfirmation()"
+        ></button>
+      </div>
+
+      <div class="flex justify-content-between" *ngIf="this.dto && !(this.dto.bookedSeats > 0)">
         <div class="flex flex-column">
           <div class="flex align-items-center">
-            <p class="mx-2" *ngIf="editModeButtonVisible" translate>Editieren?</p>
+            <p class="mx-2" *ngIf="editModeButtonVisible" translate>{{ 'edit?'|translate }}</p>
             <p-inputSwitch
               id="editMode"
               *ngIf="editModeButtonVisible"
               [(ngModel)]="editMode"
               [ngModelOptions]="{standalone: true}"
-              pTooltip="Edtieren?"
+              pTooltip="{{'edit?' | translate}}"
               tooltipPosition="top"
             >
             </p-inputSwitch>
@@ -175,8 +197,7 @@
               pButton
               icon="pi pi-trash"
               class="p-button-outlined"
-              label="Löschen"
-              aria-label="Löschen"
+              label="{{'delete' | translate }}"
               (click)="confirmDelete()"
             ></button>
             <button
@@ -184,8 +205,7 @@
               class="mt-4"
               pButton
               icon="pi pi-save"
-              aria-label="Speichern"
-              label="Speichern"
+              label="{{'save' | translate }}"
               [disabled]="formGroup.invalid || saveButtonDisabled"
               (click)="saveWithConfirmation()"
             ></button>

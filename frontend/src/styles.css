@@ -187,10 +187,17 @@ body {
 .p-messages {
   position: fixed;
   bottom: 5px;
-  z-index: 9999;
+  z-index: 99999;
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
+}
+
+.p-message.p-message-error {
+  background: rgba(255, 231, 230);
+  border: solid #ff5757;
+  border-width: 0 0 0 6px;
+  color: #ff5757;
 }
 
 @media (max-width: 400px) {

@@ -13,6 +13,9 @@ import {ToolbarModule} from "primeng/toolbar";
 import {ButtonDirective} from "primeng/button";
 import {InputTextModule} from "primeng/inputtext";
 import {TooltipModule} from "primeng/tooltip";
+import {DropdownModule} from "primeng/dropdown";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
+import {takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-flight-overview',
@@ -26,7 +29,9 @@ import {TooltipModule} from "primeng/tooltip";
     CommonModule,
     ButtonDirective,
     InputTextModule,
-    TooltipModule
+    TooltipModule,
+    DropdownModule,
+    TranslateModule
   ],
   providers: [
     DynamicDialogRef
@@ -45,11 +50,18 @@ export class FlightOverviewComponent extends BaseOverviewComponent<Flight> imple
     public override dialogService: DialogService,
     public override dynamicDialogRef: DynamicDialogRef,
     protected flightService: FlightService,
+    protected translateService: TranslateService
   ) {
     super(confirmationService, messageService, dialogService, dynamicDialogRef);
   }
 
   ngOnInit(): void {
+    this.translateService.onLangChange
+      .pipe(takeUntil(this.garbageCollector))
+      .subscribe(() => {
+        this.refreshFilters(this.dtos);
+        this.updateColumns();
+      });
     this.refreshData();
     this.updateColumns();
     if (this.table) this.table.clear(); // Reset existing filtering
