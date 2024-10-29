@@ -20,6 +20,7 @@ import {InputSwitchModule} from "primeng/inputswitch";
 import {TooltipModule} from "primeng/tooltip";
 import {InputTextModule} from "primeng/inputtext";
 import {CalendarModule} from "primeng/calendar";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-flight-details',
@@ -35,7 +36,8 @@ import {CalendarModule} from "primeng/calendar";
     TooltipModule,
     NgIf,
     InputTextModule,
-    CalendarModule
+    CalendarModule,
+    TranslateModule
   ],
   templateUrl: './flight-details.component.html',
   styleUrl: './flight-details.component.css'
@@ -58,6 +60,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
     public override dynamicDialogConfig: DynamicDialogConfig,
     public override formBuilder: FormBuilder,
     public override changeDetectorRef: ChangeDetectorRef,
+    public override translateService: TranslateService,
     protected airportService: AirportService,
     protected airplaneService: AirplaneService,
     protected flightService: FlightService
@@ -69,7 +72,8 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
       dynamicDialogRef,
       dynamicDialogConfig,
       formBuilder,
-      changeDetectorRef
+      changeDetectorRef,
+      translateService
     );
   }
 
@@ -204,7 +208,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
         next: () => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Der Flug mit der ID ' + dtoToInsertOrUpdate.id + ' wurde erfolgreich aktualisiert',
+            summary: this.translateService.instant('the-flight-with-id') + ' ' + dtoToInsertOrUpdate.id + ' ' + this.translateService.instant('was-updated-successfully'),
             life: 6000
           });
         },
@@ -215,7 +219,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
           }
           this.messageService.add({
             severity: 'error',
-            summary: 'Der Flug mit der ID ' + dtoToInsertOrUpdate.id + ' konnte nicht aktualisiert werden',
+            summary: this.translateService.instant('the-flight-with-id') + ' ' + dtoToInsertOrUpdate.id + ' ' + this.translateService.instant('was-not-updated-successfully'),
             life: 6000
           });
         },
@@ -229,7 +233,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
         next: (response: Flight) => {
           this.messageService.add({
             severity: 'success',
-            summary: 'Der Flug mit der ID ' + response.id + ' wurde erfolgreich erstellt',
+            summary: this.translateService.instant('the-flight') + ' ' + this.translateService.instant('was-created-successfully'),
             life: 6000
           });
         },
@@ -240,7 +244,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
           }
           this.messageService.add({
             severity: 'error',
-            summary: 'Der Flug konnte nicht erstellt werden',
+            summary: this.translateService.instant('the-flight') + ' ' + this.translateService.instant('was-not-created'),
             life: 6000
           });
         },
@@ -254,9 +258,9 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
 
   confirmDelete() {
     this.confirmationService.confirm({
-      header: 'Bestätigen',
+      header: this.translateService.instant('confirm'),
       icon: 'pi pi-question-circle',
-      message: 'Löschen?',
+      message: this.translateService.instant('delete') + '?',
       accept: () => {
         this.delete(this.dto.id);
       }
@@ -268,14 +272,14 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
       next: () => {
         this.messageService.add({
           severity: 'success',
-          summary: 'Der Flug mit der ID ' + id + ' wurde erfolgreich gelöscht',
+          summary: this.translateService.instant('the-flight-with-id') + ' ' + id + ' ' + this.translateService.instant('was-deleted-successfully'),
           life: 6000
         });
       },
       error: () => {
         this.messageService.add({
           severity: 'error',
-          summary: 'Der Flug mit der ID ' + id + ' konnte nicht gelöscht werden',
+          summary: this.translateService.instant('the-flight-with-id') + ' ' + id + ' ' + this.translateService.instant('was-not-deleted'),
           life: 6000
         });
       },
@@ -287,9 +291,9 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
 
   saveWithConfirmation() {
     this.confirmationService.confirm({
-      header: 'Bestätigung',
+      header: this.translateService.instant('confirm'),
       icon: 'pi pi-question-circle',
-      message: this.dto && this.dto.id > 0 ? 'Den Flug wircklich verändern?' : 'Den Flug wircklich speichern?',
+      message: this.dto && this.dto.id > 0 ? this.translateService.instant('confirm-edit') : this.translateService.instant('confirm-save'),
       accept: () => {
         this.submit();
       },

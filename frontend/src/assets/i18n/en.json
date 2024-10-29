@@ -3,6 +3,43 @@
     "language": {
       "de": "German",
       "en": "English"
-    }
-  }
+    },
+    "yes": "Yes",
+    "no": "No"
+  },
+  "table": {
+    "search": "Search",
+    "refresh-table": "Reload Table",
+    "clear-sorting-and-filters": "Reset sorting and filters"
+  },
+  "informations": "Informations",
+  "add-flight": "Add new flight",
+  "flight-number": "Flight number",
+  "departure-airport": "Departure airport",
+  "arrival-airport": "Arrival airport",
+  "create-flight": "Create flight",
+  "edit-flight": "Edit flight",
+  "flight-already-exists": "A flight with this flight number already exists",
+  "enter-valid-value": "Please provide a valid value",
+  "airplane": "Airplane",
+  "price": "Price",
+  "capacity": "Capacity",
+  "departure-time": "Departure Time",
+  "arrival-time": "Arrival Time",
+  "edit?": "Edit?",
+  "delete": "Delete",
+  "save": "Save",
+  "confirm": "Confirm",
+  "the-flight-with-id": "The flight with ID",
+  "the-flight": "The flight",
+  "was-updated-successfully": "was updated successfully",
+  "was-not-updated-successfully": "could not be updated",
+  "was-created-successfully": "was created successfully",
+  "was-not-created": "could not be created",
+  "was-deleted-successfully": "was deleted successfully",
+  "was-not-deleted": "could not be deleted",
+  "confirm-edit": "Are you sure you want to edit?",
+  "confirm-save": "Are you sure you want to save?",
+  "confirm-cancel": "Are you sure you want to cancel?",
+  "unable-to-alter": "This flight has existing bookings, so it cannot be edited or deleted. Please contact your colleagues in the flight cancellation department."
 }
