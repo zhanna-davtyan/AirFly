@@ -1,0 +1,85 @@
+<p-card header="Deinen Flug finden" [style]="{ width: '90%', margin: '0 auto' }">
+
+  <div class="flex flex-row align-items-center w-full">
+    <div class="mx-2">
+      <img src="/assets/img/plane-departure.svg" style="width: 16px; height: 16px;" alt=""/>
+    </div>
+    <p-floatLabel class="w-full">
+      <p-dropdown
+        [style]="{ width: '100%' }"
+        class="w-full"
+        appendTo="body"
+        id="departure-airport"
+        inputId="departure-airport"/>
+      <label for="departure-airport">{{ "departure-airport" | translate }}</label>
+    </p-floatLabel>
+  </div>
+
+
+  <div class="flex flex-row align-items-center w-full mt-6">
+    <div class="mx-2">
+      <img src="/assets/img/plane-arrival.svg" style="width: 16px; height: 16px;" alt=""/>
+    </div>
+    <p-floatLabel class="w-full">
+      <p-dropdown
+        [style]="{ width: '100%' }"
+        class="w-full"
+        appendTo="body"
+        id="arrival-airport"
+        inputId="arrival-airport"/>
+      <label for="arrival-airport">{{ "arrival-airport" | translate }}</label>
+    </p-floatLabel>
+  </div>
+
+  <div class="flex flex-row align-items-center w-full mt-6">
+    <div class="mx-2">
+      <i style="width: 16px; height: 16px;" class="pi pi-calendar"></i>
+    </div>
+    <p-floatLabel class="w-full">
+      <p-calendar
+        [style]="{ width: '100%'}"
+        dateFormat="dd.mm.yy"
+        class="w-full"
+        [touchUI]="true"
+        id="outgoing-flight"
+        inputId="doutgoing-flight"/>
+      <label for="outgoing-flight">{{ "outgoing-flight" | translate }}</label>
+    </p-floatLabel>
+  </div>
+
+  <div class="flex flex-row align-items-center w-full mt-6">
+    <div class="mx-2">
+      <i style="width: 16px; height: 16px;" class="pi pi-plus"></i>
+    </div>
+    <p-floatLabel class="w-full">
+      <p-calendar
+        [style]="{ width: '100%'}"
+        class="w-full"
+        [touchUI]="true"
+        id="return-flight"
+        dateFormat="dd.mm.yy"
+        inputId="return-flight"/>
+      <label for="return-flight">{{ "return-flight" | translate }}</label>
+    </p-floatLabel>
+  </div>
+
+  <div class="flex flex-row align-items-center w-full mt-6">
+    <div class="mx-2">
+      <i style="width: 16px; height: 16px;" class="pi pi-user"></i>
+    </div>
+    <p-floatLabel class="w-full">
+      <input
+        type="text"
+        pInputText
+        id="passengers"
+        (click)="passengers = true"
+        class="w-full"
+      >
+      <label for="passengers">{{ "passengers" | translate }}</label>
+    </p-floatLabel>
+  </div>
+</p-card>
+
+<p-sidebar styleClass="h-30rem" [(visible)]="passengers" position="bottom">
+  <h3>Bottom Sidebar</h3>
+</p-sidebar>
