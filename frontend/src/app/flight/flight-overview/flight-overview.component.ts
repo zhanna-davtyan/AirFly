@@ -72,20 +72,20 @@ export class FlightOverviewComponent extends BaseOverviewComponent<Flight> imple
 
     this.departureAirportOptions = [];
     for (const departureAirport of [...new Set(dtos.map(dto => dto.departureAirport))].sort()) {
-      this.departureAirportOptions.push({label: departureAirport.code + " - " + departureAirport.name, value: departureAirport.name});
+      this.departureAirportOptions.push({label: departureAirport.code , value: departureAirport.code});
     }
 
     this.arrivalAirportOptions = [];
     for (const arrivalAirport of [...new Set(dtos.map(dto => dto.arrivalAirport))].sort()) {
-      this.arrivalAirportOptions.push({label: arrivalAirport.code + " - " +  arrivalAirport.name, value: arrivalAirport.name});
+      this.arrivalAirportOptions.push({label: arrivalAirport.code, value: arrivalAirport.code});
     }
   }
 
   updateColumns() {
       this.columns = [
         {header: 'Flugnummer', field: 'flightNumber'},
-        {header: 'Abflughafen', field: 'departureAirport.name'},
-        {header: 'Zielflughafen', field: 'arrivalAirport.name'},
+        {header: 'Abflughafen', field: 'departureAirport.code'},
+        {header: 'Zielflughafen', field: 'arrivalAirport.code'},
       ];
   }
 

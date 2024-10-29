@@ -26,7 +26,7 @@
       <p-fieldset legend="Informationen" class="col">
         <div class="flex flex-column">
           <div>
-            <p style="margin: 0 0 7px" class="w-full">Name</p>
+            <p style="margin: 0 0 7px" class="w-full">Flugnummer</p>
             <input
               formControlName="flightNumber"
               type="text"
@@ -42,8 +42,9 @@
           <div>
             <p style="margin: 0 0 7px" class="w-full">Abflughafen</p>
             <p-dropdown
-              [style]="{width: '80vw'}"
+              [style]="{ width: '100%'}"
               formControlName="departureAirportId"
+              class="w-full"
               [readonly]="!editMode"
               [options]="filteredDepartureOptions"
               appendTo="body"
@@ -58,7 +59,7 @@
           <div>
             <p style="margin: 0 0 7px" class="w-full">Zielflughafen</p>
             <p-dropdown
-              [style]="{width: '80vw'}"
+              [style]="{width: '100%'}"
               formControlName="arrivalAirportId"
               [readonly]="!editMode"
               [options]="filteredArrivalOptions"
@@ -74,7 +75,7 @@
           <div>
             <p style="margin: 0 0 7px" class="w-full">Flugzeug</p>
             <p-dropdown
-              [style]="{width: '80vw'}"
+              [style]="{width: '100%'}"
               formControlName="airplaneId"
               [readonly]="!editMode"
               [options]="airplaneOptions"
@@ -126,7 +127,7 @@
               [touchUI]="true"
             />
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('price')!.valid || dateInvalid" class="p-error">Bitte validen Wert
+              <small *ngIf="!formGroup.get('departureTime')!.valid || dateInvalid" class="p-error">Bitte validen Wert
                 angeben</small>
             </div>
           </div>
@@ -144,7 +145,7 @@
               [touchUI]="true"
             />
             <div style="min-height: 20px;">
-              <small *ngIf="!formGroup.get('price')!.valid || dateInvalid" class="p-error">Bitte validen Wert
+              <small *ngIf="!formGroup.get('arrivalTime')!.valid || dateInvalid" class="p-error">Bitte validen Wert
                 angeben</small>
             </div>
           </div>

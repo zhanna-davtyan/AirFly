@@ -183,3 +183,19 @@ body {
 .close-icon:hover {
   background-color: RGB(230, 231, 250, 0.5);
 }
+
+.p-messages {
+  position: fixed;
+  bottom: 5px;
+  z-index: 9999;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90vw;
+}
+
+@media (max-width: 400px) {
+  .p-dropdown {
+    max-width: 290px;
+  }
+
+}
