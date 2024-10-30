@@ -44,5 +44,11 @@
   "confirm-edit": "Wircklich editieren?",
   "confirm-save": "Wircklich speichern?",
   "confirm-cancel": "Wircklich abbrechen?",
-  "unable-to-alter": "Dieser Flug hat bereits bestehende Buchungen, weshalb nicht editiert oder gelöscht werden kann. Bitte melden Sie sich bei Ihren Kollegen aus der Flugstornierungsabteilung."
+  "unable-to-alter": "Dieser Flug hat bereits bestehende Buchungen, weshalb nicht editiert oder gelöscht werden kann. Bitte melden Sie sich bei Ihren Kollegen aus der Flugstornierungsabteilung.",
+  "adult": "Erwachsener",
+  "adults": "Erwachsene",
+  "child": "Kind",
+  "children": "Kinder",
+  "baby": "Baby",
+  "babies": "Babys"
 }
