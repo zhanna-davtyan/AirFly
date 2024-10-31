@@ -13,6 +13,7 @@
             [options]="filteredDepartureOptions"
             (onChange)="onAirportSelect()"
             [showClear]="true"
+            (onClear)="onAirportClear()"
             appendTo="body"
             id="departure-airport"
             inputId="departure-airport"/>
@@ -31,6 +32,7 @@
             formControlName="arrivalAirportId"
             (onChange)="onAirportSelect()"
             [options]="filteredArrivalOptions"
+            (onClear)="onAirportClear()"
             [showClear]="true"
             appendTo="body"
             id="arrival-airport"
@@ -95,6 +97,7 @@
               pInputText
               id="passengers"
               disabled
+              [value]="getPassengerInfo()"
               [ngClass]="{'white-background': formGroup.get('departureAirportId')?.valid && formGroup.get('arrivalAirportId')?.valid && this.formGroup.get('departureTime')?.valid}"
               class="w-full"
             >
@@ -106,7 +109,6 @@
       <button style="width: 100%; background-color: #836EEE; border-radius: 20px;"
         class="mt-6 d-flex justify-content-center"
         pButton>
-        Search
       </button>
     </div>
 
