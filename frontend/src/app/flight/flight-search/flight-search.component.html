@@ -1,3 +1,4 @@
+
 <p-card [style]="{ width: '90%', margin: '20px auto'}">
   <form (ngSubmit)="submit()">
     <div [formGroup]="formGroup" class="search-flight-card">
@@ -101,11 +102,14 @@
           </p-floatLabel>
         </div>
       </div>
-      <button
-        class="mt-6"
+    <div class="col justify-content-center d-flex align-items-center">
+      <button style="width: 100%; background-color: #836EEE; border-radius: 20px;"
+        class="mt-6 d-flex justify-content-center"
         pButton>
         Search
       </button>
+    </div>
+
     </div>
   </form>
 </p-card>

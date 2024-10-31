@@ -1,0 +1,11 @@
+.blur-background::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Beispiel für einen halbtransparenten schwarzen Hintergrund */
+  backdrop-filter: blur(5px); /* Blur-Effekt */
+  z-index: 9999; /* Stelle sicher, dass der Hintergrund hinter der Sidebar liegt */
+}
