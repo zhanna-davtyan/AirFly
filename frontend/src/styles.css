@@ -36,6 +36,7 @@ body {
   padding: 0;
   min-height: 100vh;
   min-width: 100vw;
+  background-color: #120F2B;
 }
 
 /*Readonly style for all input texts*/
@@ -174,7 +175,6 @@ body {
   border-radius: 100%;
   font-size: 1.1em;
 }
-
 .close-icon:hover {
   background-color: RGB(230, 231, 250, 0.5);
 }
@@ -200,11 +200,6 @@ body {
   width: 50px;
 }
 
-.p-sidebar-header{
-  background: #f4f4f4;
-  padding-bottom: 0;
-  padding-top: 0;
-}
 
 
 @media (max-width: 450px) {

@@ -11,7 +11,7 @@ import { RouterModule } from '@angular/router';
 import { MenuSidebarService } from './menu-sidebar.service';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api';
 import {  take } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
@@ -28,6 +28,7 @@ import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
     DropdownModule,
     TooltipModule,
     OverlayPanelModule,
+    TranslateModule
   ],
   templateUrl: './menu.component.html',
   encapsulation: ViewEncapsulation.None,
@@ -40,6 +41,7 @@ export class MenuComponent implements OnInit {
   visibleSidebar: boolean = false;
   protected selectedLanguage: string | null = localStorage.getItem('lng');
   languageOptions: SelectItem[] = [];
+
 
   ngOnInit() {
     this.menusidebarService.isSidebarVisible$.subscribe((value) => {
@@ -58,12 +60,6 @@ export class MenuComponent implements OnInit {
   private readonly availableLanguages = ['de', 'en'];
   translateService = inject(TranslateService);
   items: any[] = [];
-
-  // items = [
-  //   { label: 'Buchen', routerLink: '/' },
-  //   { label: 'Meine Reise', routerLink: '/' },
-  //   { label: 'Check-in', routerLink: '/' },
-  // ];
 
 
   private updateMenuTranslations() {

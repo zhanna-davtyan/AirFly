@@ -1,8 +1,13 @@
-<p-messages />
-
-<p-button label="Admin" routerLink="/all-flights"></p-button>
-<p-button label="Home" routerLink="/"></p-button>
-
-
-<router-outlet></router-outlet>
-
+<div>
+  <div [ngClass]="{'blur-background': isSidebarVisible}">
+    <app-menu></app-menu>
+    <div class="content">
+        <router-outlet></router-outlet>
+    </div>
+    <p-messages />
+    <p-button label="Admin" routerLink="/all-flights"></p-button>
+    <p-button label="Home" routerLink="/"></p-button>
+    <app-footer></app-footer>
+  </div>
+</div>
+<app-footer></app-footer>
