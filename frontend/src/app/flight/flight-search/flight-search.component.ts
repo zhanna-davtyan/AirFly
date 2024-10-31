@@ -6,7 +6,7 @@ import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/
 import {NgClass, NgIf} from "@angular/common";
 import {CalendarModule} from "primeng/calendar";
 import {InputTextModule} from "primeng/inputtext";
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule, TranslateService} from "@ngx-translate/core";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {SidebarModule} from "primeng/sidebar";
 import {FlightService} from "../flight.service";
@@ -45,13 +45,43 @@ export class FlightSearchComponent implements OnInit {
   minDate = new Date();
   maxDate = new Date();
 
-
   constructor(
     protected flightService: FlightService,
     protected airportService: AirportService,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected formBuilder: FormBuilder
+    protected formBuilder: FormBuilder,
+    protected translateService: TranslateService
   ) {
+  }
+
+  onAirportClear(){
+    this.formGroup.patchValue({
+      departureTime: null,
+      arrivalTime: null,
+      adults: 1,
+      children: 0,
+      babies: 0
+    })
+  }
+
+  getPassengerInfo(): string {
+    const adults = this.formGroup.get('adults')?.value || 0;
+    const children = this.formGroup.get('children')?.value || 0;
+    const babies = this.formGroup.get('babies')?.value || 0;
+
+    const parts: string[] = [];
+
+    if (adults > 0) {
+      parts.push(`${adults} ${this.translateService.instant(adults === 1 ? 'adult' : 'adults')}`);
+    }
+    if (children > 0) {
+      parts.push(`${children} ${this.translateService.instant(children === 1 ? 'child' : 'children')}`);
+    }
+    if (babies > 0) {
+      parts.push(`${babies} ${this.translateService.instant(babies === 1 ? 'baby' : 'babies')}`);
+    }
+
+    return parts.join(', ');
   }
 
   ngOnInit(): void {
