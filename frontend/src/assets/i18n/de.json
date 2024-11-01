@@ -50,5 +50,8 @@
   "child": "Kind",
   "children": "Kinder",
   "baby": "Baby",
-  "babies": "Babys"
+  "babies": "Babys",
+  "book": "Buchen", 
+  "my-trip": "Meine Reise", 
+  "checkIn": "Check-in" 
 }

@@ -47,15 +47,6 @@ export class MenuComponent implements OnInit {
   protected selectedLanguage: string | null = localStorage.getItem('lng');
   languageOptions: SelectItem[] = [];
 
-  private readonly availableLanguages = ['de', 'en'];
-  translateService = inject(TranslateService);
-
-  items = [
-    { label: 'Buchen', routerLink: '/' },
-    { label: 'Meine Reise', routerLink: '/' },
-    { label: 'Check-in', routerLink: '/' },
-  ];
-
   ngOnInit() {
     this.menusidebarService.isSidebarVisible$.subscribe((value) => {
       this.visibleSidebar = value;
@@ -67,26 +58,41 @@ export class MenuComponent implements OnInit {
     }
     this.translateService.use(this.selectedLanguage);
     this.updateTranslations();
+    this.updateMenuTranslations();
   }
 
+  private readonly availableLanguages = ['de', 'en'];
+  translateService = inject(TranslateService);
+  items: any[] = []; 
+
+  // items = [
+  //   { label: 'Buchen', routerLink: '/' },
+  //   { label: 'Meine Reise', routerLink: '/' },
+  //   { label: 'Check-in', routerLink: '/' },
+  // ];
+
+
+  private updateMenuTranslations() {
+    this.translateService.get([
+      'book', 
+      'my-trip',
+      'checkIn', 
+    ]).subscribe(translations => {
+      this.items = [
+        { label: translations['book'], routerLink: '/' },
+        { label: translations['my-trip'], routerLink: '/' },
+        { label: translations['checkIn'], routerLink: '/' },
+      ];
+    });
+  }
   protected onChangeLanguage(event: any) {
     const newLanguage = event.value;
     localStorage.setItem('lng', newLanguage);
-
-    this.translateService
-      .use(newLanguage)
-      .pipe(
-        switchMap(() =>
-          this.translateService.get(['base.language.en', 'base.language.de'])
-        ), // Hole Übersetzungen nach Sprachwechsel
-        take(1)
-      )
-      .subscribe((translations) => {
-        this.languageOptions = this.availableLanguages.map((option) => ({
-          value: option,
-          label: translations['base.language.' + option],
-        }));
-      });
+  
+    this.translateService.use(newLanguage).subscribe(() => { 
+      this.updateTranslations();
+      this.updateMenuTranslations();
+    });
   }
 
   private updateTranslations() {
