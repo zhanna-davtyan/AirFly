@@ -33,7 +33,6 @@
   </div>
   <ul class="menu-list">
     <li *ngFor="let item of items" (click)="toggleSidebar()">
-      <i *ngIf="item.icon" class="{{ item.icon }}"></i>
       {{ item.label }}
     </li>
   </ul>

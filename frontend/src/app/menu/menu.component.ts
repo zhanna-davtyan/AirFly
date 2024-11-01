@@ -51,13 +51,9 @@ export class MenuComponent implements OnInit {
   translateService = inject(TranslateService);
 
   items = [
-    { label: 'Home', icon: 'pi pi-home', routerLink: '/' },
-    { label: 'Flüge', icon: 'pi pi-send', routerLink: '/flights' },
-    {
-      label: 'Reiseziele',
-      icon: 'pi pi-map-marker',
-      routerLink: '/destinations',
-    },
+    { label: 'Buchen', routerLink: '/' },
+    { label: 'Meine Reise', routerLink: '/' },
+    { label: 'Check-in', routerLink: '/' },
   ];
 
   ngOnInit() {
@@ -74,12 +70,15 @@ export class MenuComponent implements OnInit {
   }
 
   protected onChangeLanguage(event: any) {
-    const newLanguage = event.value; 
+    const newLanguage = event.value;
     localStorage.setItem('lng', newLanguage);
-  
-    this.translateService.use(newLanguage)
+
+    this.translateService
+      .use(newLanguage)
       .pipe(
-        switchMap(() => this.translateService.get(['base.language.en', 'base.language.de'])), // Hole Übersetzungen nach Sprachwechsel
+        switchMap(() =>
+          this.translateService.get(['base.language.en', 'base.language.de'])
+        ), // Hole Übersetzungen nach Sprachwechsel
         take(1)
       )
       .subscribe((translations) => {
@@ -104,8 +103,8 @@ export class MenuComponent implements OnInit {
 
   toggleSidebar() {
     this.menusidebarService.toggleSidebar();
-    setTimeout(() => { 
-      document.getElementById('main-content')?.focus(); 
+    setTimeout(() => {
+      document.getElementById('main-content')?.focus();
     });
   }
 }
