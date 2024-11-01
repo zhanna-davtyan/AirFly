@@ -1,0 +1,95 @@
+<header class="flex justify-content-between align-items-center">
+  <div>
+    <img src="/assets/img/logo.png" style="width: 80px; height: 80px;" alt="t">
+  </div>
+  <div class="flex align-items-center mr-6">
+    <p-avatar
+      label="{{currentStep}}"
+      styleClass="mr-2"
+      [style]="{ 'background-color': '#3b82f6', color: 'white', 'font-weight':'bold' }"/>
+    <p class="m-0 p-0 font-bold">
+      {{ currentStepDescription | translate }}
+    </p>
+  </div>
+  <div class="mr-3">
+    Account
+  </div>
+</header>
+<p-tabView [activeIndex]="currentStep - 1">
+  <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
+  </p-tabPanel>
+</p-tabView>
+<div class="w-full modify-flight">
+  <p-accordion>
+    <p-accordionTab header="{{'change-search' | translate }}">
+      <div class="w-full flex justify-content-center mt-5">
+        <app-flight-search></app-flight-search>
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+</div>
+<div class="w-full flex flex-column align-items-center bg-gray-100 flight-select-holder">
+  @for (flight of outwardFlights; track outwardFlights) {
+    <p-card class="mt-5">
+      <div class="flex w-full justify-content-between align-items-center">
+        <div class="flex flex-column" style="font-size: 1.1rem;">
+          <p class="m-0 font-semibold">{{ flight.departureAirport.code }}</p>
+          <p class="m-0 mt-2 font-bold">{{ flight.departureTime | date: 'HH:mm' }}</p>
+        </div>
+        <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+          <p class="m-0">{{ getTimeDifference(flight.departureTime, flight.arrivalTime) }}h</p>
+          <p-divider class="w-full p-flight-divider"/>
+          <p class="m-0">Nonstop</p>
+        </div>
+        <div class="flex flex-column" style="font-size: 1.1rem;">
+          <p class="m-0 font-semibold">{{ flight.arrivalAirport.code }}</p>
+          <p class="m-0 mt-2 font-bold">{{ flight.arrivalTime | date: 'HH:mm' }}</p>
+        </div>
+      </div>
+      <p-divider/>
+      <div class="flight-select">
+        <p-accordion>
+          <p-accordionTab>
+            <ng-template pTemplate="header">
+              <div>
+                <span>{{ "flight-from" | translate }}</span>
+                <br/>
+                <span class="mt-1" style="color: black; font-size:1.7em;">{{ flight.price | currency: 'EUR' }}</span>
+              </div>
+            </ng-template>
+            <div class="category-holder mt-5">
+              <p-carousel
+                [value]="categories"
+                [numVisible]="1"
+                [numScroll]="1"
+                [circular]="false">
+                <ng-template let-category pTemplate="item">
+                  <p-card>
+                    <ng-template pTemplate="header">
+                      <p class="m-0">{{category.name}}</p>
+                    </ng-template>
+                    <div style="height: 15rem;">
+                      {{category.name}}
+                    </div>
+                    <input
+                      type="radio"
+                      [name]="flight.id + category.id"
+                      [value]="{ flightId: flight.id, categoryId: category.id }"
+                      [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
+                      (change)="onSelection(flight.id, category.id)"
+                    />
+                  </p-card>
+                </ng-template>
+              </p-carousel>
+            </div>
+            <div class="w-full flex justify-content-center mt-5">
+            </div>
+          </p-accordionTab>
+        </p-accordion>
+      </div>
+    </p-card>
+  }
+</div>
+<div class="continue">
+
+</div>

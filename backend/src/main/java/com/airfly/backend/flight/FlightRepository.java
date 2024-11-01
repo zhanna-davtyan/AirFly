@@ -1,6 +1,8 @@
 package com.airfly.backend.flight;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.sql.Timestamp;
 import java.util.List;
@@ -14,9 +16,19 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
 
     Boolean existsByFlightNumber(String flightNumber);
 
-    List<Flight> findByDepartureAirportIdAndArrivalAirportIdAndDepartureTimeBetween(
-            long departureAirportId,
-            long arrivalAirportId,
-            Timestamp startDate,
-            Timestamp endDate
-    );}
+    @Query("""
+        SELECT f FROM Flight f
+        WHERE f.departureAirport.id = :departureAirportId
+        AND f.arrivalAirport.id = :arrivalAirportId
+        AND f.departureTime BETWEEN :startDate AND :endDate
+        AND (f.airplane.capacity - f.bookedSeats) >= :numberOfSeats
+    """)
+    List<Flight> findFlightByFlightSearch(
+            @Param("departureAirportId") long departureAirportId,
+            @Param("arrivalAirportId") long arrivalAirportId,
+            @Param("startDate") Timestamp startDate,
+            @Param("endDate") Timestamp endDate,
+            @Param("numberOfSeats") long numberOfSeats
+    );
+
+}

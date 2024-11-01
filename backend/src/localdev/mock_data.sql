@@ -20,3 +20,8 @@ INSERT INTO airfly_local.airplanes (model, capacity) VALUES
                                                                       ('Boeing 757-200', 200),
                                                                       ('Boeing 767-300ER', 216),
                                                                       ('Airbus A321neo', 230);
+
+INSERT INTO airfly_local.categories (name, price) VALUES
+                                                      ('BASIC', 19.99),
+                                                      ('STANDARD', 29.99),
+                                                      ('PREMIUM', 39.99)

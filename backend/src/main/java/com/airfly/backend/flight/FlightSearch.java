@@ -7,7 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class FlightSearchByAirports {
+public class FlightSearch {
     long departureAirportId;
     long arrivalAirportId;
+    long numberOfPassengers;
 }

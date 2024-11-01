@@ -12,8 +12,10 @@ import {SidebarModule} from "primeng/sidebar";
 import {FlightService} from "../flight.service";
 import {AirportService} from "../../airport/airport.service";
 import {Airport} from "../../airport/airport.model";
-import {FlightSearchByAirports} from "../flight-search-by-airports.model";
 import {Flight} from "../flight.model";
+import {FlightSearch} from "../flight-search.model";
+import {Router} from "@angular/router";
+import {toNumber} from "lodash";
 
 @Component({
   selector: 'app-flight-search',
@@ -30,7 +32,7 @@ import {Flight} from "../flight.model";
     FloatLabelModule,
     SidebarModule,
     NgIf
-  ],
+],
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.component.css'
 })
@@ -50,24 +52,25 @@ export class FlightSearchComponent implements OnInit {
     protected airportService: AirportService,
     protected changeDetectorRef: ChangeDetectorRef,
     protected formBuilder: FormBuilder,
-    protected translateService: TranslateService
+    protected translateService: TranslateService,
+    protected router: Router
   ) {
   }
 
-  onAirportClear(){
+  onAirportClear() {
     this.formGroup.patchValue({
-      departureTime: null,
-      arrivalTime: null,
-      adults: 1,
+      outwardFlightTime: null,
+      returnFlightTime: null,
+      adults: 0,
       children: 0,
       babies: 0
     })
   }
 
   getPassengerInfo(): string {
-    const adults = this.formGroup.get('adults')?.value || 0;
-    const children = this.formGroup.get('children')?.value || 0;
-    const babies = this.formGroup.get('babies')?.value || 0;
+    const adults = this.formGroup.get('adults')?.value;
+    const children = this.formGroup.get('children')?.value;
+    const babies = this.formGroup.get('babies')?.value;
 
     const parts: string[] = [];
 
@@ -86,14 +89,15 @@ export class FlightSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate() + 60);
+    this.minDate.setHours(0,0,0,0);
     this.formGroup = this.formBuilder.group({
       departureAirportId: [null, [Validators.required]],
       arrivalAirportId: [null, [Validators.required]],
-      departureTime: [null, [Validators.required]],
-      arrivalTime: [null],
-      adults: [1, [Validators.required]],
+      outwardFlightTime: [null, [Validators.required]],
+      returnFlightTime: [null],
+      adults: [0],
       children: [0],
-      babies: [0, Validators.required]
+      babies: [0]
     });
     this.formGroup.get('adults')?.valueChanges.subscribe(adultsCount => {
       const babiesControl = this.formGroup.get('babies');
@@ -119,9 +123,21 @@ export class FlightSearchComponent implements OnInit {
         this.formGroup.get('arrivalAirportId')?.valueChanges.subscribe(() => {
           this.updateFilteredOptions();
         });
+        if (this.router.url.includes('/select-flight')) {
+          this.formGroup.get('departureAirportId')?.setValue(toNumber(localStorage.getItem("departure_airport_id")));
+          this.formGroup.get('arrivalAirportId')?.setValue(toNumber(localStorage.getItem("arrival_airport_id")));
+          this.formGroup.get('outwardFlightTime')?.setValue(new Date(toNumber(localStorage.getItem("outward_flight_time")!)));
+          this.formGroup.get('returnFlightTime')?.setValue(localStorage.getItem("return_flight_time") ? new Date(toNumber(localStorage.getItem("return_flight_time"))) : null);
+          this.formGroup.get('adults')?.setValue(toNumber(localStorage.getItem("adults")));
+          this.formGroup.get('children')?.setValue(toNumber(localStorage.getItem("children")));
+          this.formGroup.get('babies')?.setValue(toNumber(localStorage.getItem("babies")));
+          this.onPassengerHide()
+          this.changeDetectorRef.detectChanges();
+        }
       }
     })
-  }
+
+    }
 
   updateFilteredOptions() {
     const selectedDepartureId = this.formGroup.get('departureAirportId')?.value;
@@ -135,43 +151,81 @@ export class FlightSearchComponent implements OnInit {
       airport => airport.value !== selectedArrivalId
     );
     this.changeDetectorRef.detectChanges();
+    this.changeDetectorRef.markForCheck();
   }
 
   submit() {
+    const outwardFlightTime = this.formGroup.get('outwardFlightTime')?.value;
+    const now = new Date();
+    outwardFlightTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
+
+
+    localStorage.setItem("departure_airport_id", this.formGroup.get('departureAirportId')?.value);
+    localStorage.setItem("arrival_airport_id", this.formGroup.get('arrivalAirportId')?.value);
+    localStorage.setItem("outward_flight_time", outwardFlightTime.getTime().toString());
+    if (this.formGroup.get('returnFlightTime')?.value != null) {
+      const returnFlightTimeValue = this.formGroup.get('returnFlightTime')?.value;
+      const returnFlightDate = new Date(returnFlightTimeValue);
+      returnFlightDate.setHours(23, 59, 59);
+      localStorage.setItem("return_flight_time", returnFlightDate.getTime().toString());
+    }
+    localStorage.setItem("adults", this.formGroup.get('adults')?.value);
+    localStorage.setItem("children", this.formGroup.get('children')?.value);
+    localStorage.setItem("babies", this.formGroup.get('babies')?.value);
+    localStorage.setItem("current_step", "1");
+    localStorage.setItem("current_step_description", "outgoing-flight")
+    if(this.router.url.includes('/select-flight')){
+      window.location.reload()
+    }
+    this.router.navigate(['/select-flight']);
   }
 
   checkFieldsAndShowPassengers() {
     const departureAirportId = this.formGroup.get('departureAirportId')?.value;
     const arrivalAirportId = this.formGroup.get('arrivalAirportId')?.value;
-    const departureTime = this.formGroup.get('departureTime')?.value;
-    if (departureAirportId && arrivalAirportId && departureTime) {
+    if (departureAirportId && arrivalAirportId) {
       this.showPassengers = true;
     }
   }
 
-  onAirportSelect() {
+  onPassengerHide() {
     const departureAirportId = this.formGroup.get('departureAirportId')?.value;
     const arrivalAirportId = this.formGroup.get('arrivalAirportId')?.value;
-    if (departureAirportId && arrivalAirportId) {
-      this.flightService.getFlightsByAirports(
-        new FlightSearchByAirports(
-          departureAirportId,
-          arrivalAirportId
-        )
-      ).subscribe((response: Flight[]) => {
-        this.invalidOutwardFlightDateOptions = [];
-        this.createInvalidDatesArray(response, this.invalidOutwardFlightDateOptions);
-      });
+    const numberOfPassengers = this.formGroup.get('adults')?.value + this.formGroup.get('children')?.value;
+    if (numberOfPassengers != 0) {
+      if (departureAirportId && arrivalAirportId) {
+        this.flightService.getByFlightSearch(
+          new FlightSearch(
+            departureAirportId,
+            arrivalAirportId,
+            numberOfPassengers
+          )
+        ).subscribe((response: Flight[]) => {
+          this.invalidOutwardFlightDateOptions = [];
+          this.createInvalidDatesArray(response, this.invalidOutwardFlightDateOptions);
+        });
 
-      this.flightService.getFlightsByAirports(
-        new FlightSearchByAirports(
-          arrivalAirportId,
-          departureAirportId
-        )
-      ).subscribe((response: Flight[]) => {
-        this.invalidReturnFlightDateOptions = [];
-        this.createInvalidDatesArray(response, this.invalidReturnFlightDateOptions);
-      });
+        this.flightService.getByFlightSearch(
+          new FlightSearch(
+            arrivalAirportId,
+            departureAirportId,
+            numberOfPassengers
+          )
+        ).subscribe((response: Flight[]) => {
+          this.invalidReturnFlightDateOptions = [];
+          this.createInvalidDatesArray(response, this.invalidReturnFlightDateOptions);
+        });
+      }
+    }
+  }
+
+  onPassengerClick(){
+      this.formGroup.patchValue({
+        outwardFlightTime: null,
+        returnFlightTime: null
+      })
+    if(this.formGroup.get('adults')?.value < this.formGroup.get('babies')?.value){
+      this.formGroup.get('babies')?.setValue(this.formGroup.get('adults')?.value)
     }
   }
 
@@ -189,7 +243,6 @@ export class FlightSearchComponent implements OnInit {
         invalidDates.push(new Date(currentDate));
       }
 
-      // Move to the next day
       currentDate.setDate(currentDate.getDate() + 1);
     }
     this.changeDetectorRef.detectChanges()

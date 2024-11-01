@@ -50,5 +50,7 @@
   "child": "Child",
   "children": "Children",
   "baby": "Baby",
-  "babies": "Babies"
+  "babies": "Babies",
+  "change-search": "Change search",
+  "flight-from": "Flight from"
 }

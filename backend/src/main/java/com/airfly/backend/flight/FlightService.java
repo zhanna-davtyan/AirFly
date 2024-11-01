@@ -61,20 +61,63 @@ public class FlightService {
     }
 
 
-    List<Flight> getByDepartureAirportIdAndArrivalAirportId(FlightSearchByAirports dto) {
+    List<Flight> getFlightByFlightSearch(FlightSearch dto) {
         try {
             Timestamp startDate = new Timestamp(System.currentTimeMillis());
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(startDate.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 60);
             Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
-            return flightRepository.findByDepartureAirportIdAndArrivalAirportIdAndDepartureTimeBetween(
+            return flightRepository.findFlightByFlightSearch(
                     dto.departureAirportId,
                     dto.arrivalAirportId,
                     startDate,
-                    endDate
+                    endDate,
+                    dto.numberOfPassengers
             );
         } catch (Exception e) {
+            throw new EntityNotFoundException("Could not find flights", e);
+        }
+    }
+
+    List<Flight> getFlightByFlightSearchWithDate(FlightSearchWithDate flightSearchWithDate) {
+        try {
+            Timestamp departureTime = flightSearchWithDate.getDepartureTime();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(departureTime.getTime());
+
+            Timestamp startDate;
+            Timestamp endDate;
+
+            Calendar today = Calendar.getInstance();
+            boolean isToday = (calendar.get(Calendar.YEAR) == today.get(Calendar.YEAR)) &&
+                    (calendar.get(Calendar.DAY_OF_YEAR) == today.get(Calendar.DAY_OF_YEAR));
+
+            if (isToday) {
+                startDate = new Timestamp(System.currentTimeMillis());
+            } else {
+                calendar.set(Calendar.HOUR_OF_DAY, 0);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                calendar.set(Calendar.MILLISECOND, 0);
+                startDate = new Timestamp(calendar.getTimeInMillis());
+            }
+
+            calendar.setTimeInMillis(departureTime.getTime());
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
+            endDate = new Timestamp(calendar.getTimeInMillis());
+
+            return flightRepository.findFlightByFlightSearch(
+                    flightSearchWithDate.getDepartureAirportId(),
+                    flightSearchWithDate.getArrivalAirportId(),
+                    startDate,
+                    endDate,
+                    flightSearchWithDate.getNumberOfPassengers()
+            );
+        }
+        catch (Exception e){
             throw new EntityNotFoundException("Could not find flights", e);
         }
     }

@@ -61,12 +61,21 @@ public class FlightController {
         }
     }
 
-    @PostMapping("get-by-airport-ids")
-    public ResponseEntity<List<Flight>> getByAirportIds(@RequestBody final FlightSearchByAirports dto) {
+    @PostMapping("get-by-flight-search")
+    public ResponseEntity<List<Flight>> getByFlightSearch(@RequestBody final FlightSearch dto) {
         if (dto == null) {
             return ResponseEntity.badRequest().build();
         } else {
-            return ResponseEntity.status(HttpStatus.CREATED).body(flightService.getByDepartureAirportIdAndArrivalAirportId(dto));
+            return ResponseEntity.status(HttpStatus.CREATED).body(flightService.getFlightByFlightSearch(dto));
+        }
+    }
+
+    @PostMapping("get-by-flight-search-with-date")
+    public ResponseEntity<List<Flight>> getByFlightSearch(@RequestBody final FlightSearchWithDate dto) {
+        if (dto == null) {
+            return ResponseEntity.badRequest().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.CREATED).body(flightService.getFlightByFlightSearchWithDate(dto));
         }
     }
 
