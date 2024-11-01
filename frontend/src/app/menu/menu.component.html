@@ -1,0 +1,63 @@
+<div class="border-color-purpel d-flex justify-content-between">
+  <div class="col-4">
+    <img
+      class="header-logo"
+      style="width: 120px; height: 100px"
+      src="assets/img/AirFly_Logo.png"
+      alt=""
+    />
+  </div>
+  <div class="d-flex col-4 justify-content-end align-items-center">
+    <div class="profile-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path
+          d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464l349.5 0c-8.9-63.3-63.3-112-129-112l-91.4 0c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304l91.4 0C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7L29.7 512C13.3 512 0 498.7 0 482.3z"
+        />
+      </svg>
+    </div>
+    <div class="menu-icon ms-4 me-4" (click)="toggleSidebar()">
+      <i class="pi pi-bars" style="font-size: 35px"></i>
+    </div>
+  </div>
+</div>
+
+<p-sidebar
+  [(visible)]="visibleSidebar"
+  [baseZIndex]="10000"
+  [position]="'right'"
+  class="custom-sidebar"
+  [modal]="false"
+>
+  <div class="sidebar-header">
+    <i class="pi pi-times close-icon" (click)="toggleSidebar()"></i>
+  </div>
+  <ul class="menu-list">
+    <li *ngFor="let item of items" (click)="toggleSidebar()">
+      <i *ngIf="item.icon && items.length > 0" class="{{ item.icon }}"></i>
+      {{ item.label }}
+    </li>
+  </ul>
+  <div class="search border-top pt-4" style="color: black;">
+    <i class="pi pi-search"  (click)="op.toggle($event)"></i>
+    <span style="font-size: 18px; margin-left: 10px;" class="fw-bold">Search</span>
+    <p-overlayPanel #op>
+        <input type="text"  pInputText placeholder="Search" />
+    </p-overlayPanel>
+  </div>
+  <div class="language-icon pt-2" *ngIf="visibleSidebar">
+    <i
+      class="fw-bold pi pi-globe text-dark pt-3 pb-3"
+      style="margin-right: 10px; font-size: 24px;"
+      (click)="op.toggle($event)"
+    ></i>
+    <p-overlayPanel #op>
+      <p-dropdown
+        [(ngModel)]="selectedLanguage"
+        optionLabel="label"
+        optionValue="value"
+        [options]="languageOptions"
+        (onChange)="onChangeLanguage($event)">
+      </p-dropdown>
+    </p-overlayPanel>
+  </div>
+</p-sidebar>
