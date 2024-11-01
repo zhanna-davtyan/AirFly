@@ -7,22 +7,16 @@ import {
   ViewEncapsulation,
 } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
-import { RouterModule, ROUTES, Routes } from '@angular/router';
-import { LandingPageComponent } from '../landing-page/landing-page.component';
-import { FlightSearchComponent } from '../flight/flight-search/flight-search.component';
+import { RouterModule } from '@angular/router';
 import { MenuSidebarService } from './menu-sidebar.service';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api';
-import { switchMap, take } from 'rxjs';
+import {  take } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 
-const routes: Routes = [
-  { path: '', component: LandingPageComponent },
-  { path: 'flights', component: FlightSearchComponent },
-];
 @Component({
   selector: 'app-menu',
   standalone: true,
@@ -63,7 +57,7 @@ export class MenuComponent implements OnInit {
 
   private readonly availableLanguages = ['de', 'en'];
   translateService = inject(TranslateService);
-  items: any[] = []; 
+  items: any[] = [];
 
   // items = [
   //   { label: 'Buchen', routerLink: '/' },
@@ -74,9 +68,9 @@ export class MenuComponent implements OnInit {
 
   private updateMenuTranslations() {
     this.translateService.get([
-      'book', 
+      'book',
       'my-trip',
-      'checkIn', 
+      'checkIn',
     ]).subscribe(translations => {
       this.items = [
         { label: translations['book'], routerLink: '/' },
@@ -88,8 +82,8 @@ export class MenuComponent implements OnInit {
   protected onChangeLanguage(event: any) {
     const newLanguage = event.value;
     localStorage.setItem('lng', newLanguage);
-  
-    this.translateService.use(newLanguage).subscribe(() => { 
+
+    this.translateService.use(newLanguage).subscribe(() => {
       this.updateTranslations();
       this.updateMenuTranslations();
     });
