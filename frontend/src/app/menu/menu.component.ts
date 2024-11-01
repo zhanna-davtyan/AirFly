@@ -18,7 +18,6 @@ import { SelectItem } from 'primeng/api';
 import { switchMap, take } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
-import { TranslationChangeEvent } from '@ngx-translate/core'; 
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -105,5 +104,8 @@ export class MenuComponent implements OnInit {
 
   toggleSidebar() {
     this.menusidebarService.toggleSidebar();
+    setTimeout(() => { 
+      document.getElementById('main-content')?.focus(); 
+    });
   }
 }
