@@ -32,7 +32,7 @@
     <i class="pi pi-times close-icon" (click)="toggleSidebar()"></i>
   </div>
   <ul class="menu-list">
-    <li *ngFor="let item of items" (click)="toggleSidebar()">
+    <li *ngFor="let item of items" (click)="toggleSidebar()"> 
       <i *ngIf="item.icon && items.length > 0" class="{{ item.icon }}"></i>
       {{ item.label }}
     </li>
@@ -44,15 +44,15 @@
         <input type="text"  pInputText placeholder="Search" />
     </p-overlayPanel>
   </div>
-  <div class="language-icon pt-2" *ngIf="visibleSidebar">
-    <i
-      class="fw-bold pi pi-globe text-dark pt-3 pb-3"
+  <div class="language-icon pt-2" *ngIf="visibleSidebar"> 
+    <i 
+      class="fw-bold pi pi-globe text-dark pt-3 pb-3" 
       style="margin-right: 10px; font-size: 24px;"
       (click)="op.toggle($event)"
     ></i>
     <p-overlayPanel #op>
       <p-dropdown
-        [(ngModel)]="selectedLanguage"
+        [(ngModel)]="selectedLanguage" 
         optionLabel="label"
         optionValue="value"
         [options]="languageOptions"
