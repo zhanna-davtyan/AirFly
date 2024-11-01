@@ -85,3 +85,13 @@
 .ng-star-inserted .pi {
   font-size: 24px;
 }
+
+
+
+.p-dropdown-items-wrapper {
+  width: 100px !important;
+}
+
+.p-dropdown-panel .p-dropdown-items {
+  padding-left: 0px !important;
+}
