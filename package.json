@@ -1,8 +1,0 @@
-{
-  "dependencies": {
-    "@ngx-translate/http-loader": "^8.0.0"
-  },
-  "devDependencies": {
-    "@types/lodash": "^4.17.13"
-  }
-}

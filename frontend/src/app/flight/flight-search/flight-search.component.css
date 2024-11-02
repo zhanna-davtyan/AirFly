@@ -1,22 +1,7 @@
 .passenger-select{
-  .p-inputtext:disabled.white-background{
-    background: white;
-  }
-}
-
-.passenger-select{
-  .p-inputtext:disabled{
-    background: #f0f1f2;
-    opacity: 1;
-  }
-}
-
-.passenger-select{
   cursor: pointer;
 }
 
 ::ng-deep td .p-disabled{
   opacity: 0.1;
 }
-
-

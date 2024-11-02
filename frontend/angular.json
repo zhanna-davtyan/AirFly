@@ -26,7 +26,17 @@
               "src/manifest.webmanifest"
             ],
             "styles": [
-              "src/styles.css"
+              "src/styles.css",
+              {
+                "input": "src/assets/styles/theme-dark.css",
+                "bundleName": "theme-dark",
+                "inject": false
+              },
+              {
+                "input": "src/assets/styles/theme-light.css",
+                "bundleName": "theme-light",
+                "inject": false
+              }
             ],
             "scripts": []
           },

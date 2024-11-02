@@ -27,12 +27,13 @@
   [position]="'right'"
   class="custom-sidebar"
   [modal]="false"
+  [showCloseIcon]="false"
 >
   <div class="sidebar-header">
     <i class="pi pi-times close-icon" (click)="toggleSidebar()"></i>
   </div>
   <ul class="menu-list">
-    <li *ngFor="let item of items" (click)="toggleSidebar()"> 
+    <li *ngFor="let item of items" (click)="toggleSidebar()">
       <i *ngIf="item.icon && items.length > 0" class="{{ item.icon }}"></i>
       {{ item.label }}
     </li>
@@ -41,23 +42,32 @@
     <i class="pi pi-search"  (click)="op.toggle($event)"></i>
     <span style="font-size: 18px; margin-left: 10px;" class="fw-bold">{{ 'search' | translate }}</span>
     <p-overlayPanel #op>
-        <input type="text"  pInputText placeholder="Search" />
+        <input type="text" pInputText placeholder="Search" />
     </p-overlayPanel>
   </div>
-  <div class="language-icon pt-2" *ngIf="visibleSidebar"> 
-    <i 
-      class="fw-bold pi pi-globe text-dark pt-3 pb-3" 
+  <div class="language-icon pt-2" *ngIf="visibleSidebar">
+    <i
+      class="fw-bold pi pi-globe text-dark pt-3 pb-3"
       style="margin-right: 10px; font-size: 24px;"
       (click)="op.toggle($event)"
     ></i>
     <p-overlayPanel #op>
       <p-dropdown
-        [(ngModel)]="selectedLanguage" 
+        [(ngModel)]="selectedLanguage"
         optionLabel="label"
         optionValue="value"
         [options]="languageOptions"
         (onChange)="onChangeLanguage($event)">
       </p-dropdown>
     </p-overlayPanel>
+  </div>
+  <div class="border-1 border-300 border-round p-3 surface-100 shadow-2">
+    <div class="text-xl mb-3">
+    </div>
+    <p-inputSwitch
+      (onChange)="changeTheme($event)"
+      [(ngModel)]="darkTheme"
+    />
+    {{darkTheme}}
   </div>
 </p-sidebar>

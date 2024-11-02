@@ -1,41 +1,16 @@
-.menu-icon {
-  font-size: 200px;
-  cursor: pointer;
-  color: #ffffff;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.custom-sidebar {
-  width: 280px;
-  background-color: #473e80;
-  color: #733333;
-  padding: 20px;
-}
-
 .sidebar-header {
   display: flex;
   justify-content: flex-end;
-  padding: 10px;  
+  padding: 10px;
 }
-.header-class .erste-close-icon { 
-  display: none; 
+.header-class .erste-close-icon {
+  display: none;
 }
 
 .menu-list {
   list-style: none;
   padding: 0;
   margin: 20px 0;
-}
-
-.menu-list li {
-  padding: 15px 0;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: #6d4d4d;
 }
 
 .menu-list li i {
@@ -58,22 +33,16 @@
   display: flex;
 }
 
-.header-icons .account-icon path {
-  fill: white !important;
-}
-
 .custom-sidebar {
   background-color: unset;
 }
 
-.profile-icon svg {
+.header-icons .profile-icon svg {
   width: 35px;
   height: 35px;
 }
 
-.profile-icon svg path {
-  fill: white;
-}
+
 
 .border-color-purpel {
   border-bottom: 1px solid #8080D7 !important;
@@ -105,8 +74,3 @@
 .profile-icon  {
   margin-right: 15px;
 }
-
-.p-sidebar-header {
-  display: none;
-}
-

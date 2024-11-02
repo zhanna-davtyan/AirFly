@@ -1,10 +1,9 @@
-import { CommonModule } from '@angular/common';
+import {CommonModule} from '@angular/common';
 import {
   Component,
   inject,
   OnInit,
   ViewChild,
-  ViewEncapsulation,
 } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { RouterModule } from '@angular/router';
@@ -16,6 +15,11 @@ import { SelectItem } from 'primeng/api';
 import {  take } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import {InputTextModule} from "primeng/inputtext";
+import {InputSwitchModule} from "primeng/inputswitch";
+import {ToggleButtonModule} from "primeng/togglebutton";
+import {ToolbarModule} from "primeng/toolbar";
+import {ThemeService} from "../common/service/theme.service";
 
 @Component({
   selector: 'app-menu',
@@ -28,23 +32,29 @@ import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
     DropdownModule,
     TooltipModule,
     OverlayPanelModule,
-    TranslateModule
+    TranslateModule,
+    InputTextModule,
+    InputSwitchModule,
+    ToggleButtonModule,
+    ToolbarModule
   ],
   templateUrl: './menu.component.html',
-  encapsulation: ViewEncapsulation.None,
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
   @ViewChild('op') op!: OverlayPanel;
-
-  constructor(private menusidebarService: MenuSidebarService) {}
+  languageOptions: SelectItem[] = [];
   visibleSidebar: boolean = false;
   protected selectedLanguage: string | null = localStorage.getItem('lng');
-  languageOptions: SelectItem[] = [];
+  theme: string | null = localStorage.getItem('theme');
+  darkTheme!: boolean;
 
+
+  constructor(private menuSideBarService: MenuSidebarService,
+              private themeService: ThemeService) {}
 
   ngOnInit() {
-    this.menusidebarService.isSidebarVisible$.subscribe((value) => {
+    this.menuSideBarService.isSidebarVisible$.subscribe((value) => {
       this.visibleSidebar = value;
     });
     this.translateService.addLangs(this.availableLanguages);
@@ -52,6 +62,16 @@ export class MenuComponent implements OnInit {
       this.selectedLanguage = 'en'; // Default
       localStorage.setItem('lng', this.selectedLanguage);
     }
+    if (this.theme == null) {
+      this.theme = 'theme-dark'; // Default
+      localStorage.setItem('theme', 'theme-dark');
+    }
+    else if(this.theme == 'theme-light'){
+      this.theme = 'theme-light';
+      localStorage.setItem('theme', 'theme-light');
+      this.themeService.switchTheme('theme-light');
+    }
+    this.darkTheme = !this.theme || this.theme === 'theme-dark';
     this.translateService.use(this.selectedLanguage);
     this.updateTranslations();
     this.updateMenuTranslations();
@@ -75,6 +95,7 @@ export class MenuComponent implements OnInit {
       ];
     });
   }
+
   protected onChangeLanguage(event: any) {
     const newLanguage = event.value;
     localStorage.setItem('lng', newLanguage);
@@ -98,9 +119,23 @@ export class MenuComponent implements OnInit {
   }
 
   toggleSidebar() {
-    this.menusidebarService.toggleSidebar();
+    this.menuSideBarService.toggleSidebar();
     setTimeout(() => {
       document.getElementById('main-content')?.focus();
     });
+  }
+
+
+  changeTheme(event: any) {
+    if(event.checked === true){
+      this.themeService.switchTheme('theme-dark');
+      localStorage.setItem('theme', 'theme-dark');
+      this.darkTheme = true;
+    }
+    else{
+      this.themeService.switchTheme('theme-light');
+      localStorage.setItem('theme', 'theme-light');
+      this.darkTheme = false;
+    }
   }
 }

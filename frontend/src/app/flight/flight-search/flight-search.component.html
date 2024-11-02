@@ -1,8 +1,8 @@
   <form (ngSubmit)="submit()">
     <div [formGroup]="formGroup" class="search-flight-card">
       <div class="flex flex-row align-items-center w-full">
-        <div class="mx-2">
-          <img src="/assets/img/plane-departure.svg" style="width: 16px; height: 16px;" alt=""/>
+        <div class="mx-2 flight-search-custom-icon">
+          <i class="fa-solid fa-plane-departure" style="width: 16px; height: 16px;"></i>
         </div>
         <p-floatLabel class="w-full">
           <p-dropdown
@@ -19,8 +19,8 @@
 
 
       <div class="flex flex-row align-items-center w-full mt-6">
-        <div class="mx-2">
-          <img src="/assets/img/plane-arrival.svg" style="width: 16px; height: 16px;" alt=""/>
+        <div class="mx-2 flight-search-custom-icon">
+          <i class="fa-solid fa-plane-arrival" style="width: 16px; height: 16px;"></i>
         </div>
         <p-floatLabel class="w-full">
           <p-dropdown
@@ -36,7 +36,7 @@
       </div>
       <div class="flex flex-row align-items-center w-full mt-6">
         <div class="mx-2">
-          <i style="width: 16px; height: 16px;" class="pi pi-user"></i>
+          <i style="width: 16px; height: 16px;" class="fa-solid fa-user"></i>
         </div>
         <div class="w-full passenger-select" (click)="checkFieldsAndShowPassengers()">
           <p-floatLabel class="w-full">
@@ -56,7 +56,7 @@
 
       <div class="flex flex-row align-items-center w-full mt-6">
         <div class="mx-2">
-          <i style="width: 16px; height: 16px;" class="pi pi-calendar"></i>
+          <i style="width: 16px; height: 16px;" class="fa-regular fa-calendar"></i>
         </div>
         <p-floatLabel class="w-full">
           <p-calendar
@@ -79,7 +79,7 @@
 
       <div class="flex flex-row align-items-center w-full mt-6">
         <div class="mx-2">
-          <i style="width: 16px; height: 16px;" class="pi pi-plus"></i>
+          <i style="width: 16px; height: 16px;" class="fa-solid fa-plus"></i>
         </div>
         <p-floatLabel class="w-full">
           <p-calendar
