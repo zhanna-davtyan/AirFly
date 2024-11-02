@@ -1,12 +1,12 @@
 <div>
   <div [ngClass]="{'blur-background': isSidebarVisible}">
-    <app-menu></app-menu>
+    <app-menu *ngIf="shouldShowMenuAndFooter()"></app-menu>
     <div class="content">
         <router-outlet></router-outlet>
     </div>
     <p-messages />
     <p-button label="Admin button for testing" routerLink="/all-flights"></p-button>
     <p-button label="Home button for testing" routerLink="/"></p-button>
-    <app-footer></app-footer>
+    <app-footer *ngIf="shouldShowMenuAndFooter()"></app-footer>
   </div>
 </div>

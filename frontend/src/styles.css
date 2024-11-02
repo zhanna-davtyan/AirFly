@@ -28,9 +28,9 @@ html {
 /*Readonly style for all input texts*/
 
 .my-readonly .p-button {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
-  border: 1px solid #3f51b5;
+  border: 1px solid #8B5CF6;
 }
 
 .my-readonly button{
@@ -38,20 +38,20 @@ html {
 }
 
 .my-readonly .p-autocomplete-dropdown {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
-  border: 1px solid #3f51b5;
+  border: 1px solid #8B5CF6;
   cursor: default !important;
   pointer-events: none;
 }
 
 .my-readonly .p-datepicker-trigger {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
 }
 
 .my-readonly .p-inputnumber-button {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
   border: none;
   pointer-events: none;
@@ -63,21 +63,21 @@ html {
 
 /* Highlighted, read-only */
 .my-readonly .p-checkbox-box.p-highlight:read-only {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
-  border: 1px solid #3f51b5;
+  border: 1px solid #8B5CF6;
   pointer-events: none;
 }
 
 /* Highlighted, not read-only */
 .p-checkbox-box.p-highlight:not(:read-only) {
-  background-color: #3b82f6 !important;
+  background-color: #8B5CF6 !important;
   border: none;
 }
 
 .my-readonly .p-radiobutton .p-radiobutton-box.p-highlight {
-  border-color: #3f51b5;
-  background: #3f51b5;
+  border-color: #8B5CF6;
+  background: #8B5CF6;
   opacity: 0.6 !important;
 }
 
@@ -197,7 +197,7 @@ html {
 
 .modify-flight .p-accordion-content {
   position: absolute;
-  top: 217px;
+  top: 179px;
   width: 100%;
   z-index: 1;
 }
@@ -237,9 +237,9 @@ html {
   display: none;
 }
 
-.category-holder .p-card{
-  width: 90%;
-  border: none;
+.category-holder .p-card-header{
+  font-size: 1.3em;
+  font-weight: bold;
+  border-radius: 7px 7px 0 0;
 }
-
 

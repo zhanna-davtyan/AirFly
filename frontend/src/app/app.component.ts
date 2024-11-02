@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import { CalendarModule } from 'primeng/calendar';
 import { MessageModule } from 'primeng/message';
 import { MessagesModule } from 'primeng/messages';
@@ -32,9 +32,14 @@ export class AppComponent {
   title = 'frontend';
   isSidebarVisible: boolean = false;
 
-  constructor(private menuSidebarService: MenuSidebarService) {
+  constructor(private menuSidebarService: MenuSidebarService, private router: Router) {
     this.menuSidebarService.isSidebarVisible$.subscribe((value) => {
       this.isSidebarVisible = value;
     });
+  }
+
+
+  shouldShowMenuAndFooter(): boolean {
+    return this.router.url !== '/select-flight';
   }
 }

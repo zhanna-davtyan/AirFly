@@ -1,3 +1,53 @@
-::ng-deep body{
-  background: #f3f4f6;
+::ng-deep .standard-background{
+  background: #3B82F6;
+  color: black;
+}
+::ng-deep .p-card .premium-background{
+  background: #891b55;
+  color: white;
+}
+::ng-deep .p-card .basic-background{
+  background: #dddddd;
+  color: black;
+}
+
+.category-holder .p-card{
+  width: 90%;
+  border: none;
+  color: white;
+}
+
+.category-holder .p-card i{
+  font-weight: bold;
+}
+
+.category-header{
+  border-radius: 7px 7px 0 0;
+}
+.category-header{
+  padding: 15px;
+}
+
+.p-accordion-tab-active .header-div{
+  display: none;
+}
+
+.continue{
+  width: 100vw;
+  height: 9vh;
+  position: fixed;
+  bottom: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.continue button {
+  width: 90%;
+  height: 3.5em;
+}
+.flight-select-holder {
+  padding-bottom: 13vh;
 }

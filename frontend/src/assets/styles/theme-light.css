@@ -59,14 +59,14 @@
 
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   background: #ffffff;
-  color: #3B82F6;
+  color: #8B5CF6;
   border-bottom: 3px solid lightgray; /* Specify solid border */
 }
 
 .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
   background: #ffffff;
-  color: #3B82F6;
-  border-bottom: 3px solid #3B82F6;
+  color: #8B5CF6;
+  border-bottom: 3px solid #8B5CF6;
 }
 
 .flight-select .p-icon-wrapper *{
@@ -82,14 +82,6 @@
 .category-holder .p-card-body{
   background: #f6f6f6;
   border-radius: 0 0 7px 7px;
-}
-
-.category-holder .p-card-header{
-  background: #dddddd;
-  padding: 12px;
-  font-size: 1.3em;
-  font-weight: bold;
-  border-radius: 7px 7px 0 0;
 }
 
 .passenger-select{
@@ -159,4 +151,12 @@ footer {
 
 .main-page-design span, .main-page-tickets span{
   font-weight: bold; font-size: 18px; color: black;
+}
+
+.continue{
+  background: white;
+}
+
+.flight-select-holder .header-div{
+  color: black;
 }

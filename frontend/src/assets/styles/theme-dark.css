@@ -125,3 +125,40 @@ footer {
 .main-page-design span, .main-page-tickets span{
   font-weight: bold; font-size: 18px; color: white;
 }
+
+.continue{
+  background: #1f2937;
+}
+
+.flight-select-holder .p-accordion-content, .flight-select-holder .p-accordion .p-accordion-header .p-accordion-header-link {
+  background: #1f2937;
+}
+
+.flight-select-holder .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link {
+  background: #1f2937;
+}
+
+.flight-select-holder .header-div{
+  color: white;
+}
+
+.flight-select-holder .p-accordion p-card .p-card-body{
+  background: #131922;
+}
+
+.flight-select-holder .p-card .basic-background{
+  background: gray;
+  color: white;
+}
+
+.flight-select-holder .standard-background{
+  background: #3B82F6;
+  color: white;
+}
+.flight-select-holder .p-card .premium-background{
+  background: #891b55;
+  color: white;
+}
+
+
+

@@ -53,9 +53,16 @@
   "babies": "Babys",
   "change-search": "Suche ändern",
   "flight-from": "Flug ab",
-  "babies": "Babys",
   "book": "Buchen",
   "my-trip": "Meine Reise",
   "checkIn": "Check-in",
-  "search": "Suchen"
+  "search": "Suchen",
+  "small-cabin-bag": "Handgepäckstück",
+  "only-online-check-in": "Nur Online Check-in",
+  "online-check-in": "Online Check-in",
+  "on-site-check-in": "Vor Ort Check-in",
+  "baggage": "Gepäck bis 23kg",
+  "priority-boarding": "Priority Boarding",
+  "cancel-flight-info": "Flug bis zu 2 Tage vorher stornierbar",
+  "continue": "Weiter"
 }

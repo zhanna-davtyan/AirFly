@@ -50,12 +50,19 @@
   "child": "Child",
   "children": "Children",
   "baby": "Baby",
-  "babies": "Babwies",
+  "babies": "Babies",
   "change-search": "Change search",
   "flight-from": "Flight from",
-  "babies": "Babies",
   "book": "Book",
   "my-trip": "My Trip",
   "checkIn": "Check-in",
-  "search": "Search"
+  "search": "Search",
+  "small-cabin-bag": "Small cabin bag",
+  "only-online-check-in": "Only online check-in",
+  "online-check-in": "Online check-in",
+  "on-site-check-in": "On site check-in",
+  "baggage": "Baggage up to 23kg",
+  "priority-boarding": "Priority boarding",
+  "cancel-flight-info": "Flight can be canceled up to 2 days in advance",
+  "continue": "Continue"
 }

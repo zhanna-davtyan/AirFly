@@ -32,7 +32,7 @@ import {toNumber} from "lodash";
     FloatLabelModule,
     SidebarModule,
     NgIf
-],
+  ],
   templateUrl: './flight-search.component.html',
   styleUrl: './flight-search.component.css'
 })
@@ -137,7 +137,7 @@ export class FlightSearchComponent implements OnInit {
       }
     })
 
-    }
+  }
 
   updateFilteredOptions() {
     const selectedDepartureId = this.formGroup.get('departureAirportId')?.value;
@@ -174,6 +174,13 @@ export class FlightSearchComponent implements OnInit {
     localStorage.setItem("babies", this.formGroup.get('babies')?.value);
     localStorage.setItem("current_step", "1");
     localStorage.setItem("current_step_description", "outgoing-flight")
+
+    localStorage.removeItem("departure_flight_id");
+    localStorage.removeItem("departure_category_id");
+    localStorage.removeItem("return_flight_id");
+    localStorage.removeItem("return_category_id");
+    localStorage.removeItem("return_flight_time")
+    localStorage.removeItem("travel_insurance");
     if(this.router.url.includes('/select-flight')){
       window.location.reload()
     }
@@ -220,10 +227,10 @@ export class FlightSearchComponent implements OnInit {
   }
 
   onPassengerClick(){
-      this.formGroup.patchValue({
-        outwardFlightTime: null,
-        returnFlightTime: null
-      })
+    this.formGroup.patchValue({
+      outwardFlightTime: null,
+      returnFlightTime: null
+    })
     if(this.formGroup.get('adults')?.value < this.formGroup.get('babies')?.value){
       this.formGroup.get('babies')?.setValue(this.formGroup.get('adults')?.value)
     }
