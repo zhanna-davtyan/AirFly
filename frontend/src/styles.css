@@ -282,7 +282,7 @@ body {
 
 .modify-flight .p-accordion-content {
   position: absolute;
-  top: 217px;
+  top: 179px;
   width: 100%;
   z-index: 1;
 }
@@ -445,14 +445,51 @@ body {
 }
 
 .category-holder .p-card-header{
-  background: #dddddd;
-  padding: 12px;
   font-size: 1.3em;
   font-weight: bold;
   border-radius: 7px 7px 0 0;
 }
 
+.category-header{
+  border-radius: 7px 7px 0 0;
+}
+
+.category-header{
+  padding: 15px;
+}
+
 .category-holder .p-card{
   width: 90%;
   border: none;
+  color: black;
+}
+
+.category-holder .p-card i{
+  font-weight: bold;
+}
+
+.p-accordion-tab-active .header-div{
+  display: none;
+}
+
+.continue{
+  width: 100vw;
+  height: 9vh;
+  position: fixed;
+  bottom: 0;
+  background: white;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.continue button {
+  width: 90%;
+  height: 3.5em;
+}
+
+.flight-select-holder {
+  padding-bottom: 13vh;
 }

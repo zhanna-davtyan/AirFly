@@ -1,3 +1,18 @@
 ::ng-deep body{
   background: #f3f4f6;
 }
+
+::ng-deep .standard-background{
+  background: #3B82F6;
+  color: black;
+}
+
+::ng-deep .p-card .premium-background{
+  background: #891b55;
+  color: white;
+}
+
+::ng-deep .p-card .basic-background{
+  background: #dddddd;
+  color: black;
+}

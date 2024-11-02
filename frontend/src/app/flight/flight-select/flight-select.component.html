@@ -1,95 +1,293 @@
 <header class="flex justify-content-between align-items-center">
-  <div>
-    <img src="/assets/img/logo.png" style="width: 80px; height: 80px;" alt="t">
-  </div>
-  <div class="flex align-items-center mr-6">
-    <p-avatar
-      label="{{currentStep}}"
-      styleClass="mr-2"
-      [style]="{ 'background-color': '#3b82f6', color: 'white', 'font-weight':'bold' }"/>
-    <p class="m-0 p-0 font-bold">
-      {{ currentStepDescription | translate }}
-    </p>
-  </div>
-  <div class="mr-3">
-    Account
-  </div>
+    <div>
+        <img src="/assets/img/logo.png" style="width: 80px; height: 80px;" alt="t">
+    </div>
+    <div class="flex align-items-center mr-6">
+        <p-avatar
+                label="{{currentStep}}"
+                styleClass="mr-2"
+                [style]="{ 'background-color': '#3b82f6', color: 'white', 'font-weight':'bold' }"/>
+        <p class="m-0 p-0 font-bold" style="font-size:1.2em;">
+            {{ currentStepDescription | translate }}
+        </p>
+    </div>
+    <div class="mr-3">
+        Account
+    </div>
 </header>
 <p-tabView [activeIndex]="currentStep - 1">
-  <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
-  </p-tabPanel>
+    <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
+    </p-tabPanel>
 </p-tabView>
-<div class="w-full modify-flight">
-  <p-accordion>
-    <p-accordionTab header="{{'change-search' | translate }}">
-      <div class="w-full flex justify-content-center mt-5">
-        <app-flight-search></app-flight-search>
-      </div>
-    </p-accordionTab>
-  </p-accordion>
-</div>
-<div class="w-full flex flex-column align-items-center bg-gray-100 flight-select-holder">
-  @for (flight of outwardFlights; track outwardFlights) {
-    <p-card class="mt-5">
-      <div class="flex w-full justify-content-between align-items-center">
-        <div class="flex flex-column" style="font-size: 1.1rem;">
-          <p class="m-0 font-semibold">{{ flight.departureAirport.code }}</p>
-          <p class="m-0 mt-2 font-bold">{{ flight.departureTime | date: 'HH:mm' }}</p>
-        </div>
-        <div class="w-full flex flex-column align-items-center mx-7 flight-time">
-          <p class="m-0">{{ getTimeDifference(flight.departureTime, flight.arrivalTime) }}h</p>
-          <p-divider class="w-full p-flight-divider"/>
-          <p class="m-0">Nonstop</p>
-        </div>
-        <div class="flex flex-column" style="font-size: 1.1rem;">
-          <p class="m-0 font-semibold">{{ flight.arrivalAirport.code }}</p>
-          <p class="m-0 mt-2 font-bold">{{ flight.arrivalTime | date: 'HH:mm' }}</p>
-        </div>
-      </div>
-      <p-divider/>
-      <div class="flight-select">
+@if (currentStep === 1) {
+    <div class="w-full modify-flight">
         <p-accordion>
-          <p-accordionTab>
-            <ng-template pTemplate="header">
-              <div>
-                <span>{{ "flight-from" | translate }}</span>
-                <br/>
-                <span class="mt-1" style="color: black; font-size:1.7em;">{{ flight.price | currency: 'EUR' }}</span>
-              </div>
-            </ng-template>
-            <div class="category-holder mt-5">
-              <p-carousel
-                [value]="categories"
-                [numVisible]="1"
-                [numScroll]="1"
-                [circular]="false">
-                <ng-template let-category pTemplate="item">
-                  <p-card>
-                    <ng-template pTemplate="header">
-                      <p class="m-0">{{category.name}}</p>
-                    </ng-template>
-                    <div style="height: 15rem;">
-                      {{category.name}}
-                    </div>
-                    <input
-                      type="radio"
-                      [name]="flight.id + category.id"
-                      [value]="{ flightId: flight.id, categoryId: category.id }"
-                      [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
-                      (change)="onSelection(flight.id, category.id)"
-                    />
-                  </p-card>
-                </ng-template>
-              </p-carousel>
-            </div>
-            <div class="w-full flex justify-content-center mt-5">
-            </div>
-          </p-accordionTab>
+            <p-accordionTab header="{{'change-search' | translate }}">
+                <div class="w-full flex justify-content-center mt-5">
+                    <app-flight-search></app-flight-search>
+                </div>
+            </p-accordionTab>
         </p-accordion>
-      </div>
-    </p-card>
-  }
-</div>
+    </div>
+    <div class="w-full flex flex-column align-items-center bg-gray-100 flight-select-holder">
+        @for (flight of outwardFlights; track outwardFlights; let i = $index) {
+            <p-card class="mt-5">
+                <div class="flex w-full justify-content-between align-items-center">
+                    <div class="flex flex-column" style="font-size: 1.1rem;">
+                        <p class="m-0 font-semibold">{{ flight.departureAirport.code }}</p>
+                        <p class="m-0 mt-2 font-bold">{{ flight.departureTime | date: 'HH:mm' }}</p>
+                    </div>
+                    <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+                        <p class="m-0">{{ getTimeDifference(flight.departureTime, flight.arrivalTime) }}h</p>
+                        <p-divider class="w-full p-flight-divider"/>
+                        <p class="m-0">Nonstop</p>
+                    </div>
+                    <div class="flex flex-column" style="font-size: 1.1rem;">
+                        <p class="m-0 font-semibold">{{ flight.arrivalAirport.code }}</p>
+                        <p class="m-0 mt-2 font-bold">{{ flight.arrivalTime | date: 'HH:mm' }}</p>
+                    </div>
+                </div>
+                <p-divider/>
+                <div class="flight-select">
+                    <p-accordion>
+                        <p-accordionTab>
+                            <ng-template pTemplate="header">
+                                <div class="header-div">
+                                    <span>{{ "flight-from" | translate }}</span>
+                                    <br/>
+                                    <span class="mt-1"
+                                          style="color: black; font-size:1.7em;">{{ flight.price + (categories!.at(0)?.price ?? 0)  | currency: 'EUR' }}</span>
+                                </div>
+                            </ng-template>
+                            <div class="category-holder mt-5">
+                                <p-carousel
+                                        [value]="categories"
+                                        [numVisible]="1"
+                                        [numScroll]="1"
+                                        [circular]="false">
+                                    <ng-template let-category pTemplate="item">
+                                        <p-card>
+                                            <ng-template pTemplate="header">
+                                                <div class="category-header"
+                                                     [ngClass]="{'basic-background': category?.name ==='BASIC','standard-background': category?.name === 'STANDARD', 'premium-background': category?.name === 'PREMIUM'}">
+                                                    <p class="m-0">{{ category.name }}</p>
+                                                </div>
+                                            </ng-template>
+                                            <div style="height: 15rem; overflow-y: auto;">
+                                                @if (category.name == 'BASIC') {
+                                                    <p class="m-0">
+                                                        <i class="pi pi-desktop mr-2"></i>
+                                                        {{ 'only-online-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-shopping-bag mr-2"></i>
+                                                        1x {{ 'small-cabin-bag' | translate }}
+                                                    </p>
+                                                }
+                                                @if (category.name == 'STANDARD') {
+                                                    <p class="m-0">
+                                                        <i class="pi pi-desktop mr-2"></i>
+                                                        {{ 'online-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-home mr-2"></i>
+                                                        {{ 'on-site-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-shopping-bag mr-2"></i>
+                                                        1x {{ 'small-cabin-bag' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-briefcase mr-2"></i>
+                                                        1x {{ 'baggage' | translate }}
+                                                    </p>
+                                                }
+                                                @if (category.name == 'PREMIUM') {
+                                                    <p class="m-0">
+                                                        <i class="pi pi-desktop mr-2"></i>
+                                                        {{ 'online-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-home mr-2"></i>
+                                                        {{ 'on-site-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-shopping-bag mr-2"></i>
+                                                        1x {{ 'small-cabin-bag' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-briefcase mr-2"></i>
+                                                        2x {{ 'baggage' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-user-plus mr-2"></i>
+                                                        {{ 'priority-boarding' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-calendar-minus mr-2 mb-1"></i>
+                                                        {{ 'cancel-flight-info' | translate }}
+                                                    </p>
+                                                }
+                                            </div>
+                                            <p-divider></p-divider>
+                                            <div class="flex justify-content-between align-items-center">
+                                                <input
+                                                        type="radio"
+                                                        [name]="flight.id + category.id"
+                                                        [value]="{ flightId: flight.id, categoryId: category.id }"
+                                                        [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
+                                                        (change)="onDepartureFlightSelection(flight.id, category.id)"
+                                                        style="transform: scale(1.8);"
+                                                />
+                                                <p class="font-bold"
+                                                   style="font-size: 1.5rem;">{{ flight.price + category.price | currency: 'EUR' }}</p>
+                                            </div>
+                                        </p-card>
+                                    </ng-template>
+                                </p-carousel>
+                            </div>
+                            <div class="w-full flex justify-content-center mt-5">
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                </div>
+            </p-card>
+        }
+    </div>
+}
+@if(currentStep === 2){
+    <div class="w-full flex flex-column align-items-center bg-gray-100 flight-select-holder">
+        @for (flight of returnFlights; track returnFlights; let i = $index) {
+            <p-card class="mt-5">
+                <div class="flex w-full justify-content-between align-items-center">
+                    <div class="flex flex-column" style="font-size: 1.1rem;">
+                        <p class="m-0 font-semibold">{{ flight.departureAirport.code }}</p>
+                        <p class="m-0 mt-2 font-bold">{{ flight.departureTime | date: 'HH:mm' }}</p>
+                    </div>
+                    <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+                        <p class="m-0">{{ getTimeDifference(flight.departureTime, flight.arrivalTime) }}h</p>
+                        <p-divider class="w-full p-flight-divider"/>
+                        <p class="m-0">Nonstop</p>
+                    </div>
+                    <div class="flex flex-column" style="font-size: 1.1rem;">
+                        <p class="m-0 font-semibold">{{ flight.arrivalAirport.code }}</p>
+                        <p class="m-0 mt-2 font-bold">{{ flight.arrivalTime | date: 'HH:mm' }}</p>
+                    </div>
+                </div>
+                <p-divider/>
+                <div class="flight-select">
+                    <p-accordion>
+                        <p-accordionTab>
+                            <ng-template pTemplate="header">
+                                <div class="header-div">
+                                    <span>{{ "flight-from" | translate }}</span>
+                                    <br/>
+                                    <span class="mt-1"
+                                          style="color: black; font-size:1.7em;">{{ flight.price + (categories!.at(0)?.price ?? 0)  | currency: 'EUR' }}</span>
+                                </div>
+                            </ng-template>
+                            <div class="category-holder mt-5">
+                                <p-carousel
+                                        [value]="categories"
+                                        [numVisible]="1"
+                                        [numScroll]="1"
+                                        [circular]="false">
+                                    <ng-template let-category pTemplate="item">
+                                        <p-card>
+                                            <ng-template pTemplate="header">
+                                                <div class="category-header"
+                                                     [ngClass]="{'basic-background': category?.name ==='BASIC','standard-background': category?.name === 'STANDARD', 'premium-background': category?.name === 'PREMIUM'}">
+                                                    <p class="m-0">{{ category.name }}</p>
+                                                </div>
+                                            </ng-template>
+                                            <div style="height: 15rem; overflow-y: auto;">
+                                                @if (category.name == 'BASIC') {
+                                                    <p class="m-0">
+                                                        <i class="pi pi-desktop mr-2"></i>
+                                                        {{ 'only-online-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-shopping-bag mr-2"></i>
+                                                        1x {{ 'small-cabin-bag' | translate }}
+                                                    </p>
+                                                }
+                                                @if (category.name == 'STANDARD') {
+                                                    <p class="m-0">
+                                                        <i class="pi pi-desktop mr-2"></i>
+                                                        {{ 'online-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-home mr-2"></i>
+                                                        {{ 'on-site-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-shopping-bag mr-2"></i>
+                                                        1x {{ 'small-cabin-bag' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-briefcase mr-2"></i>
+                                                        1x {{ 'baggage' | translate }}
+                                                    </p>
+                                                }
+                                                @if (category.name == 'PREMIUM') {
+                                                    <p class="m-0">
+                                                        <i class="pi pi-desktop mr-2"></i>
+                                                        {{ 'online-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-home mr-2"></i>
+                                                        {{ 'on-site-check-in' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-shopping-bag mr-2"></i>
+                                                        1x {{ 'small-cabin-bag' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-briefcase mr-2"></i>
+                                                        2x {{ 'baggage' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-user-plus mr-2"></i>
+                                                        {{ 'priority-boarding' | translate }}
+                                                    </p>
+                                                    <p>
+                                                        <i class="pi pi-calendar-minus mr-2 mb-1"></i>
+                                                        {{ 'cancel-flight-info' | translate }}
+                                                    </p>
+                                                }
+                                            </div>
+                                            <p-divider></p-divider>
+                                            <div class="flex justify-content-between align-items-center">
+                                                <input
+                                                        type="radio"
+                                                        [name]="flight.id + category.id"
+                                                        [value]="{ flightId: flight.id, categoryId: category.id }"
+                                                        [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
+                                                        (change)="onReturnFlightSelection(flight.id, category.id)"
+                                                        style="transform: scale(1.8);"
+                                                />
+                                                <p class="font-bold"
+                                                   style="font-size: 1.5rem;">{{ flight.price + category.price | currency: 'EUR' }}</p>
+                                            </div>
+                                        </p-card>
+                                    </ng-template>
+                                </p-carousel>
+                            </div>
+                            <div class="w-full flex justify-content-center mt-5">
+                            </div>
+                        </p-accordionTab>
+                    </p-accordion>
+                </div>
+            </p-card>
+        }
+    </div>
+}
 <div class="continue">
-
+        <button
+                style="font-size: 1.1em;"
+                pButton
+                label="{{'continue' | translate }}"
+                [disabled]="isContinueButtonDisabled()"
+                (click)="submit()">
+        </button>
 </div>

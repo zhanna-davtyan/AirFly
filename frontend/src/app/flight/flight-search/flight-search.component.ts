@@ -174,6 +174,13 @@ export class FlightSearchComponent implements OnInit {
     localStorage.setItem("babies", this.formGroup.get('babies')?.value);
     localStorage.setItem("current_step", "1");
     localStorage.setItem("current_step_description", "outgoing-flight")
+
+    localStorage.removeItem("departure_flight_id");
+    localStorage.removeItem("departure_category_id");
+    localStorage.removeItem("return_flight_id");
+    localStorage.removeItem("return_category_id");
+    localStorage.removeItem("return_flight_time")
+    localStorage.removeItem("travel_insurance");
     if(this.router.url.includes('/select-flight')){
       window.location.reload()
     }
