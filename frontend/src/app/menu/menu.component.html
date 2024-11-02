@@ -2,8 +2,8 @@
   <div class="col-4">
     <img
       class="header-logo"
-      style="width: 120px; height: 100px"
-      src="assets/img/AirFly_Logo.png"
+      style="width: 80px; height: 80px"
+      src="assets/img/AirFly_Logo1.png"
       alt=""
     />
   </div>
@@ -38,7 +38,7 @@
       {{ item.label }}
     </li>
   </ul>
-  <div class="search border-top pt-4" style="color: black;">
+  <div class="search border-top" style="color: black;">
     <i class="pi pi-search"  (click)="op.toggle($event)"></i>
     <span style="font-size: 18px; margin-left: 10px;" class="fw-bold">{{ 'search' | translate }}</span>
     <p-overlayPanel #op>
