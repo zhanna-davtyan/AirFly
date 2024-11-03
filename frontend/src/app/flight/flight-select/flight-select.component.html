@@ -1,4 +1,4 @@
-<header class="flex justify-content-between align-items-center">
+<header class="flex justify-content-between align-items-center flight-select-header">
   <div>
     <img src="/assets/img/AirFlyLogo.png" style="width: 80px; height: 80px;" alt="t">
   </div>
@@ -7,7 +7,7 @@
       label="{{currentStep}}"
       styleClass="mr-2"
       [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
-    <p class="m-0 p-0 font-bold" style="font-size:1.2em;">
+    <p class="m-0 p-0 font-bold" style="font-size:1.2em">
       {{ currentStepDescription | translate }}
     </p>
   </div>
@@ -155,8 +155,17 @@
     }
   </div>
 }
-@if(currentStep === 2){
-  <div class="w-full flex flex-column align-items-center bg-gray-100 flight-select-holder">
+@if (currentStep === 2 && numberOfSteps === 5) {
+  <div class="w-full modify-flight">
+    <p-accordion>
+      <p-accordionTab header="{{'change-search' | translate }}">
+        <div class="w-full flex justify-content-center mt-5">
+          <app-flight-search></app-flight-search>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+  <div class="w-full flex flex-column align-items-center flight-select-holder">
     @for (flight of returnFlights; track returnFlights; let i = $index) {
       <p-card class="mt-5">
         <div class="flex w-full justify-content-between align-items-center">
@@ -282,12 +291,130 @@
     }
   </div>
 }
+@if (currentStep === 2 && numberOfSteps === 4 || currentStep === 3 && numberOfSteps === 5) {
+  <div class="passenger-info-holder w-full">
+    <form [formGroup]="formGroup">
+      <div formArrayName="passengers" class="passenger-info-card">
+        <div class="w-full flex justify-content-center mt-5"
+             *ngFor="let passenger of passengers.controls; let i = index"
+             [formGroupName]="i">
+          <p-card>
+            <h3 class="mt-0">{{ 'passenger' | translate }} {{ i + 1 }}:
+              <span>{{ passenger.get('type')?.value | translate }}</span></h3>
+            <div class="w-full mt-6">
+              <p-floatLabel>
+                <input class="w-full" id="firstname-{{i}}" type="text" pInputText formControlName="firstname"/>
+                <label for="firstname-{{i}}">{{"firstname" | translate }}</label>
+              </p-floatLabel>
+              <div style="min-height: 20px;">
+                <small *ngIf="passenger.get('firstname')?.invalid && passenger.get('firstname')?.touched"
+                       class="p-error ml-2">{{"firstname-required" | translate}}</small>
+              </div>
+            </div>
+
+            <div class="w-full mt-4">
+              <p-floatLabel class="w-full">
+                <input class="w-full" id="lastname-{{i}}" type="text" pInputText formControlName="lastname"/>
+                <label for="lastname-{{i}}"> {{"lastname" | translate }}</label>
+              </p-floatLabel>
+              <div style="min-height: 20px;">
+                <small *ngIf="passenger.get('lastname')?.invalid && passenger.get('lastname')?.touched"
+                       class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+              </div>
+            </div>
+
+            <div class="mt-4">
+              <p-floatLabel>
+                <p-calendar
+                  [maxDate]="maxDate"
+                  [style]="{ width: '100%'}"
+                  formControlName="dateOfBirth"
+                  dateFormat="dd.mm.yy"
+                  class="w-full"
+                  [touchUI]="true"
+                  id="dateOfBirth-{{i}}"
+                  [showButtonBar]="true"
+                  inputId="dateOfBirth-{{i}}"/>
+                <label for="dateOfBirth-{{i}}">{{ "date-of-birth" | translate }}</label>
+              </p-floatLabel>
+              <div style="min-height: 20px;">
+                <small *ngIf="passenger.get('dateOfBirth')?.invalid && passenger.get('dateOfBirth')?.touched"
+                       class="p-error ml-2">{{ "date-of-birth-required" | translate }}</small>
+                <small *ngIf="passenger.errors?.['notAdult'] && passenger.get('dateOfBirth')?.touched"
+                       class="p-error ml-2">{{ "date-of-birth-adults" | translate }}</small>
+                <small *ngIf="passenger.errors?.['notChild'] && passenger.get('dateOfBirth')?.touched"
+                       class="p-error ml-2">{{ "date-of-birth-children" | translate }}</small>
+                <small *ngIf="passenger.errors?.['notBaby'] && passenger.get('dateOfBirth')?.touched"
+                       class="p-error ml-2">{{ "date-of-birth-babies" | translate }}</small>
+              </div>
+            </div>
+          </p-card>
+        </div>
+      </div>
+    </form>
+  </div>
+}
+@if(currentStep === 3 && numberOfSteps === 4 || currentStep === 4 && numberOfSteps === 5){
+  <div class="travel-insurance-holder flex justify-content-center align-items-center mt-5 w-full">
+    <p-card>
+      <div class="flex justify-content-between">
+        <img style="width: 95px; height: auto;" src="/assets/img/LVM_Versicherung_2010_logo.svg.png" alt="">
+        <a class="text-color" href="https://www.lvm.de/versicherungen-und-finanzen/reiseversicherungen/reiseruecktrittsversicherung"><i style="font-size: 1.3em;" class="pi pi-info-circle"></i></a>
+      </div>
+      <div class="flex align-items-center mt-4">
+        <i class="pi pi-shield mr-4" style="font-size: 1.7em;"></i>
+        <div>
+          <h2 class="mb-1 mt-0">LVM {{"travel-insurance"|translate}}</h2>
+          <p class="m-0">{{"travel-insurance-slogan"|translate}}</p>
+        </div>
+      </div>
+      <div class="mt-5 insurance-info">
+        <div class="flex mt-3 align-items-center">
+          <i class="pi pi-check mr-3"></i>
+          <span>{{"travel-insurance-benefit-1"|translate}}</span>
+        </div>
+        <div class="flex mt-3 align-items-center">
+          <i class="pi pi-check mr-3"></i>
+          <span>{{"travel-insurance-benefit-2"|translate}}</span>
+        </div>
+        <div class="flex mt-3 align-items-center">
+          <i class="pi pi-check mr-3"></i>
+          <span>{{"travel-insurance-benefit-3"|translate}}</span>
+        </div>
+        <div class="flex mt-3 align-items-center">
+          <i class="pi pi-check mr-3"></i>
+          <span>{{"travel-insurance-benefit-4"|translate}}</span>
+        </div>
+        <div class="flex mt-3 align-items-center">
+          <i class="pi pi-check mr-3"></i>
+          <span>{{"travel-insurance-benefit-5"|translate}}</span>
+        </div>
+      </div>
+      <p style="font-size: 1.2em;" class="mt-6 mb-0"><span>{{ "total-price" | translate }}:</span><span class="ml-2" style="font-size: 1.3em; font-weight: bold;">50€</span></p>
+      <div class="mt-4">
+        <p-checkbox
+          [(ngModel)]="travelInsurance"
+          [binary]="true"
+          label="{{'book-travel-insurance' | translate }}"
+          inputId="binary"/>
+      </div>
+    </p-card>
+  </div>
+}
 <div class="continue">
   <button
-    style="font-size: 1.1em;"
+    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
     pButton
-    label="{{'continue' | translate }}"
+    (click)="goBack()"
+    [disabled]="currentStep === 1"
+  >
+    <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+  </button>
+  <button
+    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
+    pButton
     [disabled]="isContinueButtonDisabled()"
-    (click)="submit()">
+    (click)="goForward()">
+    <i style="font-size: 2rem" class="pi pi-angle-right"></i>
   </button>
 </div>

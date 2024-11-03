@@ -12,7 +12,8 @@
     "refresh-table": "Reload Table",
     "clear-sorting-and-filters": "Reset sorting and filters"
   },
-  "passengers": "Passenger",
+  "passengers": "Passengers",
+  "passenger": "Passenger",
   "informations": "Informations",
   "add-flight": "Add new flight",
   "flight-number": "Flight number",
@@ -65,6 +66,25 @@
   "priority-boarding": "Priority boarding",
   "cancel-flight-info": "Flight can be canceled up to 2 days in advance",
   "continue": "Continue",
+  "firstname": "Firstname",
+  "firstname-required": "Firstname is required",
+  "lastname": "Lastname",
+  "lastname-required": "Lastname is required",
+  "date-of-birth": "Date of birth",
+  "date-of-birth-required": "Date of birth is required",
+  "date-of-birth-adults": "Adults must be 12 years or older",
+  "date-of-birth-children": "Children must be between 2 and 11 years",
+  "date-of-birth-babies": "Babies must be between 0 and 23 months",
+  "travel-insurance": "Travel insurance",
+  "travel-insurance-slogan": "Travel protection for all flights and passengers in this booking",
+  "travel-insurance-benefit-1": "Trip Cancellation Insurance",
+  "travel-insurance-benefit-2": "Trip Interruption Insurance",
+  "travel-insurance-benefit-3": "Travel Health Insurance",
+  "travel-insurance-benefit-4": "Emergency Insurance",
+  "travel-insurance-benefit-5": "Baggage Insurance",
+  "total-price": "Total Price",
+  "book-travel-insurance": "Add LVM Travel Insurance"
+  "continue": "Continue",
   "recommended-destinations": "Recommended destinations",
   "book-tickets": "Book your tickets now!",
   "book-direct-flights": "Book direct flights and explore the world with ease and at low cost",
@@ -74,4 +94,3 @@
   "email": "E-Mail",
   "register": "Sign up"
 }
-

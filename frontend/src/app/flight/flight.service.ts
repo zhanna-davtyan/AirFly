@@ -4,8 +4,9 @@ import {Injectable} from "@angular/core";
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
-import {FlightSearch} from "./flight-search.model";
+import {OutwardFlightSearch} from "./outward-flight-search.model";
 import {FlightSearchWithDate} from "./flight-search-with-date.model";
+import {ReturnFlightSearch} from "./return-flight-search.model";
 
 @Injectable({providedIn: 'root'})
 export class FlightService extends AbstractCrudService<Flight> {
@@ -14,9 +15,15 @@ export class FlightService extends AbstractCrudService<Flight> {
     super(httpClient, "flights");
   }
 
-  getByFlightSearch(flightSearch: FlightSearch): Observable<Flight[]> {
+  getByOutwardFlightSearch(flightSearch: OutwardFlightSearch): Observable<Flight[]> {
     return this.httpClient
-      .post<Flight[]>(this.URL_FOR_TYPE + '/get-by-flight-search', flightSearch)
+      .post<Flight[]>(this.URL_FOR_TYPE + '/get-by-outward-flight-search', flightSearch)
+      .pipe(map((dtos: Flight[]) => dtos.map((json: any) => this.jsonToDto(json))));
+  }
+
+  getByReturnFlightSearch(flightSearch: ReturnFlightSearch): Observable<Flight[]> {
+    return this.httpClient
+      .post<Flight[]>(this.URL_FOR_TYPE + '/get-by-return-flight-search', flightSearch)
       .pipe(map((dtos: Flight[]) => dtos.map((json: any) => this.jsonToDto(json))));
   }
 

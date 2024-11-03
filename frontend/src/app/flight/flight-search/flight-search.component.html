@@ -61,6 +61,7 @@
         <p-floatLabel class="w-full">
           <p-calendar
             [style]="{ width: '100%'}"
+            (onSelect)="onOutwardFlightTimeSelect()"
             formControlName="outwardFlightTime"
             dateFormat="dd.mm.yy"
             class="w-full"
@@ -86,7 +87,7 @@
             [style]="{ width: '100%'}"
             class="w-full"
             formControlName="returnFlightTime"
-            [readonlyInput]="!formGroup.get('departureAirportId')?.valid || !formGroup.get('arrivalAirportId')?.valid || formGroup.get('adults')?.getRawValue() === 0 && formGroup.get('children')?.getRawValue() === 0"
+            [readonlyInput]="!formGroup.get('departureAirportId')?.valid || !formGroup.get('outwardFlightTime')?.valid || !formGroup.get('arrivalAirportId')?.valid || formGroup.get('adults')?.getRawValue() === 0 && formGroup.get('children')?.getRawValue() === 0"
             [minDate]="minDate"
             [maxDate]="maxDate"
             [todayButtonStyleClass]="'hide-today-button'"

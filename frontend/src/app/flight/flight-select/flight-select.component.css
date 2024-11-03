@@ -1,16 +1,3 @@
-::ng-deep .standard-background{
-  background: #3B82F6;
-  color: black;
-}
-::ng-deep .p-card .premium-background{
-  background: #891b55;
-  color: white;
-}
-::ng-deep .p-card .basic-background{
-  background: #dddddd;
-  color: black;
-}
-
 .category-holder .p-card{
   width: 90%;
   border: none;
@@ -28,7 +15,7 @@
   padding: 15px;
 }
 
-.p-accordion-tab-active .header-div{
+::ng-deep .p-accordion-tab-active .header-div{
   display: none;
 }
 
@@ -39,7 +26,7 @@
   bottom: 0;
   z-index: 999;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
 }
@@ -48,6 +35,32 @@
   width: 90%;
   height: 3.5em;
 }
-.flight-select-holder {
+
+.flight-select-holder, .passenger-info-holder {
   padding-bottom: 13vh;
+}
+
+::ng-deep .passenger-info-card p-card{
+  width: 90%;
+}
+
+::ng-deep .passenger-info-card p-card .p-card-content{
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+::ng-deep .travel-insurance-holder p-card{
+  width: 90%;
+}
+
+::ng-deep .travel-insurance-holder .p-card-content{
+  padding-top: 0;
+}
+
+::ng-deep .insurance-info .pi {
+  font-weight: bold;
+  color: #00875A;
+  background: rgba(0, 135, 90, 0.2);
+  padding: 5px;
+  border-radius: 100%;
 }

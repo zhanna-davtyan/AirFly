@@ -86,7 +86,7 @@ footer {
   margin-bottom: 3px;
   border-top: #836EEE solid;
   font-size: 14px;
-  color: white;
+  color: #dddddd;
 }
 
 .menu-icon {
@@ -115,15 +115,17 @@ footer {
 }
 
 .header-icons .account-icon path {
-  fill: white !important;
+  fill: #dddddd !important;
 }
 
 .header-icons svg path {
-  fill: white;
+  fill: #dddddd;
 }
 
 .main-page-design span, .main-page-tickets span{
-  font-weight: bold; font-size: 18px; color: white;
+  font-weight: bold;
+  font-size: 18px;
+  color: #dddddd;
 }
 
 .continue{
@@ -139,26 +141,30 @@ footer {
 }
 
 .flight-select-holder .header-div{
-  color: white;
+  color: #dddddd;
 }
 
 .flight-select-holder .p-accordion p-card .p-card-body{
   background: #131922;
 }
 
-.flight-select-holder .p-card .basic-background{
-  background: gray;
-  color: white;
-}
-
-.flight-select-holder .standard-background{
+.standard-background{
   background: #3B82F6;
-  color: white;
-}
-.flight-select-holder .p-card .premium-background{
-  background: #891b55;
-  color: white;
+  color: #dddddd;
 }
 
+.premium-background{
+  background: #891b55;
+  color: #dcdcdc;
+}
+
+.basic-background{
+  background: #dddddd;
+  color: black;
+}
+
+.flight-select-header{
+  color: #dddddd;
+}
 
 

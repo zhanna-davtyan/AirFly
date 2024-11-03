@@ -197,7 +197,7 @@ html {
 
 .modify-flight .p-accordion-content {
   position: absolute;
-  top: 179px;
+  top: 142px;
   width: 100%;
   z-index: 1;
 }
@@ -205,6 +205,10 @@ html {
 .modify-flight{
   box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
   z-index: 555;
+}
+
+.modify-flight .p-accordion-content{
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
 }
 
 .flight-select-holder .p-card{
@@ -221,12 +225,16 @@ html {
 
 .flight-select .p-icon-wrapper{
   padding:10px;
-  background: #3b82f6;
+  background: #8B5CF6;
   border-radius: 6px;
 }
 
 .p-tabview-panels{
   padding: 0;
+}
+
+input[type='radio'] {
+  accent-color: #8B5CF6;
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link{
