@@ -38,7 +38,7 @@
       {{ item.label }}
     </li>
   </ul>
-  <div class="search border-top" style="color: black;">
+  <div class="search border-top" style="color: black; font-weight: bold;">
     <i class="pi pi-search"  (click)="op.toggle($event)"></i>
     <span style="font-size: 18px; margin-left: 10px;" class="fw-bold">{{ 'search' | translate }}</span>
     <p-overlayPanel #op>
@@ -48,7 +48,7 @@
   <div class="language-icon pt-2" *ngIf="visibleSidebar">
     <i
       class="fw-bold pi pi-globe text-dark pt-3 pb-3"
-      style="margin-right: 10px; font-size: 24px;"
+      style="margin-right: 10px; font-size: 24px; color: black;"
       (click)="op.toggle($event)"
     ></i>
     <p-overlayPanel #op>

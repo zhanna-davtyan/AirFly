@@ -1,18 +1,37 @@
-<div class="body">
+<main>
   <div class="main-page-design">
-  <span class="me-3">
-    Direktflüge buchen
-    und die Welt einfach
-    und günstig entdecken</span>
-    <img src="assets/img/Planet.png" alt="" style="height: 180px; width: 180px;">
+    <h2>{{ 'book-direct-flights' | translate }}</h2>
+    <img src="assets/img/Planet.png" alt="Planet Erde" style="height: 180px; width: 180px;">
   </div>
   <div class="main-page-tickets">
-    <img src="assets/img/Ticket.png" alt="" style="height: 70px; width: 70px;">
-    <span class="ms-5">Buche deine Tickets jetzt!</span>
+    <img src="assets/img/Ticket.png" alt="Flugticket" style="height: 70px; width: 70px;">
+    <span class="ms-5">{{ 'book-tickets' | translate }}</span>
+  </div>
+
+  <div class="p-card-container">
+    <div style="width: 90%;">
+        <p-card>
+            <app-flight-search></app-flight-search>
+        </p-card>
+    </div>
   </div>
 
 
-  <p-card>
-    <app-flight-search></app-flight-search>
-  </p-card>
-</div>
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header">{{ 'recommended-destinations' | translate }}</div>
+      <p-carousel [value]="destinations" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
+        <ng-template let-destination pTemplate="item">
+          <div class="destination-item">
+            <img [src]="destination.image" [alt]="destination.name" class="destination-image" />
+            <div class="destination-details">
+              <div class="destination-name">{{ destination.name }}</div>
+              <div class="destination-price">ab {{ destination.price }} €</div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+
+</main>
