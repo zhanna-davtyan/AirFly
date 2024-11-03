@@ -67,5 +67,10 @@
   "continue": "Weiter",
   "recommended-destinations": "Empfohlene Reiseziele",
   "book-tickets": "Buche deine Tickets jetzt!",
-  "book-direct-flights": "Direktflüge buchen und die Welt einfach und günstig entdecken"
+  "book-direct-flights": "Direktflüge buchen und die Welt einfach und günstig entdecken",
+  "loginOrRegister": "Anmelden oder Registrieren",
+  "loginEmail": "E-Mail",
+  "login": "Anmelden",
+  "email": "E-Mail",
+  "register": "Registrieren"
 }

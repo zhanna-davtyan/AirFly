@@ -1,7 +1,7 @@
 <div>
   <div [ngClass]="{'blur-background': isSidebarVisible}">
     <app-menu *ngIf="shouldShowMenuAndFooter()"></app-menu>
-    <div class="content">
+    <div class="content" style="min-height: 370px;">
         <router-outlet></router-outlet>
     </div>
     <p-messages />

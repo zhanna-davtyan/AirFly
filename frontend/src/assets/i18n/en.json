@@ -67,6 +67,11 @@
   "continue": "Continue",
   "recommended-destinations": "Recommended destinations",
   "book-tickets": "Book your tickets now!",
-  "book-direct-flights": "Book direct flights and explore the world with ease and at low cost"
+  "book-direct-flights": "Book direct flights and explore the world with ease and at low cost",
+  "loginOrRegister": "Sign in or Sign up",
+  "loginEmail": "E-Mail",
+  "login": "Sign in",
+  "email": "E-Mail",
+  "register": "Sign up"
 }
 
