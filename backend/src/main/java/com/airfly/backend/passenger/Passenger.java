@@ -18,6 +18,9 @@ public class Passenger {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "type")
+    private String type;
+
     @Column(name = "first_name")
     private String firstname;
 

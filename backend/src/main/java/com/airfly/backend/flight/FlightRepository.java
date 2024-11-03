@@ -23,7 +23,7 @@ public interface FlightRepository extends JpaRepository<Flight, Long> {
         AND f.departureTime BETWEEN :startDate AND :endDate
         AND (f.airplane.capacity - f.bookedSeats) >= :numberOfSeats
     """)
-    List<Flight> findFlightByFlightSearch(
+    List<Flight> findByFlightSearch(
             @Param("departureAirportId") long departureAirportId,
             @Param("arrivalAirportId") long arrivalAirportId,
             @Param("startDate") Timestamp startDate,

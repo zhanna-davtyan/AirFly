@@ -61,14 +61,14 @@ public class FlightService {
     }
 
 
-    List<Flight> getFlightByFlightSearch(FlightSearch dto) {
+    List<Flight> getByOutwardFlightSearch(OutwardFlightSearch dto) {
         try {
             Timestamp startDate = new Timestamp(System.currentTimeMillis());
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(startDate.getTime());
             calendar.add(Calendar.DAY_OF_MONTH, 60);
             Timestamp endDate = new Timestamp(calendar.getTimeInMillis());
-            return flightRepository.findFlightByFlightSearch(
+            return flightRepository.findByFlightSearch(
                     dto.departureAirportId,
                     dto.arrivalAirportId,
                     startDate,
@@ -80,7 +80,30 @@ public class FlightService {
         }
     }
 
-    List<Flight> getFlightByFlightSearchWithDate(FlightSearchWithDate flightSearchWithDate) {
+    List<Flight> getByReturnFlightSearch(ReturnFlightSearch dto) {
+        try {
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(dto.getMinDepartureTime().getTime());
+            calendar.add(Calendar.DAY_OF_MONTH, 1);
+            Timestamp minDeparturePlusOneDay = new Timestamp(calendar.getTimeInMillis());
+
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTimeInMillis(dto.getMinDepartureTime().getTime());
+            calendar2.add(Calendar.DAY_OF_MONTH, 60);
+            Timestamp endDate = new Timestamp(calendar2.getTimeInMillis());
+            return flightRepository.findByFlightSearch(
+                    dto.departureAirportId,
+                    dto.arrivalAirportId,
+                    minDeparturePlusOneDay,
+                    endDate,
+                    dto.numberOfPassengers
+            );
+        } catch (Exception e) {
+            throw new EntityNotFoundException("Could not find flights", e);
+        }
+    }
+
+    List<Flight> getByFlightSearchWithDate(FlightSearchWithDate flightSearchWithDate) {
         try {
             Timestamp departureTime = flightSearchWithDate.getDepartureTime();
             Calendar calendar = Calendar.getInstance();
@@ -109,7 +132,7 @@ public class FlightService {
             calendar.set(Calendar.SECOND, 59);
             endDate = new Timestamp(calendar.getTimeInMillis());
 
-            return flightRepository.findFlightByFlightSearch(
+            return flightRepository.findByFlightSearch(
                     flightSearchWithDate.getDepartureAirportId(),
                     flightSearchWithDate.getArrivalAirportId(),
                     startDate,
