@@ -11,7 +11,6 @@ import java.util.NoSuchElementException;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api")
 public class AuthController {
 
     private final UserService userService;

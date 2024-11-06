@@ -41,5 +41,10 @@
   "confirm-edit": "Are you sure you want to edit?",
   "confirm-save": "Are you sure you want to save?",
   "confirm-cancel": "Are you sure you want to cancel?",
-  "unable-to-alter": "This flight has existing bookings, so it cannot be edited or deleted. Please contact your colleagues in the flight cancellation department."
+  "unable-to-alter": "This flight has existing bookings, so it cannot be edited or deleted. Please contact your colleagues in the flight cancellation department.",
+  "firstname": "Firstname",
+  "lastname": "Lastname",
+  "email": "Email",
+  "password": "Password",
+  "register": "Register"
 }
