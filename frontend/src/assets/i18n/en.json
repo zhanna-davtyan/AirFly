@@ -75,5 +75,7 @@
   "loginEmail": "E-Mail",
   "login": "Sign in",
   "email": "E-Mail",
-  "register": "Sign up"
+  "register": "Sign up",
+  "no-account": "Already have an account?",
+  "do-you-have-a-account": "Don't have an account yet?"
 }

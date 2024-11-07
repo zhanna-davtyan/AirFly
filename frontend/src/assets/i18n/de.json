@@ -75,5 +75,7 @@
   "loginEmail": "E-Mail",
   "login": "Anmelden",
   "email": "E-Mail",
-  "register": "Registrieren"
+  "register": "Registrieren",
+  "no-account": "Sie haben noch kein Konto",
+  "do-you-have-a-account": "Sie haben bereits ein Konto?"
 }

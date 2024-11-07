@@ -144,6 +144,6 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['']);
   }
   goToSignUpRegister() {
-    this.router.navigate(['app-signup-register']);
+    this.router.navigate(['login']);
   }
 }
