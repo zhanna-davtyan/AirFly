@@ -1,0 +1,164 @@
+@import "primeng/resources/themes/lara-dark-purple/theme.css";
+
+.p-inputnumber-input:disabled {
+  background-color: #1d2a43 !important;
+}
+
+.p-inputtext:read-only {
+  background-color: #1e2943 !important;
+  pointer-events: none;
+}
+
+.my-readonly .p-calendar .p-inputtext {
+  background-color: #1e2943 !important;
+}
+
+.my-readonly .p-multiselect.p-component.p-inputwrapper {
+  background-color: #1e2943 !important;
+  pointer-events: none;
+}
+
+.my-readonly .p-checkbox-box:read-only {
+  background-color: #1e2943 !important;
+}
+
+/* Not highlighted, not read-only */
+.p-checkbox-box:not(:read-only) {
+  background-color: #111827 !important;
+}
+
+.my-readonly .p-radiobutton .p-radiobutton-box {
+  background-color: #1e2943 !important;
+
+}
+
+/*Consider the rounded corners on the right*/
+.my-readonly .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled {
+  background-color: #1e2943 !important;
+  pointer-events: none;
+}
+
+/*Readonly style for dropdown input texts*/
+.my-readonly .p-dropdown-label.p-inputtext:read-only {
+  background-color: #1e2943 !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  pointer-events: none;
+}
+
+/*Readonly style for dropdown buttons*/
+.my-readonly .p-dropdown-trigger:read-only {
+  background-color: #1e2943 !important;
+  pointer-events: none;
+}
+
+/*Non-readonly style for dropdown input texts*/
+.p-dropdown-label.p-inputtext {
+  background-color: #111827 !important;
+}
+
+.passenger-select{
+  .p-inputtext:disabled.white-background{
+    background: #111827 !important;
+  }
+}
+
+.passenger-select{
+  .p-inputtext:disabled{
+    background-color: #1e2943 !important;
+    opacity: 1;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #120F2B;
+}
+
+footer {
+  border-color: #836EEE !important;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  border-top: #836EEE solid;
+  font-size: 14px;
+  color: white;
+}
+
+.menu-icon {
+  font-size: 200px;
+  cursor: pointer;
+  color: #ffffff;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.custom-sidebar {
+  width: 280px;
+  background-color: #473e80;
+  color: #733333;
+  padding: 20px;
+}
+
+.menu-list li {
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #6d4d4d;
+}
+
+.header-icons .account-icon path {
+  fill: white !important;
+}
+
+.header-icons svg path {
+  fill: white;
+}
+
+.main-page-design span, .main-page-tickets span{
+  font-weight: bold; font-size: 18px; color: white;
+}
+
+.continue{
+  background: #1f2937;
+}
+
+.flight-select-holder .p-accordion-content, .flight-select-holder .p-accordion .p-accordion-header .p-accordion-header-link {
+  background: #1f2937;
+}
+
+.flight-select-holder .p-accordion .p-accordion-header:not(.p-disabled) .p-accordion-header-link {
+  background: #1f2937;
+}
+
+.flight-select-holder .header-div{
+  color: white;
+}
+
+.flight-select-holder .p-accordion p-card .p-card-body{
+  background: #131922;
+}
+
+.flight-select-holder .p-card .basic-background{
+  background: gray;
+  color: white;
+}
+
+.flight-select-holder .standard-background{
+  background: #3B82F6;
+  color: white;
+}
+.flight-select-holder .p-card .premium-background{
+  background: #891b55;
+  color: white;
+}
+
+
+

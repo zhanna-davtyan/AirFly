@@ -1,0 +1,7 @@
+.passenger-select{
+  cursor: pointer;
+}
+
+::ng-deep td .p-disabled{
+  opacity: 0.1;
+}

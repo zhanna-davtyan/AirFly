@@ -1,8 +1,17 @@
-<p-messages />
-<app-header></app-header>
-
-<p-button label="Admin" routerLink="/all-flights"></p-button>
-<p-button label="Register" routerLink="/register"></p-button>
-<p-button label="Login" routerLink="/login"></p-button>
-
-<router-outlet></router-outlet>
+<div>
+  <div [ngClass]="{ 'blur-background': isSidebarVisible }">
+    <app-menu *ngIf="shouldShowMenuAndFooter()"></app-menu>
+    <div class="content" style="min-height: 370px">
+      <router-outlet></router-outlet>
+    </div>
+    <p-messages />
+    <p-button
+      label="Admin button for testing"
+      routerLink="/all-flights"
+    ></p-button>
+    <p-button label="Home button for testing" routerLink="/"></p-button>
+    <p-button label="Register" routerLink="/register"></p-button>
+    <p-button label="Login" routerLink="/login"></p-button>
+    <app-footer *ngIf="shouldShowMenuAndFooter()"></app-footer>
+  </div>
+</div>

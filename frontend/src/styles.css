@@ -1,4 +1,3 @@
-@import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import "primeicons/primeicons.css";
 @import 'primeflex/primeflex.css';
@@ -14,18 +13,8 @@ filtericon {
   margin-top: 5px;
 }
 
-.p-inputnumber-input:disabled {
-  background-color: #f0f1f2 !important;
-  opacity: 1;
-}
-
 .p-disabled {
   opacity: 0.8 !important;
-}
-
-.p-inputnumber-input {
-  width: 100px !important;
-  height: 37.5px;
 }
 
 html {
@@ -36,24 +25,12 @@ html {
   font-size: 13px;
 }
 
-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  min-width: 100vw;
-}
-
 /*Readonly style for all input texts*/
 
-.p-inputtext:read-only {
-  background-color: #f0f1f2;
-  pointer-events: none;
-}
-
 .my-readonly .p-button {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
-  border: 1px solid #3f51b5;
+  border: 1px solid #8B5CF6;
 }
 
 .my-readonly button{
@@ -61,24 +38,20 @@ body {
 }
 
 .my-readonly .p-autocomplete-dropdown {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
-  border: 1px solid #3f51b5;
+  border: 1px solid #8B5CF6;
   cursor: default !important;
   pointer-events: none;
 }
 
-.my-readonly .p-calendar .p-inputtext {
-  background-color: #f0f1f2;
-}
-
 .my-readonly .p-datepicker-trigger {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
 }
 
 .my-readonly .p-inputnumber-button {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
   border: none;
   pointer-events: none;
@@ -88,67 +61,24 @@ body {
   pointer-events: none;
 }
 
-.my-readonly .p-multiselect.p-component.p-inputwrapper {
-  background-color: #f0f1f2 !important;
-  pointer-events: none;
-}
-
-.my-readonly .p-checkbox-box:read-only {
-  background-color: #f0f1f2 !important;
-}
-
-/* Not highlighted, not read-only */
-.p-checkbox-box:not(:read-only) {
-  background-color: white !important;
-}
-
 /* Highlighted, read-only */
 .my-readonly .p-checkbox-box.p-highlight:read-only {
-  background-color: #3f51b5 !important;
+  background-color: #8B5CF6 !important;
   opacity: 0.6 !important;
-  border: 1px solid #3f51b5;
+  border: 1px solid #8B5CF6;
   pointer-events: none;
 }
 
 /* Highlighted, not read-only */
 .p-checkbox-box.p-highlight:not(:read-only) {
-  background-color: #3b82f6 !important;
+  background-color: #8B5CF6 !important;
   border: none;
 }
 
-.my-readonly .p-radiobutton .p-radiobutton-box {
-  background: #f0f1f2;
-}
-
 .my-readonly .p-radiobutton .p-radiobutton-box.p-highlight {
-  border-color: #3f51b5;
-  background: #3f51b5;
+  border-color: #8B5CF6;
+  background: #8B5CF6;
   opacity: 0.6 !important;
-}
-
-/*Consider the rounded corners on the right*/
-.my-readonly .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled {
-  background-color: #f0f1f2 !important;
-  pointer-events: none;
-}
-
-/*Readonly style for dropdown input texts*/
-.my-readonly .p-dropdown-label.p-inputtext:read-only {
-  background-color: #f0f1f2 !important;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  pointer-events: none;
-}
-
-/*Readonly style for dropdown buttons*/
-.my-readonly .p-dropdown-trigger:read-only {
-  background-color: #f0f1f2 !important;
-  pointer-events: none;
-}
-
-/*Non-readonly style for dropdown input texts*/
-.p-dropdown-label.p-inputtext {
-  background-color: white !important;
 }
 
 .p-fieldset .p-fieldset-legend {
@@ -179,7 +109,6 @@ body {
   border-radius: 100%;
   font-size: 1.1em;
 }
-
 .close-icon:hover {
   background-color: RGB(230, 231, 250, 0.5);
 }
@@ -200,9 +129,117 @@ body {
   color: #ff5757;
 }
 
-@media (max-width: 400px) {
-  .p-dropdown {
-    max-width: 290px;
-  }
-
+.p-inputnumber-buttons-horizontal .p-inputnumber-input {
+  text-align: center;
+  width: 50px;
 }
+
+@media (max-width: 450px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 270px;
+  }
+}
+
+@media (max-width: 370px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 350px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 315px) {
+  .search-flight-card .p-dropdown, .search-flight-card .p-inputtext {
+    max-width: 200px;
+  }
+}
+
+.p-datepicker-calendar td {
+  font-weight: bold;
+}
+
+.p-datepicker-calendar td .p-disabled{
+  opacity: 0.3!important;
+  font-weight: normal;
+}
+
+.hide-today-button {
+  display: none;
+}
+
+.p-tabview .p-tabview-nav li {
+  padding-bottom: 2px;
+  margin-left:1px;
+  margin-right: 1px;
+  flex: 1;
+  pointer-events: none;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link{
+  padding: 0;
+  margin: 0;
+  border-radius: 0;
+}
+
+.p-tabview .p-tabview-nav {
+  border: none;
+}
+
+.modify-flight .p-accordion-content {
+  position: absolute;
+  top: 179px;
+  width: 100%;
+  z-index: 1;
+}
+
+.modify-flight{
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
+  z-index: 555;
+}
+
+.flight-select-holder .p-card{
+  width: 90vw;
+}
+
+.category-holder .p-card{
+  width: 95%;
+}
+
+.flight-select .p-accordion .p-accordion-header .p-accordion-header-link{
+  padding:0;
+}
+
+.flight-select .p-icon-wrapper{
+  padding:10px;
+  background: #3b82f6;
+  border-radius: 6px;
+}
+
+.p-tabview-panels{
+  padding: 0;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link{
+  border-top: none;
+}
+
+.p-carousel-container button{
+  display: none;
+}
+
+.category-holder .p-card-header{
+  font-size: 1.3em;
+  font-weight: bold;
+  border-radius: 7px 7px 0 0;
+}
+

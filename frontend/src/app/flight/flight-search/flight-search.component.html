@@ -1,0 +1,166 @@
+  <form (ngSubmit)="submit()">
+    <div [formGroup]="formGroup" class="search-flight-card" id="flight-search-section">
+      <div class="flex flex-row align-items-center w-full">
+        <div class="mx-2 flight-search-custom-icon">
+          <i class="fa-solid fa-plane-departure" style="width: 16px; height: 16px;"></i>
+        </div>
+        <p-floatLabel class="w-full">
+          <p-dropdown
+            [style]="{ width: '100%' }"
+            formControlName="departureAirportId"
+            [options]="filteredDepartureOptions"
+            [showClear]="true"
+            (onClear)="onAirportClear()"
+            id="departure-airport"
+            inputId="departure-airport"/>
+          <label for="departure-airport">{{ "departure-airport" | translate }}</label>
+        </p-floatLabel>
+      </div>
+
+
+      <div class="flex flex-row align-items-center w-full mt-6">
+        <div class="mx-2 flight-search-custom-icon">
+          <i class="fa-solid fa-plane-arrival" style="width: 16px; height: 16px;"></i>
+        </div>
+        <p-floatLabel class="w-full">
+          <p-dropdown
+            [style]="{ width: '100%' }"
+            formControlName="arrivalAirportId"
+            [options]="filteredArrivalOptions"
+            (onClear)="onAirportClear()"
+            [showClear]="true"
+            id="arrival-airport"
+            inputId="arrival-airport"/>
+          <label for="arrival-airport">{{ "arrival-airport" | translate }}</label>
+        </p-floatLabel>
+      </div>
+      <div class="flex flex-row align-items-center w-full mt-6">
+        <div class="mx-2">
+          <i style="width: 16px; height: 16px;" class="fa-solid fa-user"></i>
+        </div>
+        <div class="w-full passenger-select" (click)="checkFieldsAndShowPassengers()">
+          <p-floatLabel class="w-full">
+            <input
+              type="text"
+              pInputText
+              id="passengers"
+              disabled
+              [value]="getPassengerInfo()"
+              [ngClass]="{'white-background': formGroup.get('departureAirportId')?.valid && formGroup.get('arrivalAirportId')?.valid}"
+              class="w-full"
+            >
+            <label for="passengers">{{ "passengers" | translate }}</label>
+          </p-floatLabel>
+        </div>
+      </div>
+
+      <div class="flex flex-row align-items-center w-full mt-6">
+        <div class="mx-2">
+          <i style="width: 16px; height: 16px;" class="fa-regular fa-calendar"></i>
+        </div>
+        <p-floatLabel class="w-full">
+          <p-calendar
+            [style]="{ width: '100%'}"
+            formControlName="outwardFlightTime"
+            dateFormat="dd.mm.yy"
+            class="w-full"
+            [readonlyInput]="!formGroup.get('departureAirportId')?.valid || !formGroup.get('arrivalAirportId')?.valid || formGroup.get('adults')?.getRawValue() === 0 && formGroup.get('children')?.getRawValue() === 0"
+            [minDate]="minDate"
+            [todayButtonStyleClass]="'hide-today-button'"
+            [maxDate]="maxDate"
+            [touchUI]="true"
+            [disabledDates]="invalidOutwardFlightDateOptions"
+            id="outgoing-flight"
+            [showButtonBar]="true"
+            inputId="doutgoing-flight"/>
+          <label for="outgoing-flight">{{ "outgoing-flight" | translate }}</label>
+        </p-floatLabel>
+      </div>
+
+      <div class="flex flex-row align-items-center w-full mt-6">
+        <div class="mx-2">
+          <i style="width: 16px; height: 16px;" class="fa-solid fa-plus"></i>
+        </div>
+        <p-floatLabel class="w-full">
+          <p-calendar
+            [style]="{ width: '100%'}"
+            class="w-full"
+            formControlName="returnFlightTime"
+            [readonlyInput]="!formGroup.get('departureAirportId')?.valid || !formGroup.get('arrivalAirportId')?.valid || formGroup.get('adults')?.getRawValue() === 0 && formGroup.get('children')?.getRawValue() === 0"
+            [minDate]="minDate"
+            [maxDate]="maxDate"
+            [todayButtonStyleClass]="'hide-today-button'"
+            [touchUI]="true"
+            [disabledDates]="invalidReturnFlightDateOptions"
+            id="return-flight"
+            [showButtonBar]="true"
+            dateFormat="dd.mm.yy"
+            inputId="return-flight"/>
+          <label for="return-flight">{{ "return-flight" | translate }}</label>
+        </p-floatLabel>
+      </div>
+      <button
+        class="mt-6"
+        [disabled]="formGroup.invalid"
+        label="Search"
+        pButton>
+      </button>
+    </div>
+
+  </form>
+
+<p-sidebar styleClass="h-auto" (onHide)="onPassengerHide()" [(visible)]="showPassengers" position="bottom">
+  <ng-template pTemplate="header">
+    <h2 class="w-full text-center">{{ 'passengers'|translate }}</h2>
+  </ng-template>
+  <div [formGroup]="formGroup">
+    <div class="flex justify-content-between mt-6">
+      <div>
+        <h3 class="m-0 p-0">Erwachsene</h3>
+        <p class="active:text-gray-50 m-0 p-0 mt-1">Ab 12 Jahren</p>
+      </div>
+      <p-inputNumber
+        [showButtons]="true"
+        formControlName="adults"
+        buttonLayout="horizontal"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+        [min]="0"
+        (onInput)="onPassengerClick()"
+      />
+    </div>
+    <div class="flex justify-content-between mt-8">
+      <div>
+        <h3 class="m-0 p-0">Kinder</h3>
+        <p class="active:text-gray-50 m-0 p-0 mt-1">2 bis 11 Jahre</p>
+      </div>
+      <p-inputNumber
+        [showButtons]="true"
+        formControlName="children"
+        buttonLayout="horizontal"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+        [min]="0"
+        (onInput)="onPassengerClick()"
+      />
+    </div>
+    <div class="flex justify-content-between mt-8">
+      <div>
+        <h3 class="m-0 p-0">Kleinkinder</h3>
+        <p class="active:text-gray-50 m-0 p-0 mt-1">0 bis 23 Monate</p>
+      </div>
+      <p-inputNumber
+        [showButtons]="true"
+        formControlName="babies"
+        buttonLayout="horizontal"
+        incrementButtonIcon="pi pi-plus"
+        decrementButtonIcon="pi pi-minus"
+        (onInput)="onPassengerClick()"
+        [max]="this.formGroup.get('adults')?.getRawValue()"
+      />
+    </div>
+    <p class="mt-4">
+      Die Anzahl der mitreisenden Kleinkinder darf die der Erwachsenen nicht überschreiten.
+    </p>
+  </div>
+</p-sidebar>

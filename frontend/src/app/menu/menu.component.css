@@ -1,0 +1,81 @@
+.sidebar-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+}
+.header-class .erste-close-icon {
+  display: none;
+}
+
+.menu-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+}
+
+.p-sidebar .p-sidebar-header + .p-sidebar-content {
+  padding-top: 0;
+  margin-top: -40px;
+}
+
+.menu-list li {
+  color: black !important;
+}
+
+.menu-list li:hover {
+  background-color: #5c5cff;
+  border-radius: 4px;
+}
+
+.language-section {
+  display: flex;
+  align-items: center;
+  padding-top: 10px;
+  border-top: 1px solid #a7636350;
+}
+
+.header-icons {
+  display: flex;
+}
+
+.custom-sidebar {
+  background-color: unset;
+}
+
+.header-icons .profile-icon svg {
+  width: 35px;
+  height: 35px;
+}
+
+.border-color-purpel {
+  border-bottom: 1px solid #8080d7 !important;
+}
+
+.ng-star-inserted .pi {
+  font-size: 24px;
+}
+
+.p-dropdown-items-wrapper {
+  width: 100px !important;
+}
+
+.p-dropdown-panel .p-dropdown-items {
+  padding-left: 0px !important;
+}
+
+.header-class {
+  display: flex;
+}
+
+.header-icons {
+  align-items: center;
+  display: flex;
+  margin-right: 20px;
+}
+.profile-icon {
+  margin-right: 15px;
+}
+
+.header-logo {
+  margin-top: 10px;
+}

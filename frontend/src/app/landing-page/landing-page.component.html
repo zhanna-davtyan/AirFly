@@ -1,0 +1,39 @@
+<main>
+  <div class="main-page-design">
+    <h2>{{ 'book-direct-flights' | translate }}</h2>
+    <img src="assets/img/Planet.png" alt="Planet Erde" style="height: 180px; width: 180px;">
+  </div>
+  <div class="main-page-tickets">
+    <img src="assets/img/Ticket.png" alt="Flugticket" style="height: 70px; width: 70px;">
+    <span class="ms-5">{{ 'book-tickets' | translate }}</span>
+  </div>
+
+  <div class="p-card-container">
+    <div style="width: 90%;">
+        <p-card>
+            <app-flight-search></app-flight-search>
+        </p-card>
+    </div>
+  </div>
+
+
+  <div class="card-container">
+    <div class="card">
+      <div class="card-header">{{ 'recommended-destinations' | translate }}</div>
+      <div class="carousel">
+      <p-carousel [value]="destinations" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
+        <ng-template let-destination pTemplate="item">
+          <div class="destination-item">
+            <img [src]="destination.image" [alt]="destination.name" class="destination-image" />
+            <div class="destination-details">
+              <div class="destination-name">{{ destination.name }}</div>
+              <div class="destination-price">ab {{ destination.price }} €</div>
+            </div>
+          </div>
+        </ng-template>
+      </p-carousel>
+    </div>
+    </div>
+  </div>
+
+</main>

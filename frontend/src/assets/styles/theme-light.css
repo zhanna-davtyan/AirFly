@@ -1,0 +1,162 @@
+@import "primeng/resources/themes/lara-light-purple/theme.css";
+
+.p-inputnumber-input:disabled {
+  background-color: #f0f1f2 !important;
+  opacity: 1;
+}
+
+.p-inputtext:read-only {
+  background-color: #f0f1f2;
+  pointer-events: none;
+}
+
+.my-readonly .p-calendar .p-inputtext {
+  background-color: #f0f1f2;
+}
+
+.my-readonly .p-multiselect.p-component.p-inputwrapper {
+  background-color: #f0f1f2 !important;
+  pointer-events: none;
+}
+
+.my-readonly .p-checkbox-box:read-only {
+  background-color: #f0f1f2 !important;
+}
+
+/* Not highlighted, not read-only */
+.p-checkbox-box:not(:read-only) {
+  background-color: white !important;
+}
+
+.my-readonly .p-radiobutton .p-radiobutton-box {
+  background: #f0f1f2;
+}
+
+/*Consider the rounded corners on the right*/
+.my-readonly .p-dropdown.p-component.p-inputwrapper.p-inputwrapper-filled {
+  background-color: #f0f1f2 !important;
+  pointer-events: none;
+}
+
+/*Readonly style for dropdown input texts*/
+.my-readonly .p-dropdown-label.p-inputtext:read-only {
+  background-color: #f0f1f2 !important;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  pointer-events: none;
+}
+
+/*Readonly style for dropdown buttons*/
+.my-readonly .p-dropdown-trigger:read-only {
+  background-color: #f0f1f2 !important;
+  pointer-events: none;
+}
+
+/*Non-readonly style for dropdown input texts*/
+.p-dropdown-label.p-inputtext {
+  background-color: white !important;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background: #ffffff;
+  color: #8B5CF6;
+  border-bottom: 3px solid lightgray; /* Specify solid border */
+}
+
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #ffffff;
+  color: #8B5CF6;
+  border-bottom: 3px solid #8B5CF6;
+}
+
+.flight-select .p-icon-wrapper *{
+  width:20px;
+  height:20px;
+  color: white;
+}
+
+.flight-time .p-divider.p-divider-horizontal::before {
+  border-top: 2px lightgray solid;
+}
+
+.category-holder .p-card-body{
+  background: #f6f6f6;
+  border-radius: 0 0 7px 7px;
+}
+
+.passenger-select{
+  .p-inputtext:disabled.white-background{
+    background: white;
+  }
+}
+
+.passenger-select{
+  .p-inputtext:disabled{
+    background: #f0f1f2;
+    opacity: 1;
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-color: #f8f8f8;
+}
+
+footer {
+  border-color: #836EEE !important;
+  padding: 5px;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 3px;
+  border-top: #836EEE solid;
+  font-size: 14px;
+  color: black;
+}
+
+.menu-icon {
+  font-size: 200px;
+  cursor: pointer;
+  color: black;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.custom-sidebar {
+  width: 280px;
+  background-color: #473e80;
+  color: #733333;
+  padding: 20px;
+}
+
+.menu-list li {
+  padding: 15px 0;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #6d4d4d;
+}
+
+.header-icons .account-icon path {
+  fill: black !important;
+}
+
+.header-icons svg path {
+  fill: black;
+}
+
+.main-page-design span, .main-page-tickets span{
+  font-weight: bold; font-size: 18px; color: black;
+}
+
+.continue{
+  background: white;
+}
+
+.flight-select-holder .header-div{
+  color: black;
+}
