@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
-import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
+import {Router, RouterModule} from '@angular/router';
 import { MenuSidebarService } from './menu-sidebar.service';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
@@ -16,6 +15,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ThemeService } from '../common/service/theme.service';
+import {DividerModule} from "primeng/divider";
 
 @Component({
   selector: 'app-menu',
@@ -33,6 +33,7 @@ import { ThemeService } from '../common/service/theme.service';
     InputSwitchModule,
     ToggleButtonModule,
     ToolbarModule,
+    DividerModule,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
@@ -45,9 +46,11 @@ export class MenuComponent implements OnInit {
   theme: string | null = localStorage.getItem('theme');
   darkTheme!: boolean;
 
+
   constructor(
     private menuSideBarService: MenuSidebarService,
     private themeService: ThemeService,
+    private translateService: TranslateService,
     private router: Router
   ) {}
 
@@ -71,24 +74,10 @@ export class MenuComponent implements OnInit {
     this.darkTheme = !this.theme || this.theme === 'theme-dark';
     this.translateService.use(this.selectedLanguage);
     this.updateTranslations();
-    this.updateMenu();
   }
 
   private readonly availableLanguages = ['de', 'en'];
-  translateService = inject(TranslateService);
   items: any[] = [];
-
-  private updateMenu() {
-    this.translateService
-      .get(['book', 'my-trip', 'checkIn'])
-      .subscribe((translations) => {
-        this.items = [
-          { label: translations['book'], id: 'flight-search-section' },
-          { label: translations['my-trip'], id: 'my-trip' },
-          { label: translations['checkIn'], id: 'checkIn' },
-        ];
-      });
-  }
 
   protected onChangeLanguage(event: any) {
     const newLanguage = event.value;
@@ -96,7 +85,6 @@ export class MenuComponent implements OnInit {
 
     this.translateService.use(newLanguage).subscribe(() => {
       this.updateTranslations();
-      this.updateMenu();
     });
   }
 
@@ -131,19 +119,10 @@ export class MenuComponent implements OnInit {
       this.darkTheme = false;
     }
   }
-  navigateAndCloseSidebar(elementId: string) {
-    this.visibleSidebar = false;
-    this.menuSideBarService.toggleSidebar();
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+
+  goToBookNewFlight() {
+    this.toggleSidebar();
+    this.router.navigate(['search-flight']);
   }
 
-  goToLandingPage() {
-    this.router.navigate(['']);
-  }
-  goToSignUpRegister() {
-    this.router.navigate(['app-signup-register']);
-  }
 }

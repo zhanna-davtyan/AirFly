@@ -55,7 +55,7 @@
   "change-search": "Change search",
   "flight-from": "Flight from",
   "book": "Book",
-  "my-trip": "My Trip",
+  "my-trips": "My Trips",
   "checkIn": "Check-in",
   "search": "Search",
   "small-cabin-bag": "Small cabin bag",
@@ -90,7 +90,7 @@
   "loginEmail": "E-Mail",
   "login": "Sign in",
   "email": "E-Mail",
-  "register": "Sign up"
+  "register": "Sign up",
   "book-travel-insurance": "Add LVM Travel Insurance",
   "checkout": "Checkout",
   "postcode": "Postcode",
@@ -102,5 +102,10 @@
   "housenumber": "Housenumber",
   "housenumber-required": "Housenumber is required",
   "pay-now": "Pay now",
-  "billing-address": "Billing address"
+  "billing-address": "Billing address",
+  "about-us": "About us",
+  "terms-of-use": "Terms of use",
+  "imprint": "Imprint",
+  "privacy-policy": "Privacy policy",
+  "contact": "Contact"
 }

@@ -1,5 +1,12 @@
 import {ApplicationConfig, importProvidersFrom, isDevMode} from '@angular/core';
-import {provideRouter} from '@angular/router';
+import {
+  ExtraOptions,
+  provideRouter,
+  RouterFeature,
+  RouterFeatures,
+  RouterModule,
+  withDisabledInitialNavigation, withInMemoryScrolling
+} from '@angular/router';
 
 import {routes} from './app.routes';
 import { provideAnimations} from "@angular/platform-browser/animations";
@@ -23,9 +30,12 @@ export const provideTranslation = () => ({
   },
 });
 
+
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideRouter(routes),
+    provideRouter(routes, withInMemoryScrolling({
+      scrollPositionRestoration: 'disabled'
+    })),
     provideAnimations(),
     provideHttpClient(),
     MessageService,

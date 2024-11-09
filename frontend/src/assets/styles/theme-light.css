@@ -105,53 +105,7 @@ body {
   background-color: #f8f8f8;
 }
 
-footer {
-  border-color: #836EEE !important;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
-  border-top: #836EEE solid;
-  font-size: 14px;
-  color: #303030;
-}
-
-.menu-icon {
-  font-size: 200px;
-  cursor: pointer;
-  color: #303030;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.custom-sidebar {
-  width: 280px;
-  background-color: #473e80;
-  color: #733333;
-  padding: 20px;
-}
-
-.menu-list li {
-  padding: 15px 0;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: #6d4d4d;
-}
-
-.header-icons .account-icon path {
-  fill: #303030 !important;
-}
-
-.header-icons svg path {
-  fill: #303030;
-}
-
-.main-page-design span, .main-page-tickets span{
-  font-weight: bold;
-  font-size: 18px;
+h2, i, h3{
   color: #303030;
 }
 

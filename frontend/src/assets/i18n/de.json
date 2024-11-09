@@ -55,7 +55,7 @@
   "change-search": "Suche ändern",
   "flight-from": "Flug ab",
   "book": "Buchen",
-  "my-trip": "Meine Reise",
+  "my-trips": "Meine Reisen",
   "checkIn": "Check-in",
   "search": "Suchen",
   "small-cabin-bag": "Handgepäckstück",
@@ -92,15 +92,20 @@
   "housenumber": "Hausnummer",
   "housenumber-required": "Hausnummer ist ein Pflichtfeld",
   "pay-now": "Jetzt bezahlen",
-  "billing-address": "Rechnungsadresse"
-  "book-travel-insurance": "LVM Reiseversicherung dazu buchen"
+  "billing-address": "Rechnungsadresse",
+  "book-travel-insurance": "LVM Reiseversicherung dazu buchen",
   "continue": "Weiter",
   "recommended-destinations": "Empfohlene Reiseziele",
-  "book-tickets": "Buche deine Tickets jetzt!",
+  "book-tickets": "Buche jetzt deine Tickets!",
   "book-direct-flights": "Direktflüge buchen und die Welt einfach und günstig entdecken",
   "loginOrRegister": "Anmelden oder Registrieren",
   "loginEmail": "E-Mail",
   "login": "Anmelden",
   "email": "E-Mail",
-  "register": "Registrieren"
+  "register": "Registrieren",
+  "about-us": "Über uns",
+  "terms-of-use": "AGB",
+  "imprint": "Impressum",
+  "privacy-policy": "Datenschutz",
+  "contact": "Kontakt"
 }

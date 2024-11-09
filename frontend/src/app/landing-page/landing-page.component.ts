@@ -17,7 +17,9 @@ import {ButtonDirective} from "primeng/button";
     AvatarModule,
     OverlayPanelModule,
     RouterLink,
-    ButtonDirective
+    ButtonDirective,
+    TranslateModule,
+    CarouselModule
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.css'

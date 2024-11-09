@@ -1,0 +1,9 @@
+.p-card-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+::ng-deep .p-card .p-card-content {
+  padding-top: 0;
+}

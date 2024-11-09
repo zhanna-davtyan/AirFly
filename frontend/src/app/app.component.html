@@ -1,12 +1,8 @@
-<div>
-  <div [ngClass]="{'blur-background': isSidebarVisible}">
-    <app-menu *ngIf="shouldShowMenuAndFooter()"></app-menu>
-    <div class="content" style="min-height: 370px;">
-        <router-outlet></router-outlet>
-    </div>
-    <p-messages />
-    <p-button label="Admin button for testing" routerLink="/all-flights"></p-button>
-    <p-button label="Home button for testing" routerLink="/"></p-button>
-    <app-footer *ngIf="shouldShowMenuAndFooter()"></app-footer>
+<p-messages/>
+<div class="container" [ngClass]="{'blur-background': isSidebarVisible}">
+  <app-menu *ngIf="shouldShowMenuAndFooter()"></app-menu>
+  <div class="content mt-5">
+    <router-outlet></router-outlet>
   </div>
+  <app-footer *ngIf="shouldShowMenuAndFooter()"></app-footer>
 </div>

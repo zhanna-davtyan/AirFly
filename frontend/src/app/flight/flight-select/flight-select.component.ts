@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, OnInit} from '@angular/core';
 import {toNumber} from "lodash";
-import {Router} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {TranslateModule} from "@ngx-translate/core";
 import {AvatarModule} from "primeng/avatar";
 import {TabViewModule} from "primeng/tabview";
@@ -62,7 +62,8 @@ import {BookingService} from "../../booking/booking.service";
     FormsModule,
     SidebarModule,
     FieldsetModule,
-    InputNumberModule
+    InputNumberModule,
+    RouterLink
   ],
   templateUrl: './flight-select.component.html',
   styleUrl: './flight-select.component.css'
