@@ -28,6 +28,10 @@ public class FlightService {
         }
     }
 
+    public Flight getById(Long id) {
+        return flightRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not find flight"));
+    }
+
     Boolean existsByFlightNumber(String flightNumber) {
         return flightRepository.existsByFlightNumber(flightNumber);
     }
@@ -139,9 +143,15 @@ public class FlightService {
                     endDate,
                     flightSearchWithDate.getNumberOfPassengers()
             );
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             throw new EntityNotFoundException("Could not find flights", e);
+        }
+    }
+
+    public void checkFlightAvailability(Long flightId, int numberOfPassengers) {
+        Flight flight = flightRepository.findById(flightId).orElseThrow(() -> new EntityNotFoundException("Flight not found"));
+        if (flight.getAirplane().getCapacity() - flight.getBookedSeats() < numberOfPassengers) {
+            throw new IllegalArgumentException("Flight is not available");
         }
     }
 

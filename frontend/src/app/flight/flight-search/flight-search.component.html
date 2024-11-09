@@ -156,6 +156,7 @@
         buttonLayout="horizontal"
         incrementButtonIcon="pi pi-plus"
         decrementButtonIcon="pi pi-minus"
+        [min]="0"
         (onInput)="onPassengerClick()"
         [max]="this.formGroup.get('adults')?.getRawValue()"
       />

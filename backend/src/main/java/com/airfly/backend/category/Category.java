@@ -1,12 +1,10 @@
 package com.airfly.backend.category;
 
 
-import com.airfly.backend.booking.Booking;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 @Table(name = "categories")
@@ -25,6 +23,4 @@ public class Category {
     @Column(name = "price")
     private BigDecimal price;
 
-    @OneToMany(mappedBy = "category")
-    private List<Booking> bookings;
 }

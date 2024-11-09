@@ -31,6 +31,11 @@ import {FloatLabelModule} from "primeng/floatlabel";
 import {CalendarModule} from "primeng/calendar";
 import {Passenger} from "../../passenger/passenger.model";
 import {CheckboxModule} from "primeng/checkbox";
+import {SidebarModule} from "primeng/sidebar";
+import {FieldsetModule} from "primeng/fieldset";
+import {InputNumberModule} from "primeng/inputnumber";
+import {BookingForInsert} from "../../booking/booking-for-insert.model";
+import {BookingService} from "../../booking/booking.service";
 
 @Component({
   selector: 'app-flight-select',
@@ -54,7 +59,10 @@ import {CheckboxModule} from "primeng/checkbox";
     FloatLabelModule,
     CalendarModule,
     CheckboxModule,
-    FormsModule
+    FormsModule,
+    SidebarModule,
+    FieldsetModule,
+    InputNumberModule
   ],
   templateUrl: './flight-select.component.html',
   styleUrl: './flight-select.component.css'
@@ -73,21 +81,23 @@ export class FlightSelectComponent implements OnInit {
   outwardFlights: Flight[] = [];
   returnFlights: Flight[] = [];
   categories: Category[] = [];
-  selectedDepartureFlightId!: number;
-  selectedDepartureCategoryId!: number;
+  selectedOutwardFlightId!: number;
+  selectedOutwardCategoryId!: number;
   selectedReturnFlightId!: number;
   selectedReturnCategoryId!: number;
   formGroup!: FormGroup;
   maxDate: Date = new Date();
   passengerArray!: Passenger[];
   travelInsurance!: boolean;
+  billingAddressForm!: FormGroup;
 
   constructor(
     private router: Router,
     protected flightService: FlightService,
     protected categoryService: CategoryService,
     protected changeDetectorRef: ChangeDetectorRef,
-    protected formBuilder: FormBuilder
+    protected formBuilder: FormBuilder,
+    protected bookingService: BookingService
   ) {
   }
 
@@ -95,12 +105,59 @@ export class FlightSelectComponent implements OnInit {
     return this.formGroup.get('passengers') as FormArray;
   }
 
-  ngOnInit() {
 
+  submitOrder() {
+    let passengerArray: Passenger[] = [];
+
+    this.passengers.controls.forEach((passenger) => {
+      passengerArray.push(
+        new Passenger(
+          passenger.get('type')?.value,
+          passenger.get('firstname')?.value,
+          passenger.get('lastname')?.value,
+          passenger.get('dateOfBirth')?.value
+        )
+      )
+    });
+
+    let booking = new BookingForInsert(
+      this.travelInsurance,
+      passengerArray,
+      this.selectedOutwardFlightId,
+      this.selectedOutwardCategoryId,
+      this.selectedReturnFlightId,
+      this.selectedReturnCategoryId,
+      this.billingAddressForm.get('billingFirstname')?.value,
+      this.billingAddressForm.get('billingLastname')?.value,
+      this.billingAddressForm.get('billingPostcode')?.value,
+      this.billingAddressForm.get('billingCity')?.value,
+      this.billingAddressForm.get('billingStreet')?.value,
+      this.billingAddressForm.get('billingHousenumber')?.value,
+    )
+    this.deleteAllFromLocalStorage();
+    this.bookingService.submitOrder(booking).subscribe({
+      next: () => {
+        this.router.navigate(['/booking-success'])
+      },
+      error: () => {
+        this.router.navigate(['/error'])
+      }
+    })
+  }
+
+  ngOnInit() {
     this.formGroup = this.formBuilder.group({
       passengers: this.formBuilder.array([])
     });
 
+    this.billingAddressForm = this.formBuilder.group({
+      billingFirstname: [null, Validators.required],
+      billingLastname: [null, Validators.required],
+      billingPostcode: [null, Validators.required],
+      billingCity: [null, Validators.required],
+      billingStreet: [null, Validators.required],
+      billingHousenumber: [null, Validators.required],
+    })
 
     const requiredFields = [
       'departure_airport_id',
@@ -134,16 +191,21 @@ export class FlightSelectComponent implements OnInit {
     this.babies = toNumber(localStorage.getItem('babies')!);
     this.currentStep = toNumber(localStorage.getItem('current_step')!);
     this.currentStepDescription = localStorage.getItem('current_step_description')!;
-    if (localStorage.getItem('departure_flight_id')) {
-      this.selectedDepartureFlightId = toNumber(localStorage.getItem('departure_flight_id'));
+    if (localStorage.getItem('outward_flight_id')) {
+      this.selectedOutwardFlightId = toNumber(localStorage.getItem('outward_flight_id'));
     }
-    if (localStorage.getItem('departure_category_id')) {
-      this.selectedDepartureCategoryId = toNumber(localStorage.getItem('departure_category_id'));
+    if (localStorage.getItem('outward_category_id')) {
+      this.selectedOutwardCategoryId = toNumber(localStorage.getItem('outward_category_id'));
     }
-    if(localStorage.getItem('travel_insurance')){
+    if (localStorage.getItem('return_flight_id')) {
+      this.selectedReturnFlightId = toNumber(localStorage.getItem('return_flight_id'));
+    }
+    if (localStorage.getItem('return_category_id')) {
+      this.selectedReturnCategoryId = toNumber(localStorage.getItem('return_category_id'));
+    }
+    if (localStorage.getItem('travel_insurance')) {
       this.travelInsurance = Boolean(localStorage.getItem('travel_insurance'));
-    }
-    else{
+    } else {
       this.travelInsurance = false;
     }
     if (localStorage.getItem('passengers')) {
@@ -151,7 +213,6 @@ export class FlightSelectComponent implements OnInit {
       this.passengerArray.forEach((passenger: Passenger) => {
         this.passengers.push(
           this.formBuilder.group({
-            id: passenger.id,
             type: passenger.type,
             firstname: [passenger.firstname, Validators.required],
             lastname: [passenger.lastname, Validators.required],
@@ -209,7 +270,13 @@ export class FlightSelectComponent implements OnInit {
         this.outwardFlightTime
       )
     ).subscribe((response) => {
-      this.outwardFlights = response;
+      if(response.length === 0){
+        this.deleteAllFromLocalStorage();
+        this.router.navigate(['/flight-unavailable']);
+      }
+      else{
+        this.outwardFlights = response;
+      }
     })
 
     if (this.returnFlightTime) {
@@ -221,7 +288,13 @@ export class FlightSelectComponent implements OnInit {
           this.returnFlightTime
         )
       ).subscribe((response) => {
-        this.returnFlights = response;
+        if(response.length === 0){
+          this.deleteAllFromLocalStorage();
+          this.router.navigate(['/flight-unavailable']);
+        }
+        else{
+          this.returnFlights = response;
+        }
       });
     }
 
@@ -231,16 +304,13 @@ export class FlightSelectComponent implements OnInit {
   }
 
   getTimeDifference(departureTime: any, arrivalTime: any): string {
-    // Convert to Date if not already a Date object
     const depTime = departureTime instanceof Date ? departureTime : new Date(departureTime);
     const arrTime = arrivalTime instanceof Date ? arrivalTime : new Date(arrivalTime);
 
-    // Check if both depTime and arrTime are valid dates
     if (isNaN(depTime.getTime()) || isNaN(arrTime.getTime())) {
       return 'Invalid Date';
     }
 
-    // Calculate the difference in milliseconds
     const diffMs = Math.abs(depTime.getTime() - arrTime.getTime());
     const hours = Math.floor(diffMs / (1000 * 60 * 60));
     const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
@@ -252,11 +322,11 @@ export class FlightSelectComponent implements OnInit {
     return value < 10 ? '0' + value : value.toString();
   }
 
-  onDepartureFlightSelection(flightId: number, categoryId: number) {
-    this.selectedDepartureFlightId = flightId;
-    this.selectedDepartureCategoryId = categoryId;
-    localStorage.setItem('departure_flight_id', String(flightId));
-    localStorage.setItem('departure_category_id', String(categoryId));
+  onOutwardFlightSelection(flightId: number, categoryId: number) {
+    this.selectedOutwardFlightId = flightId;
+    this.selectedOutwardCategoryId = categoryId;
+    localStorage.setItem('outward_flight_id', String(flightId));
+    localStorage.setItem('outward_category_id', String(categoryId));
   }
 
   onReturnFlightSelection(flightId: number, categoryId: number) {
@@ -266,32 +336,40 @@ export class FlightSelectComponent implements OnInit {
     localStorage.setItem('return_category_id', String(categoryId));
   }
 
-  goBack(){
+  goBack() {
     if (this.currentStep === 2) {
       this.currentStep--;
       localStorage.setItem('current_step', '1');
       localStorage.setItem('current_step_description', 'outgoing-flight');
       this.currentStepDescription = 'outgoing-flight';
     }
-    if(this.currentStep === 3){
+    if (this.currentStep === 3) {
       this.currentStep--;
       localStorage.setItem('current_step', '2');
-      if(this.numberOfSteps === 5){
+      if (this.numberOfSteps === 5) {
         localStorage.setItem('current_step_description', 'return-flight');
         this.currentStepDescription = 'return-flight';
-      }
-      else{
+      } else {
         localStorage.setItem('current_step_description', 'passengers');
         this.currentStepDescription = 'passengers';
       }
     }
-    if(this.currentStep === 4){
+    if (this.currentStep === 4) {
       this.currentStep--;
       localStorage.setItem('current_step', '3');
-      if(this.numberOfSteps === 5){
+      if (this.numberOfSteps === 5) {
         localStorage.setItem('current_step_description', 'passengers');
         this.currentStepDescription = 'passengers';
+      } else {
+        localStorage.setItem('current_step_description', 'travel-insurance');
+        this.currentStepDescription = 'travel-insurance';
       }
+    }
+    if (this.currentStep === 5) {
+      this.currentStep--;
+      localStorage.setItem('current_step', '4');
+      localStorage.setItem('current_step_description', 'travel-insurance');
+      this.currentStepDescription = 'travel-insurance';
     }
     this.changeDetectorRef.detectChanges();
   }
@@ -318,7 +396,6 @@ export class FlightSelectComponent implements OnInit {
         this.passengers.controls.forEach((passenger) => {
           this.passengerArray.push(
             new Passenger(
-              passenger.get('id')?.value,
               passenger.get('type')?.value,
               passenger.get('firstname')?.value,
               passenger.get('lastname')?.value,
@@ -338,7 +415,6 @@ export class FlightSelectComponent implements OnInit {
         this.passengers.controls.forEach((passenger) => {
           this.passengerArray.push(
             new Passenger(
-              passenger.get('id')?.value,
               passenger.get('type')?.value,
               passenger.get('firstname')?.value,
               passenger.get('lastname')?.value,
@@ -351,22 +427,22 @@ export class FlightSelectComponent implements OnInit {
         this.currentStepDescription = 'travel-insurance';
       } else {
         localStorage.setItem('travel_insurance', String(this.travelInsurance));
-        localStorage.setItem('current_step_description', 'payment');
-        this.currentStepDescription = 'payment';
+        localStorage.setItem('current_step_description', 'checkout');
+        this.currentStepDescription = 'checkout';
       }
     } else if (this.currentStep === 4) {
       this.currentStep = 5;
       localStorage.setItem('current_step', '5');
       localStorage.setItem('travel_insurance', String(this.travelInsurance));
-      localStorage.setItem('current_step_description', 'payment');
-      this.currentStepDescription = 'payment';
+      localStorage.setItem('current_step_description', 'checkout');
+      this.currentStepDescription = 'checkout';
     }
     this.changeDetectorRef.detectChanges();
   }
 
   isContinueButtonDisabled(): boolean {
     if (this.currentStep === 1) {
-      return !this.selectedDepartureFlightId || !this.selectedDepartureCategoryId;
+      return !this.selectedOutwardFlightId || !this.selectedOutwardCategoryId;
     } else if (this.currentStep === 2) {
       if (this.numberOfSteps === 5) {
         return !this.selectedReturnFlightId || !this.selectedReturnCategoryId;
@@ -383,6 +459,11 @@ export class FlightSelectComponent implements OnInit {
       if (this.numberOfSteps === 5) {
         return false;
       }
+      if (this.numberOfSteps === 4) {
+        return true;
+      }
+    } else if (this.currentStep === 5) {
+      return true;
     }
     return false;
   }
@@ -403,18 +484,39 @@ export class FlightSelectComponent implements OnInit {
       const effectiveAge = hasHadBirthdayThisYear ? ageInYears : ageInYears - 1;
 
       if (type === 'adult' && effectiveAge < 12) {
-        return { notAdult: true };
+        return {notAdult: true};
       }
 
       if (type === 'child' && (effectiveAge < 2 || effectiveAge > 11)) {
-        return { notChild: true };
+        return {notChild: true};
       }
 
       if (type === 'baby' && (effectiveAge < 0 || effectiveAge > 1)) {
-        return { notBaby: true };
+        return {notBaby: true};
       }
     }
     return null;
+  }
+
+  deleteAllFromLocalStorage(){
+    localStorage.removeItem('departure_airport_id');
+    localStorage.removeItem('outward_category_id');
+    localStorage.removeItem('outward_flight_id');
+    localStorage.removeItem('outward_flight_time');
+
+    localStorage.removeItem('arrival_airport_id');
+    localStorage.removeItem('return_category_id');
+    localStorage.removeItem('return_flight_id');
+    localStorage.removeItem('return_flight_time');
+
+    localStorage.removeItem('adults');
+    localStorage.removeItem('children');
+    localStorage.removeItem('babies');
+
+    localStorage.removeItem('current_step');
+    localStorage.removeItem('current_step_description');
+    localStorage.removeItem('passengers');
+    localStorage.removeItem('travel_insurance');
   }
 
 }

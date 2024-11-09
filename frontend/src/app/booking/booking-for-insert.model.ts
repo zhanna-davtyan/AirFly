@@ -1,14 +1,12 @@
 import {Passenger} from "../passenger/passenger.model";
-import {Category} from "../category/category.model";
-import {BookingFlightMapping} from "../bookingflightmapping/booking-flight-mapping.model";
 
-export class Booking {
-  id: number;
-  totalPrice: number;
+export class BookingForInsert {
   travelInsurance: boolean;
-  category: Category;
   passengers: Passenger[];
-  bookingFlightMappings: BookingFlightMapping[];
+  outwardFlightId: number;
+  outwardCategoryId: number;
+  returnFlightId: number;
+  returnCategoryId: number;
   billingFirstname: string;
   billingLastname: string;
   billingPostcode: string;
@@ -17,12 +15,12 @@ export class Booking {
   billingHousenumber: string;
 
   constructor(
-    id: number,
-    totalPrice: number,
     travelInsurance: boolean,
-    category: Category,
     passengers: Passenger[],
-    bookingFlightMappings: BookingFlightMapping[],
+    outwardFlightId: number,
+    outwardCategoryId: number,
+    returnFlightId: number,
+    returnCategoryId: number,
     billingFirstname: string,
     billingLastname: string,
     billingPostcode: string,
@@ -30,12 +28,12 @@ export class Booking {
     billingStreet: string,
     billingHousenumber: string
   ) {
-    this.id = id;
-    this.totalPrice = totalPrice;
     this.travelInsurance = travelInsurance;
-    this.category = category;
     this.passengers = passengers;
-    this.bookingFlightMappings = bookingFlightMappings;
+    this.outwardCategoryId = outwardCategoryId;
+    this.outwardFlightId = outwardFlightId;
+    this.returnFlightId = returnFlightId;
+    this.returnCategoryId = returnCategoryId
     this.billingFirstname = billingFirstname;
     this.billingLastname = billingLastname;
     this.billingPostcode = billingPostcode;

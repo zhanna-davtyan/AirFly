@@ -14,7 +14,15 @@ import java.sql.Timestamp;
 @Builder
 public class Passenger {
 
+    public Passenger(String type, String firstname, String lastname, Timestamp dateOfBirth) {
+        this.type = type;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.dateOfBirth = dateOfBirth;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 

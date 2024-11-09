@@ -91,6 +91,7 @@ export class FlightSearchComponent implements OnInit {
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate() + 60);
     this.minDate.setHours(0,0,0,0);
+
     this.formGroup = this.formBuilder.group({
       departureAirportId: [null, [Validators.required]],
       arrivalAirportId: [null, [Validators.required]],
@@ -100,6 +101,7 @@ export class FlightSearchComponent implements OnInit {
       children: [0],
       babies: [0]
     });
+
     this.formGroup.get('adults')?.valueChanges.subscribe(adultsCount => {
       const babiesControl = this.formGroup.get('babies');
       babiesControl?.setValidators([
@@ -107,6 +109,7 @@ export class FlightSearchComponent implements OnInit {
       ]);
       babiesControl?.updateValueAndValidity(); // Refresh validation
     });
+
     this.airportService.getAll().subscribe({
       next: (airports: Airport[]) => {
         this.airportOptions = airports.map(airport => ({
@@ -124,6 +127,7 @@ export class FlightSearchComponent implements OnInit {
         this.formGroup.get('arrivalAirportId')?.valueChanges.subscribe(() => {
           this.updateFilteredOptions();
         });
+
         if (this.router.url.includes('/select-flight')) {
           this.formGroup.get('departureAirportId')?.setValue(toNumber(localStorage.getItem("departure_airport_id")));
           this.formGroup.get('arrivalAirportId')?.setValue(toNumber(localStorage.getItem("arrival_airport_id")));
@@ -143,11 +147,9 @@ export class FlightSearchComponent implements OnInit {
   updateFilteredOptions() {
     const selectedDepartureId = this.formGroup.get('departureAirportId')?.value;
     const selectedArrivalId = this.formGroup.get('arrivalAirportId')?.value;
-
     this.filteredArrivalOptions = this.airportOptions.filter(
       airport => airport.value !== selectedDepartureId
     );
-
     this.filteredDepartureOptions = this.airportOptions.filter(
       airport => airport.value !== selectedArrivalId
     );
@@ -158,7 +160,6 @@ export class FlightSearchComponent implements OnInit {
     const outwardFlightTime = this.formGroup.get('outwardFlightTime')?.value;
     const now = new Date();
     outwardFlightTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
-
 
     localStorage.setItem("departure_airport_id", this.formGroup.get('departureAirportId')?.value);
     localStorage.setItem("arrival_airport_id", this.formGroup.get('arrivalAirportId')?.value);
@@ -178,8 +179,8 @@ export class FlightSearchComponent implements OnInit {
     localStorage.setItem("current_step", "1");
     localStorage.setItem("current_step_description", "outgoing-flight")
 
-    localStorage.removeItem("departure_flight_id");
-    localStorage.removeItem("departure_category_id");
+    localStorage.removeItem("outward_flight_id");
+    localStorage.removeItem("outward_category_id");
     localStorage.removeItem("return_flight_id");
     localStorage.removeItem("return_category_id");
     localStorage.removeItem("travel_insurance");

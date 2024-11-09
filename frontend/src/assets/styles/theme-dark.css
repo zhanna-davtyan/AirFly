@@ -92,7 +92,7 @@ footer {
 .menu-icon {
   font-size: 200px;
   cursor: pointer;
-  color: #ffffff;
+  color: #dddddd;
   display: flex;
   justify-content: flex-end;
 }
@@ -140,7 +140,7 @@ footer {
   background: #1f2937;
 }
 
-.flight-select-holder .header-div{
+.flight-select-holder .header-div, .header-div span{
   color: #dddddd;
 }
 

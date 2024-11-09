@@ -21,13 +21,11 @@
 </p-tabView>
 @if (currentStep === 1) {
   <div class="w-full modify-flight">
-    <p-accordion>
-      <p-accordionTab header="{{'change-search' | translate }}">
-        <div class="w-full flex justify-content-center mt-5">
-          <app-flight-search></app-flight-search>
-        </div>
-      </p-accordionTab>
-    </p-accordion>
+    <p-sidebar styleClass="h-auto" position="bottom">
+      <ng-template pTemplate="header">
+        <h2 class="w-full text-center">{{ 'passengers'|translate }}</h2>
+      </ng-template>
+    </p-sidebar>
   </div>
   <div class="w-full flex flex-column align-items-center flight-select-holder">
     @for (flight of outwardFlights; track outwardFlights; let i = $index) {
@@ -135,8 +133,8 @@
                           type="radio"
                           [name]="flight.id + category.id"
                           [value]="{ flightId: flight.id, categoryId: category.id }"
-                          [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
-                          (change)="onDepartureFlightSelection(flight.id, category.id)"
+                          [checked]="selectedOutwardFlightId === flight.id && selectedOutwardCategoryId === category.id"
+                          (change)="onOutwardFlightSelection(flight.id, category.id)"
                           style="transform: scale(1.8);"
                         />
                         <p class="font-bold"
@@ -192,7 +190,7 @@
                   <span>{{ "flight-from" | translate }}</span>
                   <br/>
                   <span class="mt-1"
-                        style="color: black; font-size:1.7em;">{{ flight.price + (categories!.at(0)?.price ?? 0)  | currency: 'EUR' }}</span>
+                        style="font-size:1.7em;">{{ flight.price + (categories!.at(0)?.price ?? 0)  | currency: 'EUR' }}</span>
                 </div>
               </ng-template>
               <div class="category-holder mt-5">
@@ -271,7 +269,7 @@
                           type="radio"
                           [name]="flight.id + category.id"
                           [value]="{ flightId: flight.id, categoryId: category.id }"
-                          [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
+                          [checked]="selectedReturnFlightId === flight.id && selectedReturnCategoryId === category.id"
                           (change)="onReturnFlightSelection(flight.id, category.id)"
                           style="transform: scale(1.8);"
                         />
@@ -304,18 +302,18 @@
             <div class="w-full mt-6">
               <p-floatLabel>
                 <input class="w-full" id="firstname-{{i}}" type="text" pInputText formControlName="firstname"/>
-                <label for="firstname-{{i}}">{{"firstname" | translate }}</label>
+                <label for="firstname-{{i}}">{{ "firstname" | translate }}</label>
               </p-floatLabel>
               <div style="min-height: 20px;">
                 <small *ngIf="passenger.get('firstname')?.invalid && passenger.get('firstname')?.touched"
-                       class="p-error ml-2">{{"firstname-required" | translate}}</small>
+                       class="p-error ml-2">{{ "firstname-required" | translate }}</small>
               </div>
             </div>
 
             <div class="w-full mt-4">
               <p-floatLabel class="w-full">
                 <input class="w-full" id="lastname-{{i}}" type="text" pInputText formControlName="lastname"/>
-                <label for="lastname-{{i}}"> {{"lastname" | translate }}</label>
+                <label for="lastname-{{i}}"> {{ "lastname" | translate }}</label>
               </p-floatLabel>
               <div style="min-height: 20px;">
                 <small *ngIf="passenger.get('lastname')?.invalid && passenger.get('lastname')?.touched"
@@ -354,43 +352,47 @@
     </form>
   </div>
 }
-@if(currentStep === 3 && numberOfSteps === 4 || currentStep === 4 && numberOfSteps === 5){
+@if (currentStep === 3 && numberOfSteps === 4 || currentStep === 4 && numberOfSteps === 5) {
   <div class="travel-insurance-holder flex justify-content-center align-items-center mt-5 w-full">
     <p-card>
       <div class="flex justify-content-between">
         <img style="width: 95px; height: auto;" src="/assets/img/LVM_Versicherung_2010_logo.svg.png" alt="">
-        <a class="text-color" href="https://www.lvm.de/versicherungen-und-finanzen/reiseversicherungen/reiseruecktrittsversicherung"><i style="font-size: 1.3em;" class="pi pi-info-circle"></i></a>
+        <a class="text-color"
+           href="https://www.lvm.de/versicherungen-und-finanzen/reiseversicherungen/reiseruecktrittsversicherung"><i
+          style="font-size: 1.3em;" class="pi pi-info-circle"></i></a>
       </div>
       <div class="flex align-items-center mt-4">
         <i class="pi pi-shield mr-4" style="font-size: 1.7em;"></i>
         <div>
-          <h2 class="mb-1 mt-0">LVM {{"travel-insurance"|translate}}</h2>
-          <p class="m-0">{{"travel-insurance-slogan"|translate}}</p>
+          <h2 class="mb-1 mt-0">LVM {{ "travel-insurance"|translate }}</h2>
+          <p class="m-0">{{ "travel-insurance-slogan"|translate }}</p>
         </div>
       </div>
       <div class="mt-5 insurance-info">
         <div class="flex mt-3 align-items-center">
           <i class="pi pi-check mr-3"></i>
-          <span>{{"travel-insurance-benefit-1"|translate}}</span>
+          <span>{{ "travel-insurance-benefit-1"|translate }}</span>
         </div>
         <div class="flex mt-3 align-items-center">
           <i class="pi pi-check mr-3"></i>
-          <span>{{"travel-insurance-benefit-2"|translate}}</span>
+          <span>{{ "travel-insurance-benefit-2"|translate }}</span>
         </div>
         <div class="flex mt-3 align-items-center">
           <i class="pi pi-check mr-3"></i>
-          <span>{{"travel-insurance-benefit-3"|translate}}</span>
+          <span>{{ "travel-insurance-benefit-3"|translate }}</span>
         </div>
         <div class="flex mt-3 align-items-center">
           <i class="pi pi-check mr-3"></i>
-          <span>{{"travel-insurance-benefit-4"|translate}}</span>
+          <span>{{ "travel-insurance-benefit-4"|translate }}</span>
         </div>
         <div class="flex mt-3 align-items-center">
           <i class="pi pi-check mr-3"></i>
-          <span>{{"travel-insurance-benefit-5"|translate}}</span>
+          <span>{{ "travel-insurance-benefit-5"|translate }}</span>
         </div>
       </div>
-      <p style="font-size: 1.2em;" class="mt-6 mb-0"><span>{{ "total-price" | translate }}:</span><span class="ml-2" style="font-size: 1.3em; font-weight: bold;">50€</span></p>
+      <p style="font-size: 1.2em;" class="mt-6 mb-0"><span>{{ "total-price" | translate }}:</span><span class="ml-2"
+                                                                                                        style="font-size: 1.3em; font-weight: bold;">50€</span>
+      </p>
       <div class="mt-4">
         <p-checkbox
           [(ngModel)]="travelInsurance"
@@ -399,6 +401,73 @@
           inputId="binary"/>
       </div>
     </p-card>
+  </div>
+}
+@if (currentStep === 4 && numberOfSteps === 4 || currentStep === 5 && numberOfSteps === 5) {
+  <p-fieldset legend="{{'billing-address' | translate}}" class="flex justify-content-center mt-5" [formGroup]="billingAddressForm">
+    <div>
+      <p-floatLabel>
+        <input class="w-full" id="billingFirstname" type="text" pInputText formControlName="billingFirstname"/>
+        <label for="billingFirstname">{{ "firstname" | translate }}</label>
+      </p-floatLabel>
+      <div style="min-height: 20px;">
+        <small *ngIf="billingAddressForm.get('billingFirstname')?.invalid"
+               class="p-error ml-2">{{ "firstname-required" | translate }}</small>
+      </div>
+    </div>
+    <div class="mt-5">
+      <p-floatLabel>
+        <input class="w-full" id="billingLastname" type="text" pInputText formControlName="billingLastname"/>
+        <label for="billingLastname">{{ "lastname" | translate }}</label>
+      </p-floatLabel>
+      <div style="min-height: 20px;">
+        <small *ngIf="billingAddressForm.get('billingLastname')?.invalid"
+               class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+      </div>
+    </div>
+    <div class="mt-5">
+      <p-floatLabel>
+        <p-inputNumber inputId="integeronly" [useGrouping]="false" class="w-full" id="billingPostcode" formControlName="billingPostcode"/>
+        <label for="billingPostcode">{{ "postcode" | translate }}</label>
+      </p-floatLabel>
+      <div style="min-height: 20px;">
+        <small *ngIf="billingAddressForm.get('billingPostcode')?.invalid"
+               class="p-error ml-2">{{ "postcode-required" | translate }}</small>
+      </div>
+    </div>
+    <div class="mt-5">
+      <p-floatLabel>
+        <input class="w-full" id="billingCity" type="text" pInputText formControlName="billingCity"/>
+        <label for="billingCity">{{ "city" | translate }}</label>
+      </p-floatLabel>
+      <div style="min-height: 20px;">
+        <small *ngIf="billingAddressForm.get('billingCity')?.invalid"
+               class="p-error ml-2">{{ "city-required" | translate }}</small>
+      </div>
+    </div>
+    <div class="mt-5">
+      <p-floatLabel>
+        <input class="w-full" id="billingStreet" type="text" pInputText formControlName="billingStreet"/>
+        <label for="billingStreet">{{ "street" | translate }}</label>
+      </p-floatLabel>
+      <div style="min-height: 20px;">
+        <small *ngIf="billingAddressForm.get('billingStreet')?.invalid"
+               class="p-error ml-2">{{ "street-required" | translate }}</small>
+      </div>
+    </div>
+    <div class="mt-5">
+      <p-floatLabel>
+        <p-inputNumber [useGrouping]="false" inputId="integeronly" class="w-full" id="billingHousenumber" formControlName="billingHousenumber"/>
+        <label for="billingHousenumber">{{ "housenumber" | translate }}</label>
+      </p-floatLabel>
+      <div style="min-height: 20px;">
+        <small *ngIf="billingAddressForm.get('billingHousenumber')?.invalid"
+               class="p-error ml-2">{{ "housenumber-required" | translate }}</small>
+      </div>
+    </div>
+  </p-fieldset>
+  <div class="w-full flex justify-content-center mt-5">
+    <button (click)="submitOrder()" pButton style="width: 90%;" label="{{'pay-now' | translate }}" [disabled]="billingAddressForm.invalid"></button>
   </div>
 }
 <div class="continue">

@@ -36,4 +36,24 @@
     </div>
   </div>
 
+  <p-card>
+    <app-flight-search></app-flight-search>
+  </p-card>
+
+  @if(showContinueBooking){
+    <p-avatar size="xlarge" (click)="op.toggle($event)" >
+      <i class="fa-solid fa-plane-departure"></i>
+    </p-avatar>
+    <p-overlayPanel #op [style]="{ width: '250px', height: '100px' }" [showCloseIcon]="true">
+      <ng-template pTemplate="content">
+        <div class="w-full flex flex-column justify-content-center">
+          <p class="mt-0 text-center">You still have an open booking!</p>
+          <button pButton label="Continue booking" [routerLink]="'/select-flight'"></button>
+        </div>
+      </ng-template>
+    </p-overlayPanel>
+  }
+
+</div>
+
 </main>

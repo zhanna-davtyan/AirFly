@@ -5,6 +5,7 @@ import com.airfly.backend.airport.Airport;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 @Entity
@@ -16,6 +17,7 @@ import java.sql.Timestamp;
 public class Flight {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -29,7 +31,7 @@ public class Flight {
     private Timestamp arrivalTime;
 
     @Column(name = "price")
-    private Double price;
+    private BigDecimal price;
 
     @Column(name = "booked_seats")
     private Long bookedSeats;

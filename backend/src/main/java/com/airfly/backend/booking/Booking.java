@@ -17,7 +17,32 @@ import java.util.List;
 @Builder
 public class Booking {
 
+    public Booking(
+            User user,
+            Double totalPrice,
+            Boolean travelInsurance,
+            String billingFirstname,
+            String billingLastname,
+            String billingPostcode,
+            String billingCity,
+            String billingStreet,
+            String billingHousenumber,
+            List<Passenger> passengers
+    ){
+        this.user = user;
+        this.totalPrice = totalPrice;
+        this.travelInsurance = travelInsurance;
+        this.billingFirstname = billingFirstname;
+        this.billingLastname = billingLastname;
+        this.billingPostcode = billingPostcode;
+        this.billingCity = billingCity;
+        this.billingStreet = billingStreet;
+        this.billingHousenumber = billingHousenumber;
+        this.passengers = passengers;
+    }
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
@@ -31,9 +56,23 @@ public class Booking {
     @Column(name = "travel_insurance")
     private Boolean travelInsurance;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+    @Column(name="billing_firstname")
+    private String billingFirstname;
+
+    @Column(name="billing_lastname")
+    private String billingLastname;
+
+    @Column(name="billing_postcode")
+    private String billingPostcode;
+
+    @Column(name="billing_city")
+    private String billingCity;
+
+    @Column(name="billing_street")
+    private String billingStreet;
+
+    @Column(name="billing_housenumber")
+    private String billingHousenumber;
 
     @OneToMany(mappedBy = "booking")
     private List<Passenger> passengers;
