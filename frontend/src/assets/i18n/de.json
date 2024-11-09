@@ -107,5 +107,7 @@
   "terms-of-use": "AGB",
   "imprint": "Impressum",
   "privacy-policy": "Datenschutz",
-  "contact": "Kontakt"
+  "contact": "Kontakt",
+  "go-back-home": "Zurück",
+  "error-page-text": "Oops! Etwas ist schief gelaufen..."
 }

@@ -4,7 +4,7 @@
       class="mt-4"
       style="width: 80px; height: 80px"
       src="assets/img/AirFly_Logo1.png"
-    />
+      alt=""/>
   </div>
   <div class="flex align-items-center">
     <div>
@@ -29,7 +29,7 @@
   </div>
   <div style="font-size: 18px; font-weight: bold;">
     <p (click)="goToBookNewFlight()">{{ 'book' | translate }}</p>
-    <p></p>
+    <p (click)="adminOp.toggle($event)">Admin</p>
   </div>
   <p-divider></p-divider>
   <div class="flex justify-content-between mt-4">
@@ -60,6 +60,13 @@
     optionLabel="label"
     optionValue="value"
     [options]="languageOptions"
-    (onChange)="onChangeLanguage($event)">
+    (onChange)="onLanguageChange($event)">
   </p-dropdown>
 </p-overlayPanel>
+
+<div *ngIf="visibleSidebar">
+  <p-overlayPanel #adminOp>
+    <span class="border-bottom-1" style="font-size: 16px" (click)="goToAllFlights()">All flights</span>
+  </p-overlayPanel>
+</div>
+

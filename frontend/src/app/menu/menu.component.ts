@@ -1,21 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import {Router, RouterModule} from '@angular/router';
 import { MenuSidebarService } from './menu-sidebar.service';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { SelectItem } from 'primeng/api';
+import {SelectItem} from 'primeng/api';
 import { take } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
-import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import {OverlayPanel, OverlayPanelModule} from 'primeng/overlaypanel';
 import { InputTextModule } from 'primeng/inputtext';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ThemeService } from '../common/service/theme.service';
 import {DividerModule} from "primeng/divider";
+import {MenubarModule} from "primeng/menubar";
 
 @Component({
   selector: 'app-menu',
@@ -34,18 +35,21 @@ import {DividerModule} from "primeng/divider";
     ToggleButtonModule,
     ToolbarModule,
     DividerModule,
+    MenubarModule,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-  @ViewChild('op') op!: OverlayPanel;
   languageOptions: SelectItem[] = [];
-  visibleSidebar: boolean = false;
   protected selectedLanguage: string | null = localStorage.getItem('lng');
+  private readonly availableLanguages = ['de', 'en'];
+
   theme: string | null = localStorage.getItem('theme');
   darkTheme!: boolean;
 
+  visibleSidebar: boolean = false;
+  @ViewChild('adminOp') adminOp!: OverlayPanel;
 
   constructor(
     private menuSideBarService: MenuSidebarService,
@@ -58,11 +62,15 @@ export class MenuComponent implements OnInit {
     this.menuSideBarService.isSidebarVisible$.subscribe((value) => {
       this.visibleSidebar = value;
     });
+
     this.translateService.addLangs(this.availableLanguages);
     if (this.selectedLanguage == null) {
       this.selectedLanguage = 'en'; // Default
       localStorage.setItem('lng', this.selectedLanguage);
     }
+    this.translateService.use(this.selectedLanguage);
+    this.updateTranslations();
+
     if (this.theme == null) {
       this.theme = 'theme-dark'; // Default
       localStorage.setItem('theme', 'theme-dark');
@@ -72,17 +80,12 @@ export class MenuComponent implements OnInit {
       this.themeService.switchTheme('theme-light');
     }
     this.darkTheme = !this.theme || this.theme === 'theme-dark';
-    this.translateService.use(this.selectedLanguage);
-    this.updateTranslations();
   }
 
-  private readonly availableLanguages = ['de', 'en'];
-  items: any[] = [];
 
-  protected onChangeLanguage(event: any) {
+  protected onLanguageChange(event: any) {
     const newLanguage = event.value;
     localStorage.setItem('lng', newLanguage);
-
     this.translateService.use(newLanguage).subscribe(() => {
       this.updateTranslations();
     });
@@ -123,6 +126,11 @@ export class MenuComponent implements OnInit {
   goToBookNewFlight() {
     this.toggleSidebar();
     this.router.navigate(['search-flight']);
+  }
+
+  goToAllFlights(){
+    this.toggleSidebar();
+    this.router.navigate(['all-flights']);
   }
 
 }

@@ -78,7 +78,11 @@ body {
   background-color: #120F2B;
 }
 
-h2, i, h3{
+h2, h1, i, h3{
+  color: #dddddd;
+}
+
+footer{
   color: #dddddd;
 }
 

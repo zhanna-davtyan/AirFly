@@ -1,7 +1,7 @@
 <p-messages/>
 <div class="container" [ngClass]="{'blur-background': isSidebarVisible}">
-  <app-menu *ngIf="shouldShowMenuAndFooter()"></app-menu>
-  <div class="content mt-5">
+  <app-menu class="mb-5" *ngIf="shouldShowMenuAndFooter()"></app-menu>
+  <div class="content">
     <router-outlet></router-outlet>
   </div>
   <app-footer *ngIf="shouldShowMenuAndFooter()"></app-footer>

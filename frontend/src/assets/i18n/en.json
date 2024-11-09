@@ -107,5 +107,7 @@
   "terms-of-use": "Terms of use",
   "imprint": "Imprint",
   "privacy-policy": "Privacy policy",
-  "contact": "Contact"
+  "contact": "Contact",
+  "go-back-home": "Go back home",
+  "error-page-text": "Oops! Something went wrong...\n"
 }

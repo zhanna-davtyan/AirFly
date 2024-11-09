@@ -36,6 +36,8 @@ import {FieldsetModule} from "primeng/fieldset";
 import {InputNumberModule} from "primeng/inputnumber";
 import {BookingForInsert} from "../../booking/booking-for-insert.model";
 import {BookingService} from "../../booking/booking.service";
+import {DropdownModule} from "primeng/dropdown";
+import {OverlayPanelModule} from "primeng/overlaypanel";
 
 @Component({
   selector: 'app-flight-select',
@@ -63,7 +65,9 @@ import {BookingService} from "../../booking/booking.service";
     SidebarModule,
     FieldsetModule,
     InputNumberModule,
-    RouterLink
+    RouterLink,
+    DropdownModule,
+    OverlayPanelModule
   ],
   templateUrl: './flight-select.component.html',
   styleUrl: './flight-select.component.css'
@@ -135,7 +139,7 @@ export class FlightSelectComponent implements OnInit {
       this.billingAddressForm.get('billingStreet')?.value,
       this.billingAddressForm.get('billingHousenumber')?.value,
     )
-    this.deleteAllFromLocalStorage();
+    this.deleteBookingDataFromLocalStorage();
     this.bookingService.submitOrder(booking).subscribe({
       next: () => {
         this.router.navigate(['/booking-success'])
@@ -272,7 +276,7 @@ export class FlightSelectComponent implements OnInit {
       )
     ).subscribe((response) => {
       if(response.length === 0){
-        this.deleteAllFromLocalStorage();
+        this.deleteBookingDataFromLocalStorage();
         this.router.navigate(['/flight-unavailable']);
       }
       else{
@@ -290,7 +294,7 @@ export class FlightSelectComponent implements OnInit {
         )
       ).subscribe((response) => {
         if(response.length === 0){
-          this.deleteAllFromLocalStorage();
+          this.deleteBookingDataFromLocalStorage();
           this.router.navigate(['/flight-unavailable']);
         }
         else{
@@ -499,7 +503,7 @@ export class FlightSelectComponent implements OnInit {
     return null;
   }
 
-  deleteAllFromLocalStorage(){
+  deleteBookingDataFromLocalStorage(){
     localStorage.removeItem('departure_airport_id');
     localStorage.removeItem('outward_category_id');
     localStorage.removeItem('outward_flight_id');
