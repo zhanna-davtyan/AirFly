@@ -68,7 +68,7 @@ p-card {
 
 p-avatar {
   position: fixed;
-  bottom: 85px;
+  bottom: 15px;
   right: 15px;
   z-index: 9999;
 }
