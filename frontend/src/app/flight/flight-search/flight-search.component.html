@@ -9,6 +9,7 @@
             [style]="{ width: '100%' }"
             formControlName="departureAirportId"
             [options]="filteredDepartureOptions"
+            (onChange)="onAirportClear()"
             [showClear]="true"
             (onClear)="onAirportClear()"
             id="departure-airport"
@@ -26,6 +27,7 @@
           <p-dropdown
             [style]="{ width: '100%' }"
             formControlName="arrivalAirportId"
+            (onChange)="onAirportClear()"
             [options]="filteredArrivalOptions"
             (onClear)="onAirportClear()"
             [showClear]="true"
@@ -115,10 +117,10 @@
     <h2 class="w-full text-center">{{ 'passengers'|translate }}</h2>
   </ng-template>
   <div [formGroup]="formGroup">
-    <div class="flex justify-content-between mt-6">
+    <div class="flex justify-content-between">
       <div>
-        <h3 class="m-0 p-0">Erwachsene</h3>
-        <p class="active:text-gray-50 m-0 p-0 mt-1">Ab 12 Jahren</p>
+        <h3 class="m-0 p-0">{{ 'adults' | translate }}</h3>
+        <p class="active:text-gray-50 m-0 p-0 mt-1">{{ 'from-12-years' | translate }}</p>
       </div>
       <p-inputNumber
         [showButtons]="true"
@@ -132,8 +134,8 @@
     </div>
     <div class="flex justify-content-between mt-8">
       <div>
-        <h3 class="m-0 p-0">Kinder</h3>
-        <p class="active:text-gray-50 m-0 p-0 mt-1">2 bis 11 Jahre</p>
+        <h3 class="m-0 p-0">{{ 'children' | translate }}</h3>
+        <p class="active:text-gray-50 m-0 p-0 mt-1">{{ '2-to-11-years' | translate }}</p>
       </div>
       <p-inputNumber
         [showButtons]="true"
@@ -147,8 +149,8 @@
     </div>
     <div class="flex justify-content-between mt-8">
       <div>
-        <h3 class="m-0 p-0">Kleinkinder</h3>
-        <p class="active:text-gray-50 m-0 p-0 mt-1">0 bis 23 Monate</p>
+        <h3 class="m-0 p-0">{{ 'babies' | translate }}</h3>
+        <p class="active:text-gray-50 m-0 p-0 mt-1">{{ '0-to-23-months' | translate }}</p>
       </div>
       <p-inputNumber
         [showButtons]="true"
@@ -162,7 +164,7 @@
       />
     </div>
     <p class="mt-4">
-      Die Anzahl der mitreisenden Kleinkinder darf die der Erwachsenen nicht überschreiten.
+      {{ 'babies-max-info' | translate }}
     </p>
   </div>
 </p-sidebar>

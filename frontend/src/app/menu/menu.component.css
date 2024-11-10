@@ -1,18 +1,10 @@
-.sidebar-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 7px;
-}
-.header-class .erste-close-icon {
-  display: none;
+::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close, .p-sidebar .p-sidebar-header .p-sidebar-icon {
+  width: 3.3rem;
+  height: 5rem;
 }
 
-.close-icon{
-  font-size: 22px;
-}
-
-
-.menu-list li:hover {
-  background-color: #5c5cff;
-  border-radius: 4px;
+::ng-deep .p-sidebar-header .p-icon{
+  width: 1.7rem;
+  height: 1.7rem;
+  color: #303030;
 }

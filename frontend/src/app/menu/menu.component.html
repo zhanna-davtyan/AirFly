@@ -17,18 +17,11 @@
 </div>
 
 <p-sidebar
-  [(visible)]="visibleSidebar"
-  [baseZIndex]="10000"
-  [position]="'right'"
-  [modal]="false"
-  [showCloseIcon]="false"
-  class="custom-sidebar"
+  [(visible)]="isSidebarVisible"
+  position="right"
 >
-  <div class="sidebar-header">
-    <i class="pi pi-times close-icon" (click)="toggleSidebar()"></i>
-  </div>
   <div style="font-size: 18px; font-weight: bold;">
-    <p (click)="goToBookNewFlight()">{{ 'book' | translate }}</p>
+    <p (click)="navigateToBookNewFlight()">{{ 'book' | translate }}</p>
     <p (click)="adminOp.toggle($event)">Admin</p>
   </div>
   <p-divider></p-divider>
@@ -37,7 +30,7 @@
       <i
         class="fw-bold pi pi-globe text-dark"
         style="font-size: 24px;"
-        (click)="op.toggle($event)"
+        (click)="languageOp.toggle($event)"
       ></i>
     </div>
     <div class="flex">
@@ -54,19 +47,22 @@
   </div>
 </p-sidebar>
 
-<p-overlayPanel #op>
-  <p-dropdown
-    [(ngModel)]="selectedLanguage"
-    optionLabel="label"
-    optionValue="value"
-    [options]="languageOptions"
-    (onChange)="onLanguageChange($event)">
-  </p-dropdown>
-</p-overlayPanel>
+@if (isSidebarVisible) {
+  <div>
+    <p-overlayPanel #languageOp>
+      <p-dropdown
+        [(ngModel)]="selectedLanguage"
+        optionLabel="label"
+        optionValue="value"
+        [options]="languageOptions"
+        (onChange)="onLanguageChange($event)">
+      </p-dropdown>
+    </p-overlayPanel>
+  </div>
 
-<div *ngIf="visibleSidebar">
-  <p-overlayPanel #adminOp>
-    <span class="border-bottom-1" style="font-size: 16px" (click)="goToAllFlights()">All flights</span>
-  </p-overlayPanel>
-</div>
-
+  <div>
+    <p-overlayPanel #adminOp>
+      <span class="border-bottom-1" style="font-size: 16px" (click)="navigateToAllFlights()">All flights</span>
+    </p-overlayPanel>
+  </div>
+}

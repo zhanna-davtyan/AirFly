@@ -1,7 +1,6 @@
 package com.airfly.backend.passenger;
 
 
-import com.airfly.backend.booking.Booking;
 import com.airfly.backend.common.service.EntityNotInsertedException;
 import org.springframework.stereotype.Service;
 

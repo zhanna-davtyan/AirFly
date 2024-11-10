@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import {Router, RouterModule} from '@angular/router';
-import { MenuSidebarService } from './menu-sidebar.service';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -48,21 +47,18 @@ export class MenuComponent implements OnInit {
   theme: string | null = localStorage.getItem('theme');
   darkTheme!: boolean;
 
-  visibleSidebar: boolean = false;
+  isSidebarVisible: boolean = false;
   @ViewChild('adminOp') adminOp!: OverlayPanel;
+  @ViewChild('languageOp') languageOp!: OverlayPanel;
+
 
   constructor(
-    private menuSideBarService: MenuSidebarService,
     private themeService: ThemeService,
     private translateService: TranslateService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.menuSideBarService.isSidebarVisible$.subscribe((value) => {
-      this.visibleSidebar = value;
-    });
-
     this.translateService.addLangs(this.availableLanguages);
     if (this.selectedLanguage == null) {
       this.selectedLanguage = 'en'; // Default
@@ -104,11 +100,7 @@ export class MenuComponent implements OnInit {
   }
 
   toggleSidebar() {
-    this.visibleSidebar = !this.visibleSidebar;
-    this.menuSideBarService.toggleSidebar();
-    setTimeout(() => {
-      document.getElementById('main-content')?.focus();
-    });
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 
   changeTheme(event: any) {
@@ -123,12 +115,12 @@ export class MenuComponent implements OnInit {
     }
   }
 
-  goToBookNewFlight() {
+  navigateToBookNewFlight() {
     this.toggleSidebar();
     this.router.navigate(['search-flight']);
   }
 
-  goToAllFlights(){
+  navigateToAllFlights(){
     this.toggleSidebar();
     this.router.navigate(['all-flights']);
   }

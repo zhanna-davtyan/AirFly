@@ -1,5 +1,5 @@
 <p-messages/>
-<div class="container" [ngClass]="{'blur-background': isSidebarVisible}">
+<div class="container">
   <app-menu class="mb-5" *ngIf="shouldShowMenuAndFooter()"></app-menu>
   <div class="content">
     <router-outlet></router-outlet>

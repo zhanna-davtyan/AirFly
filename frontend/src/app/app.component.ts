@@ -5,7 +5,6 @@ import {MessageModule} from 'primeng/message';
 import {MessagesModule} from 'primeng/messages';
 import {FlightSearchComponent} from './flight/flight-search/flight-search.component';
 import {LandingPageComponent} from './landing-page/landing-page.component';
-import {MenuSidebarService} from './menu/menu-sidebar.service';
 import {CommonModule} from '@angular/common';
 import {FooterComponent} from './footer/footer.component';
 import {MenuComponent} from './menu/menu.component';
@@ -30,14 +29,9 @@ import {MenuComponent} from './menu/menu.component';
 })
 export class AppComponent {
   title = 'frontend';
-  isSidebarVisible: boolean = false;
 
   constructor(
-    private menuSidebarService: MenuSidebarService,
     private router: Router) {
-    this.menuSidebarService.isSidebarVisible$.subscribe((value) => {
-      this.isSidebarVisible = value;
-    });
   }
 
   shouldShowMenuAndFooter(): boolean {
