@@ -1,23 +1,71 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {AbstractCrudService} from "../common/service/abstract-crud.service";
 import {Booking} from "./booking.model";
-import {Observable} from "rxjs";
+import {Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BookingForInsert} from "./booking-for-insert.model";
+import {Router} from "@angular/router";
+import {toNumber} from "lodash";
+import {Passenger} from "../passenger/passenger.model";
+import {FormGroup} from "@angular/forms";
 
 
 @Injectable({providedIn: 'root'})
-export class BookingService extends AbstractCrudService<Booking> {
+export class BookingService extends AbstractCrudService<Booking>{
 
-  constructor(httpClient: HttpClient) {
+  numberOfSteps: Subject<number> = new Subject<number>();
+  currentStep: Subject<number> = new Subject<number>();
+  currentStepDescription: Subject<string> = new Subject<string>();
+
+  travelInsurance!: boolean;
+  passengers!: Passenger[];
+  selectedOutwardFlightId!: number;
+  selectedOutwardCategoryId!: number;
+  selectedReturnFlightId!: number;
+  selectedReturnCategoryId!: number;
+
+
+  constructor(httpClient: HttpClient, private router: Router) {
     super(httpClient, "bookings");
   }
 
-  submitOrder(bookingForInsert: BookingForInsert): Observable<BookingForInsert> {
-    return this.httpClient
-      .post<BookingForInsert>(this.URL_FOR_TYPE + '/submit-order', bookingForInsert);
+  updateCurrentStep(currentStep: number){
+    this.currentStep.next(currentStep);
+    localStorage.setItem('current_step', currentStep.toString());
   }
 
+  updateCurrentStepDescription(currentStepDescription: string){
+    this.currentStepDescription.next(currentStepDescription);
+    localStorage.setItem('current_step_description', currentStepDescription);
+  }
+
+  submitOrder(billingAddressForm: FormGroup){
+    let booking = new BookingForInsert(
+      this.travelInsurance,
+      this.passengers,
+      this.selectedOutwardFlightId,
+      this.selectedOutwardCategoryId,
+      this.selectedReturnFlightId,
+      this.selectedReturnCategoryId,
+      billingAddressForm.get('billingFirstname')?.value,
+      billingAddressForm.get('billingLastname')?.value,
+      billingAddressForm.get('billingPostcode')?.value,
+      billingAddressForm.get('billingCity')?.value,
+      billingAddressForm.get('billingStreet')?.value,
+      billingAddressForm.get('billingHousenumber')?.value,
+    )
+    console.log(booking);
+    this.deleteBookingDataFromLocalStorage();
+    return this.httpClient
+      .post<BookingForInsert>(this.URL_FOR_TYPE + '/submit-order', booking).subscribe({
+        next: () => {
+          this.router.navigate(['/booking-success'])
+        },
+        error: () => {
+          this.router.navigate(['/error'])
+        }
+      });
+  }
 
   jsonToDto(json: any): Booking {
     return new Booking(
@@ -34,6 +82,27 @@ export class BookingService extends AbstractCrudService<Booking> {
       json.billingStreet,
       json.billingHousenumber
     )
+  }
+
+  deleteBookingDataFromLocalStorage(){
+    localStorage.removeItem('departure_airport_id');
+    localStorage.removeItem('outward_category_id');
+    localStorage.removeItem('outward_flight_id');
+    localStorage.removeItem('outward_flight_time');
+
+    localStorage.removeItem('arrival_airport_id');
+    localStorage.removeItem('return_category_id');
+    localStorage.removeItem('return_flight_id');
+    localStorage.removeItem('return_flight_time');
+
+    localStorage.removeItem('adults');
+    localStorage.removeItem('children');
+    localStorage.removeItem('babies');
+
+    localStorage.removeItem('current_step');
+    localStorage.removeItem('current_step_description');
+    localStorage.removeItem('passengers');
+    localStorage.removeItem('travel_insurance');
   }
 
 }

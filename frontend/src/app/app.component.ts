@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {CalendarModule} from 'primeng/calendar';
 import {MessageModule} from 'primeng/message';
@@ -35,6 +35,6 @@ export class AppComponent {
   }
 
   shouldShowMenuAndFooter(): boolean {
-    return this.router.url !== '/select-flight';
+    return this.router.url !== '/book-flight';
   }
 }

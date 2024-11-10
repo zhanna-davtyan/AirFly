@@ -11,6 +11,7 @@
             [options]="filteredDepartureOptions"
             (onChange)="onAirportClear()"
             [showClear]="true"
+            appendTo="body"
             (onClear)="onAirportClear()"
             id="departure-airport"
             inputId="departure-airport"/>
@@ -30,6 +31,7 @@
             (onChange)="onAirportClear()"
             [options]="filteredArrivalOptions"
             (onClear)="onAirportClear()"
+            appendTo="body"
             [showClear]="true"
             id="arrival-airport"
             inputId="arrival-airport"/>

@@ -116,7 +116,7 @@ html {
 .p-messages {
   position: fixed;
   bottom: 5px;
-  z-index: 99999;
+  z-index: 3;
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
@@ -196,15 +196,12 @@ html {
 }
 
 .modify-flight .p-accordion-content {
-  position: absolute;
-  top: 142px;
   width: 100%;
-  z-index: 1;
 }
 
 .modify-flight{
   box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
-  z-index: 555;
+  z-index: 3;
 }
 
 .modify-flight .p-accordion-content{
@@ -257,7 +254,23 @@ footer {
   height: 100px;
 }
 
-.p-component-overlay.p-sidebar-mask.p-component-overlay {
+.continue{
+  width: 100vw;
+  height: 9vh;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.continue button {
+  width: 90%;
+  height: 3.5em;
+}
+
+.p-component-overlay {
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
 }

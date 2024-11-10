@@ -1,0 +1,12 @@
+.passenger-info-holder {
+  padding-bottom: 13vh;
+}
+
+::ng-deep .passenger-info-card p-card{
+  width: 90%;
+}
+
+::ng-deep .passenger-info-card p-card .p-card-content{
+  padding-top: 0;
+  padding-bottom: 0;
+}

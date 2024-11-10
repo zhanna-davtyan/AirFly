@@ -128,7 +128,7 @@ export class FlightSearchComponent implements OnInit {
           this.updateFilteredOptions();
         });
 
-        if (this.router.url.includes('/select-flight')) {
+        if (this.router.url.includes('/book-flight')) {
           this.formGroup.get('departureAirportId')?.setValue(toNumber(localStorage.getItem("departure_airport_id")));
           this.formGroup.get('arrivalAirportId')?.setValue(toNumber(localStorage.getItem("arrival_airport_id")));
           this.formGroup.get('outwardFlightTime')?.setValue(new Date(toNumber(localStorage.getItem("outward_flight_time")!)));
@@ -185,10 +185,10 @@ export class FlightSearchComponent implements OnInit {
     localStorage.removeItem("return_category_id");
     localStorage.removeItem("travel_insurance");
     localStorage.removeItem("passengers");
-    if(this.router.url.includes('/select-flight')){
+    if(this.router.url.includes('/book-flight')){
       window.location.reload()
     }
-    this.router.navigate(['/select-flight']);
+    this.router.navigate(['/book-flight']);
   }
 
   checkFieldsAndShowPassengers() {

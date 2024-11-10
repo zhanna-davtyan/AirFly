@@ -1,0 +1,15 @@
+::ng-deep .p-inputnumber {
+  width: 100%;
+}
+
+::ng-deep .p-fieldset{
+  width: 90%;
+}
+
+app-flight-select{
+  z-index: 2000;
+}
+
+app-flight-search{
+  z-index: 5000;
+}

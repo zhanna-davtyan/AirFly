@@ -11,6 +11,7 @@
 .category-header{
   border-radius: 7px 7px 0 0;
 }
+
 .category-header{
   padding: 15px;
 }
@@ -19,56 +20,11 @@
   display: none;
 }
 
-.continue{
-  width: 100vw;
-  height: 9vh;
-  position: fixed;
-  bottom: 0;
-  z-index: 999;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.continue button {
-  width: 90%;
-  height: 3.5em;
-}
-
-.flight-select-holder, .passenger-info-holder {
+.flight-select-holder{
   padding-bottom: 13vh;
 }
 
-::ng-deep .passenger-info-card p-card{
-  width: 90%;
-}
-
-::ng-deep .passenger-info-card p-card .p-card-content{
-  padding-top: 0;
-  padding-bottom: 0;
-}
-
-::ng-deep .travel-insurance-holder p-card{
-  width: 90%;
-}
-
-::ng-deep .travel-insurance-holder .p-card-content{
-  padding-top: 0;
-}
-
-::ng-deep .insurance-info .pi {
-  font-weight: bold;
-  color: #00875A;
-  background: rgba(0, 135, 90, 0.2);
-  padding: 5px;
-  border-radius: 100%;
-}
-
-::ng-deep .p-inputnumber {
-  width: 100%;
-}
-
-::ng-deep .p-fieldset{
-  width: 90%;
+app-flight-search .p-sidebar{
+  z-index: 9999;
+  position: relative;
 }
