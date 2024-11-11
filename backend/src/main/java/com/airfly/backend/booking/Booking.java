@@ -1,9 +1,9 @@
 package com.airfly.backend.booking;
 
 import com.airfly.backend.bookingflightmapping.BookingFlightMapping;
-import com.airfly.backend.category.Category;
 import com.airfly.backend.passenger.Passenger;
 import com.airfly.backend.user.User;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -75,9 +75,11 @@ public class Booking {
     private String billingHousenumber;
 
     @OneToMany(mappedBy = "booking")
+    @JsonManagedReference
     private List<Passenger> passengers;
 
     @OneToMany(mappedBy = "booking")
+    @JsonManagedReference
     private List<BookingFlightMapping> bookingFlightMappings;
 }
 

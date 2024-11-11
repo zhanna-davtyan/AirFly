@@ -2,6 +2,7 @@ package com.airfly.backend.user;
 
 
 import com.airfly.backend.booking.Booking;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -36,12 +37,14 @@ public class User implements UserDetails {
     @Column(name = "email")
     private String email;
 
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 
     @Column(name = "role")
     private String role;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Booking> bookings;
 

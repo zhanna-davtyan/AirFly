@@ -6,12 +6,14 @@ export class BookingFlightMapping {
   id: number;
   booking: Booking;
   flight: Flight;
-  category: Category
+  category: Category;
+  type: string;
 
-  constructor(id: number, booking: Booking, flight: Flight, category: Category) {
+  constructor(id: number, booking: Booking, flight: Flight, category: Category, type: string) {
     this.id = id;
     this.booking = booking;
     this.flight = flight;
     this.category = category;
+    this.type = type;
   }
 }

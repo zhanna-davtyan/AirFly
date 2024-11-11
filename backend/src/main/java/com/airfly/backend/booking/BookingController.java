@@ -1,13 +1,12 @@
 package com.airfly.backend.booking;
 
 
-import com.airfly.backend.flight.Flight;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("bookings")
@@ -27,5 +26,20 @@ public class BookingController {
         else {
             return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.submitOrder(dto));
         }
+    }
+    @GetMapping("{id}")
+    public ResponseEntity<Booking> getById(@PathVariable("id") final long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.getById(id));
+    }
+
+    @GetMapping("get-all-by-user")
+    public ResponseEntity<List<Booking>> getAllByUser() {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAllByUser());
+    }
+
+    @GetMapping("")
+    @PreAuthorize("hasRole('Admin')")
+    public ResponseEntity<List<Booking>> getALl() {
+        return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAll());
     }
 }

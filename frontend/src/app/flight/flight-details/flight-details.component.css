@@ -32,3 +32,13 @@
     max-width: 200px;
   }
 }
+
+::ng-deep .p-dynamic-dialog > .p-dialog-header *{
+  display: none;
+}
+
+::ng-deep .p-dynamic-dialog > .p-dialog-header{
+  padding: 0;
+  height: 8px;
+  border-bottom: none;
+}

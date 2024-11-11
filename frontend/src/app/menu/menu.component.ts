@@ -120,9 +120,19 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['search-flight']);
   }
 
+  navigateToMyBookings() {
+    this.toggleSidebar();
+    this.router.navigate(['my-bookings']);
+  }
+
   navigateToAllFlights(){
     this.toggleSidebar();
     this.router.navigate(['all-flights']);
+  }
+
+  navigateToAllBookings(){
+    this.toggleSidebar();
+    this.router.navigate(['all-bookings']);
   }
 
 }

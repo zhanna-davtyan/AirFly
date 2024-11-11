@@ -118,7 +118,34 @@ footer{
 
 .basic-background{
   background: #dddddd;
-  color: black;
+  color: #303030;
+}
+
+.BASIC-span{
+  background: #dddddd;
+  color: #303030;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.STANDARD-span{
+  background: #3B82F6;
+  color: #dddddd;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.PREMIUM-span{
+  background: #891b55;
+  color: #dcdcdc;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
 }
 
 .flight-select-header{

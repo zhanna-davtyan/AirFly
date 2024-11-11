@@ -1,3 +1,4 @@
+<h2 class="mt-0 ml-3">{{'all-flights' | translate }}</h2>
 <p-toolbar class="mr-2" [style]="{ width: '95%', margin: '0 auto' }">
     <span class="p-input-icon-left" style="width: 90vw;">
       <i class="pi pi-search"></i>
@@ -133,7 +134,7 @@
       <tr [pSelectableRow]="row">
         <td *ngFor="let column of columns" [ngSwitch]="column.field"
             (click)="this.openDynamicDialogDetails(false, row)">
-          <span *ngSwitchCase="'flightNumber'">{{ row.flightNumber }}</span>
+          <span *ngSwitchCase="'flightNumber'">#FN{{ row.flightNumber }}</span>
           <span *ngSwitchCase="'departureAirport.code'">{{ row.departureAirport?.code }}</span>
           <span *ngSwitchCase="'arrivalAirport.code'">{{ row.arrivalAirport?.code }}</span>
         </td>

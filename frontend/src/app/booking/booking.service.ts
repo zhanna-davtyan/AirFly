@@ -1,17 +1,15 @@
-import {Injectable, OnInit} from "@angular/core";
+import {Injectable} from "@angular/core";
 import {AbstractCrudService} from "../common/service/abstract-crud.service";
 import {Booking} from "./booking.model";
 import {Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BookingForInsert} from "./booking-for-insert.model";
-import {Router} from "@angular/router";
-import {toNumber} from "lodash";
 import {Passenger} from "../passenger/passenger.model";
 import {FormGroup} from "@angular/forms";
 
 
 @Injectable({providedIn: 'root'})
-export class BookingService extends AbstractCrudService<Booking>{
+export class BookingService extends AbstractCrudService<Booking> {
 
   numberOfSteps: Subject<number> = new Subject<number>();
   currentStep: Subject<number> = new Subject<number>();
@@ -25,21 +23,21 @@ export class BookingService extends AbstractCrudService<Booking>{
   selectedReturnCategoryId!: number;
 
 
-  constructor(httpClient: HttpClient, private router: Router) {
+  constructor(httpClient: HttpClient) {
     super(httpClient, "bookings");
   }
 
-  updateCurrentStep(currentStep: number){
+  updateCurrentStep(currentStep: number) {
     this.currentStep.next(currentStep);
     localStorage.setItem('current_step', currentStep.toString());
   }
 
-  updateCurrentStepDescription(currentStepDescription: string){
+  updateCurrentStepDescription(currentStepDescription: string) {
     this.currentStepDescription.next(currentStepDescription);
     localStorage.setItem('current_step_description', currentStepDescription);
   }
 
-  submitOrder(billingAddressForm: FormGroup){
+  submitOrder(billingAddressForm: FormGroup) {
     let booking = new BookingForInsert(
       this.travelInsurance,
       this.passengers,
@@ -54,22 +52,15 @@ export class BookingService extends AbstractCrudService<Booking>{
       billingAddressForm.get('billingStreet')?.value,
       billingAddressForm.get('billingHousenumber')?.value,
     )
-    console.log(booking);
     this.deleteBookingDataFromLocalStorage();
     return this.httpClient
-      .post<BookingForInsert>(this.URL_FOR_TYPE + '/submit-order', booking).subscribe({
-        next: () => {
-          this.router.navigate(['/booking-success'])
-        },
-        error: () => {
-          this.router.navigate(['/error'])
-        }
-      });
+      .post<number>(this.URL_FOR_TYPE + '/submit-order', booking)
   }
 
   jsonToDto(json: any): Booking {
     return new Booking(
       json.id,
+      json.user,
       json.totalPrice,
       json.travelInsurance,
       json.category,
@@ -84,7 +75,7 @@ export class BookingService extends AbstractCrudService<Booking>{
     )
   }
 
-  deleteBookingDataFromLocalStorage(){
+  deleteBookingDataFromLocalStorage() {
     localStorage.removeItem('departure_airport_id');
     localStorage.removeItem('outward_category_id');
     localStorage.removeItem('outward_flight_id');

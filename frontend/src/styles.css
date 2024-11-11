@@ -93,16 +93,6 @@ html {
   visibility: hidden !important;
 }
 
-.p-dynamic-dialog > .p-dialog-header *{
-  display: none;
-}
-
-.p-dynamic-dialog > .p-dialog-header{
-  padding: 0;
-  height: 8px;
-  border-bottom: none;
-}
-
 .close-icon {
   cursor: pointer;
   padding: 5px;

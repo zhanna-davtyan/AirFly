@@ -18,6 +18,7 @@ import {ChipsModule} from "primeng/chips";
 import {PaginatorModule} from "primeng/paginator";
 import {ButtonDirective} from "primeng/button";
 import {toNumber} from "lodash";
+import {BookingDetailsComponent} from "../booking-details/booking-details.component";
 
 @Component({
   selector: 'app-booking-select',
@@ -38,7 +39,8 @@ import {toNumber} from "lodash";
     ReactiveFormsModule,
     NgIf,
     PaginatorModule,
-    ButtonDirective
+    ButtonDirective,
+    BookingDetailsComponent
   ],
   templateUrl: './booking-select.component.html',
   styleUrl: './booking-select.component.css'
@@ -49,6 +51,7 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   numberOfSteps!: number;
   currentStepDescription!: string;
   billingAddressForm!: FormGroup;
+  bookingId!: number;
 
   constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router) {
     super()
@@ -119,7 +122,13 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   }
 
   submitOrder() {
-    this.bookingService.submitOrder(this.billingAddressForm);
+    this.bookingService.submitOrder(this.billingAddressForm).subscribe({
+      next: (bookingId: number) => {
+        this.bookingId = bookingId;
+      },
+      error: () => {
+        this.router.navigate(['/error'])
+      }
+    });
   }
-
 }

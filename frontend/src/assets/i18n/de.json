@@ -47,6 +47,7 @@
   "confirm-cancel": "Wircklich abbrechen?",
   "unable-to-alter": "Dieser Flug hat bereits bestehende Buchungen, weshalb nicht editiert oder gelöscht werden kann. Bitte melden Sie sich bei Ihren Kollegen aus der Flugstornierungsabteilung.",
   "adult": "Erwachsener",
+  "adult-special": "Erwachsenen",
   "adults": "Erwachsene",
   "child": "Kind",
   "children": "Kinder",
@@ -113,5 +114,12 @@
   "privacy-policy": "Datenschutz",
   "contact": "Kontakt",
   "go-back-home": "Zurück",
-  "error-page-text": "Oops! Etwas ist schief gelaufen..."
+  "error-page-text": "Oops! Etwas ist schief gelaufen...",
+  "all-bookings": "Alle Buchungen",
+  "my-bookings": "Meine Buchungen",
+  "all-flights": "Alle Flüge",
+  "e-mail": "E-Mail",
+  "booking-with-id": "Buchung mit der ID:",
+  "category": "Kategorie",
+  "plane-ticket": "Flugticket"
 }

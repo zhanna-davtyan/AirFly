@@ -1,9 +1,11 @@
 import {Passenger} from "../passenger/passenger.model";
 import {Category} from "../category/category.model";
 import {BookingFlightMapping} from "../bookingflightmapping/booking-flight-mapping.model";
+import {User} from "../User/user.model";
 
 export class Booking {
   id: number;
+  user: User;
   totalPrice: number;
   travelInsurance: boolean;
   category: Category;
@@ -18,6 +20,7 @@ export class Booking {
 
   constructor(
     id: number,
+    user: User,
     totalPrice: number,
     travelInsurance: boolean,
     category: Category,
@@ -31,6 +34,7 @@ export class Booking {
     billingHousenumber: string
   ) {
     this.id = id;
+    this.user = user;
     this.totalPrice = totalPrice;
     this.travelInsurance = travelInsurance;
     this.category = category;

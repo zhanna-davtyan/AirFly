@@ -22,6 +22,7 @@
 >
   <div style="font-size: 18px; font-weight: bold;">
     <p (click)="navigateToBookNewFlight()">{{ 'book' | translate }}</p>
+    <p (click)="navigateToMyBookings()">{{ 'my-bookings' | translate }}</p>
     <p (click)="adminOp.toggle($event)">Admin</p>
   </div>
   <p-divider></p-divider>
@@ -62,7 +63,10 @@
 
   <div>
     <p-overlayPanel #adminOp>
-      <span class="border-bottom-1" style="font-size: 16px" (click)="navigateToAllFlights()">All flights</span>
+      <div class="flex flex-column">
+        <span class="mb-3 underline" style="font-size: 16px" (click)="navigateToAllFlights()">{{ 'all-flights' | translate }}</span>
+        <span class="underline" style="font-size: 16px" (click)="navigateToAllBookings()">{{ 'all-bookings' | translate }}</span>
+      </div>
     </p-overlayPanel>
   </div>
 }

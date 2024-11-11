@@ -2,115 +2,121 @@
   <div class="flex justify-content-center align-items-center" routerLink="">
     <img src="/assets/img/AirFly_Logo1.png" class="mt-4" style="width: 80px; height: 80px" alt="">
   </div>
-  <div class="flex align-items-center mr-4 mt-2">
-    <p-avatar
-      label="{{currentStep}}"
-      styleClass="mr-2"
-      [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
-    <p class="m-0 p-0 font-bold" style="font-size:1.2em">
-      {{ currentStepDescription | translate }}
-    </p>
-  </div>
+  @if (!bookingId) {
+    <div class="flex align-items-center mr-4 mt-2">
+      <p-avatar
+        label="{{currentStep}}"
+        styleClass="mr-2"
+        [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
+      <p class="m-0 p-0 font-bold" style="font-size:1.2em">
+        {{ currentStepDescription | translate }}
+      </p>
+    </div>
+  }
   <div class="mr-3 mt-2">
     <i style="font-size: 30px;" class="pi pi-user"></i>
   </div>
 </header>
-<p-tabView [activeIndex]="currentStep - 1">
-  <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
-  </p-tabPanel>
-</p-tabView>
-@if (currentStep === 1 || currentStep === 2 && numberOfSteps === 5) {
-  <app-flight-select></app-flight-select>
-}
-@if (currentStep === 2 && numberOfSteps === 4 || currentStep === 3 && numberOfSteps === 5) {
-  <app-passenger-select></app-passenger-select>
-}
-@if (currentStep === 3 && numberOfSteps === 4 || currentStep === 4 && numberOfSteps === 5) {
-  <app-travel-insurance-select></app-travel-insurance-select>
-}
-@if (currentStep === 4 && numberOfSteps === 4 || currentStep === 5 && numberOfSteps === 5) {
-  <p-fieldset legend="{{'billing-address' | translate}}" class="flex justify-content-center mt-5"
-              [formGroup]="billingAddressForm">
-    <div>
-      <p-floatLabel>
-        <input class="w-full" id="billingFirstname" type="text" pInputText formControlName="billingFirstname"/>
-        <label for="billingFirstname">{{ "firstname" | translate }}</label>
-      </p-floatLabel>
-      <div style="min-height: 20px;">
-        <small *ngIf="billingAddressForm.get('billingFirstname')?.invalid"
-               class="p-error ml-2">{{ "firstname-required" | translate }}</small>
+@if (bookingId) {
+  <app-booking-details [bookingIdFromSuccessPage]="bookingId"></app-booking-details>
+} @else {
+  <p-tabView [activeIndex]="currentStep - 1">
+    <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
+    </p-tabPanel>
+  </p-tabView>
+  @if (currentStep === 1 || currentStep === 2 && numberOfSteps === 5) {
+    <app-flight-select></app-flight-select>
+  }
+  @if (currentStep === 2 && numberOfSteps === 4 || currentStep === 3 && numberOfSteps === 5) {
+    <app-passenger-select></app-passenger-select>
+  }
+  @if (currentStep === 3 && numberOfSteps === 4 || currentStep === 4 && numberOfSteps === 5) {
+    <app-travel-insurance-select></app-travel-insurance-select>
+  }
+  @if (currentStep === 4 && numberOfSteps === 4 || currentStep === 5 && numberOfSteps === 5) {
+    <p-fieldset legend="{{'billing-address' | translate}}" class="flex justify-content-center mt-5"
+                [formGroup]="billingAddressForm">
+      <div>
+        <p-floatLabel>
+          <input class="w-full" id="billingFirstname" type="text" pInputText formControlName="billingFirstname"/>
+          <label for="billingFirstname">{{ "firstname" | translate }}</label>
+        </p-floatLabel>
+        <div style="min-height: 20px;">
+          <small *ngIf="billingAddressForm.get('billingFirstname')?.invalid"
+                 class="p-error ml-2">{{ "firstname-required" | translate }}</small>
+        </div>
       </div>
-    </div>
-    <div class="mt-5">
-      <p-floatLabel>
-        <input class="w-full" id="billingLastname" type="text" pInputText formControlName="billingLastname"/>
-        <label for="billingLastname">{{ "lastname" | translate }}</label>
-      </p-floatLabel>
-      <div style="min-height: 20px;">
-        <small *ngIf="billingAddressForm.get('billingLastname')?.invalid"
-               class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+      <div class="mt-5">
+        <p-floatLabel>
+          <input class="w-full" id="billingLastname" type="text" pInputText formControlName="billingLastname"/>
+          <label for="billingLastname">{{ "lastname" | translate }}</label>
+        </p-floatLabel>
+        <div style="min-height: 20px;">
+          <small *ngIf="billingAddressForm.get('billingLastname')?.invalid"
+                 class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+        </div>
       </div>
-    </div>
-    <div class="mt-5">
-      <p-floatLabel>
-        <p-inputNumber inputId="integeronly" [useGrouping]="false" class="w-full" id="billingPostcode"
-                       formControlName="billingPostcode"/>
-        <label for="billingPostcode">{{ "postcode" | translate }}</label>
-      </p-floatLabel>
-      <div style="min-height: 20px;">
-        <small *ngIf="billingAddressForm.get('billingPostcode')?.invalid"
-               class="p-error ml-2">{{ "postcode-required" | translate }}</small>
+      <div class="mt-5">
+        <p-floatLabel>
+          <p-inputNumber inputId="integeronly" [useGrouping]="false" class="w-full" id="billingPostcode"
+                         formControlName="billingPostcode"/>
+          <label for="billingPostcode">{{ "postcode" | translate }}</label>
+        </p-floatLabel>
+        <div style="min-height: 20px;">
+          <small *ngIf="billingAddressForm.get('billingPostcode')?.invalid"
+                 class="p-error ml-2">{{ "postcode-required" | translate }}</small>
+        </div>
       </div>
-    </div>
-    <div class="mt-5">
-      <p-floatLabel>
-        <input class="w-full" id="billingCity" type="text" pInputText formControlName="billingCity"/>
-        <label for="billingCity">{{ "city" | translate }}</label>
-      </p-floatLabel>
-      <div style="min-height: 20px;">
-        <small *ngIf="billingAddressForm.get('billingCity')?.invalid"
-               class="p-error ml-2">{{ "city-required" | translate }}</small>
+      <div class="mt-5">
+        <p-floatLabel>
+          <input class="w-full" id="billingCity" type="text" pInputText formControlName="billingCity"/>
+          <label for="billingCity">{{ "city" | translate }}</label>
+        </p-floatLabel>
+        <div style="min-height: 20px;">
+          <small *ngIf="billingAddressForm.get('billingCity')?.invalid"
+                 class="p-error ml-2">{{ "city-required" | translate }}</small>
+        </div>
       </div>
-    </div>
-    <div class="mt-5">
-      <p-floatLabel>
-        <input class="w-full" id="billingStreet" type="text" pInputText formControlName="billingStreet"/>
-        <label for="billingStreet">{{ "street" | translate }}</label>
-      </p-floatLabel>
-      <div style="min-height: 20px;">
-        <small *ngIf="billingAddressForm.get('billingStreet')?.invalid"
-               class="p-error ml-2">{{ "street-required" | translate }}</small>
+      <div class="mt-5">
+        <p-floatLabel>
+          <input class="w-full" id="billingStreet" type="text" pInputText formControlName="billingStreet"/>
+          <label for="billingStreet">{{ "street" | translate }}</label>
+        </p-floatLabel>
+        <div style="min-height: 20px;">
+          <small *ngIf="billingAddressForm.get('billingStreet')?.invalid"
+                 class="p-error ml-2">{{ "street-required" | translate }}</small>
+        </div>
       </div>
-    </div>
-    <div class="mt-5">
-      <p-floatLabel>
-        <p-inputNumber [useGrouping]="false" inputId="integeronly" class="w-full" id="billingHousenumber"
-                       formControlName="billingHousenumber"/>
-        <label for="billingHousenumber">{{ "housenumber" | translate }}</label>
-      </p-floatLabel>
-      <div style="min-height: 20px;">
-        <small *ngIf="billingAddressForm.get('billingHousenumber')?.invalid"
-               class="p-error ml-2">{{ "housenumber-required" | translate }}</small>
+      <div class="mt-5">
+        <p-floatLabel>
+          <p-inputNumber [useGrouping]="false" inputId="integeronly" class="w-full" id="billingHousenumber"
+                         formControlName="billingHousenumber"/>
+          <label for="billingHousenumber">{{ "housenumber" | translate }}</label>
+        </p-floatLabel>
+        <div style="min-height: 20px;">
+          <small *ngIf="billingAddressForm.get('billingHousenumber')?.invalid"
+                 class="p-error ml-2">{{ "housenumber-required" | translate }}</small>
+        </div>
       </div>
+    </p-fieldset>
+    <div class="w-full flex justify-content-center mt-5">
+      <button (click)="submitOrder()" pButton style="width: 90%;" label="{{'pay-now' | translate }}"
+              [disabled]="billingAddressForm.invalid"></button>
     </div>
-  </p-fieldset>
-  <div class="w-full flex justify-content-center mt-5">
-    <button (click)="submitOrder()" pButton style="width: 90%;" label="{{'pay-now' | translate }}"
-            [disabled]="billingAddressForm.invalid"></button>
-  </div>
-  <div class="continue">
-    <button
-      style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-      pButton
-      (click)="goBack()"
-    >
-      <i style="font-size: 2rem" class="pi pi-angle-left"></i>
-    </button>
-    <button
-      style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-      pButton
-      [disabled]="isContinueButtonDisabled()">
-      <i style="font-size: 2rem" class="pi pi-angle-right"></i>
-    </button>
-  </div>
+    <div class="continue">
+      <button
+        style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
+        pButton
+        (click)="goBack()"
+      >
+        <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+      </button>
+      <button
+        style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
+        pButton
+        [disabled]="isContinueButtonDisabled()">
+        <i style="font-size: 2rem" class="pi pi-angle-right"></i>
+      </button>
+    </div>
+  }
 }
