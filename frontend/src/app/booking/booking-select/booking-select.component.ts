@@ -1,17 +1,19 @@
 import {Component, OnInit} from '@angular/core';
 import {AvatarModule} from "primeng/avatar";
-import {NgForOf, NgIf} from "@angular/common";
-import {Router, RouterLink} from "@angular/router";
+import {NgForOf, NgIf, NgStyle} from "@angular/common";
+import {NavigationStart, Router, RouterLink} from "@angular/router";
 import {TabViewModule} from "primeng/tabview";
 import {TranslateModule} from "@ngx-translate/core";
-import {takeUntil} from "rxjs";
+import {Subscription, takeUntil} from "rxjs";
 import {BookingService} from "../booking.service";
 import {BaseComponent} from "../../common/components/base/base.component";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {SidebarModule} from "primeng/sidebar";
 import {FlightSelectComponent} from "../../flight/flight-select/flight-select.component";
 import {PassengerSelectComponent} from "../../passenger/passenger-select/passenger-select.component";
-import {TravelInsuranceSelectComponent} from "../../travel-insurance/travel-insurance-select/travel-insurance-select.component";
+import {
+  TravelInsuranceSelectComponent
+} from "../../travel-insurance/travel-insurance-select/travel-insurance-select.component";
 import {FieldsetModule} from "primeng/fieldset";
 import {FloatLabelModule} from "primeng/floatlabel";
 import {ChipsModule} from "primeng/chips";
@@ -40,7 +42,8 @@ import {BookingDetailsComponent} from "../booking-details/booking-details.compon
     NgIf,
     PaginatorModule,
     ButtonDirective,
-    BookingDetailsComponent
+    BookingDetailsComponent,
+    NgStyle
   ],
   templateUrl: './booking-select.component.html',
   styleUrl: './booking-select.component.css'
@@ -56,6 +59,7 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router) {
     super()
   }
+
 
   ngOnInit() {
 

@@ -121,5 +121,7 @@
   "e-mail": "E-Mail",
   "booking-with-id": "Buchung mit der ID:",
   "category": "Kategorie",
-  "plane-ticket": "Flugticket"
+  "plane-ticket": "Flugticket",
+  "booking": "Buchung",
+  "no-bookings-found": "Keine Buchungen gefunden"
 }

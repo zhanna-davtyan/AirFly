@@ -34,71 +34,73 @@
     <app-travel-insurance-select></app-travel-insurance-select>
   }
   @if (currentStep === 4 && numberOfSteps === 4 || currentStep === 5 && numberOfSteps === 5) {
-    <p-fieldset legend="{{'billing-address' | translate}}" class="flex justify-content-center mt-5"
-                [formGroup]="billingAddressForm">
-      <div>
-        <p-floatLabel>
-          <input class="w-full" id="billingFirstname" type="text" pInputText formControlName="billingFirstname"/>
-          <label for="billingFirstname">{{ "firstname" | translate }}</label>
-        </p-floatLabel>
-        <div style="min-height: 20px;">
-          <small *ngIf="billingAddressForm.get('billingFirstname')?.invalid"
-                 class="p-error ml-2">{{ "firstname-required" | translate }}</small>
+    <div class="w-full billingAddress">
+      <p-fieldset legend="{{'billing-address' | translate}}" class="flex justify-content-center mt-5"
+                  [formGroup]="billingAddressForm">
+        <div>
+          <p-floatLabel>
+            <input class="w-full" id="billingFirstname" type="text" pInputText formControlName="billingFirstname"/>
+            <label for="billingFirstname">{{ "firstname" | translate }}</label>
+          </p-floatLabel>
+          <div style="min-height: 20px;">
+            <small *ngIf="billingAddressForm.get('billingFirstname')?.invalid"
+                   class="p-error ml-2">{{ "firstname-required" | translate }}</small>
+          </div>
         </div>
-      </div>
-      <div class="mt-5">
-        <p-floatLabel>
-          <input class="w-full" id="billingLastname" type="text" pInputText formControlName="billingLastname"/>
-          <label for="billingLastname">{{ "lastname" | translate }}</label>
-        </p-floatLabel>
-        <div style="min-height: 20px;">
-          <small *ngIf="billingAddressForm.get('billingLastname')?.invalid"
-                 class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+        <div class="mt-5">
+          <p-floatLabel>
+            <input class="w-full" id="billingLastname" type="text" pInputText formControlName="billingLastname"/>
+            <label for="billingLastname">{{ "lastname" | translate }}</label>
+          </p-floatLabel>
+          <div style="min-height: 20px;">
+            <small *ngIf="billingAddressForm.get('billingLastname')?.invalid"
+                   class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+          </div>
         </div>
-      </div>
-      <div class="mt-5">
-        <p-floatLabel>
-          <p-inputNumber inputId="integeronly" [useGrouping]="false" class="w-full" id="billingPostcode"
-                         formControlName="billingPostcode"/>
-          <label for="billingPostcode">{{ "postcode" | translate }}</label>
-        </p-floatLabel>
-        <div style="min-height: 20px;">
-          <small *ngIf="billingAddressForm.get('billingPostcode')?.invalid"
-                 class="p-error ml-2">{{ "postcode-required" | translate }}</small>
+        <div class="mt-5">
+          <p-floatLabel>
+            <p-inputNumber inputId="integeronly" [useGrouping]="false" class="w-full" id="billingPostcode"
+                           formControlName="billingPostcode"/>
+            <label for="billingPostcode">{{ "postcode" | translate }}</label>
+          </p-floatLabel>
+          <div style="min-height: 20px;">
+            <small *ngIf="billingAddressForm.get('billingPostcode')?.invalid"
+                   class="p-error ml-2">{{ "postcode-required" | translate }}</small>
+          </div>
         </div>
-      </div>
-      <div class="mt-5">
-        <p-floatLabel>
-          <input class="w-full" id="billingCity" type="text" pInputText formControlName="billingCity"/>
-          <label for="billingCity">{{ "city" | translate }}</label>
-        </p-floatLabel>
-        <div style="min-height: 20px;">
-          <small *ngIf="billingAddressForm.get('billingCity')?.invalid"
-                 class="p-error ml-2">{{ "city-required" | translate }}</small>
+        <div class="mt-5">
+          <p-floatLabel>
+            <input class="w-full" id="billingCity" type="text" pInputText formControlName="billingCity"/>
+            <label for="billingCity">{{ "city" | translate }}</label>
+          </p-floatLabel>
+          <div style="min-height: 20px;">
+            <small *ngIf="billingAddressForm.get('billingCity')?.invalid"
+                   class="p-error ml-2">{{ "city-required" | translate }}</small>
+          </div>
         </div>
-      </div>
-      <div class="mt-5">
-        <p-floatLabel>
-          <input class="w-full" id="billingStreet" type="text" pInputText formControlName="billingStreet"/>
-          <label for="billingStreet">{{ "street" | translate }}</label>
-        </p-floatLabel>
-        <div style="min-height: 20px;">
-          <small *ngIf="billingAddressForm.get('billingStreet')?.invalid"
-                 class="p-error ml-2">{{ "street-required" | translate }}</small>
+        <div class="mt-5">
+          <p-floatLabel>
+            <input class="w-full" id="billingStreet" type="text" pInputText formControlName="billingStreet"/>
+            <label for="billingStreet">{{ "street" | translate }}</label>
+          </p-floatLabel>
+          <div style="min-height: 20px;">
+            <small *ngIf="billingAddressForm.get('billingStreet')?.invalid"
+                   class="p-error ml-2">{{ "street-required" | translate }}</small>
+          </div>
         </div>
-      </div>
-      <div class="mt-5">
-        <p-floatLabel>
-          <p-inputNumber [useGrouping]="false" inputId="integeronly" class="w-full" id="billingHousenumber"
-                         formControlName="billingHousenumber"/>
-          <label for="billingHousenumber">{{ "housenumber" | translate }}</label>
-        </p-floatLabel>
-        <div style="min-height: 20px;">
-          <small *ngIf="billingAddressForm.get('billingHousenumber')?.invalid"
-                 class="p-error ml-2">{{ "housenumber-required" | translate }}</small>
+        <div class="mt-5">
+          <p-floatLabel>
+            <p-inputNumber [useGrouping]="false" inputId="integeronly" class="w-full" id="billingHousenumber"
+                           formControlName="billingHousenumber"/>
+            <label for="billingHousenumber">{{ "housenumber" | translate }}</label>
+          </p-floatLabel>
+          <div style="min-height: 20px;">
+            <small *ngIf="billingAddressForm.get('billingHousenumber')?.invalid"
+                   class="p-error ml-2">{{ "housenumber-required" | translate }}</small>
+          </div>
         </div>
-      </div>
-    </p-fieldset>
+      </p-fieldset>
+    </div>
     <div class="w-full flex justify-content-center mt-5">
       <button (click)="submitOrder()" pButton style="width: 90%;" label="{{'pay-now' | translate }}"
               [disabled]="billingAddressForm.invalid"></button>

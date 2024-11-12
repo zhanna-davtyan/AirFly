@@ -1,1 +1,78 @@
-<p>booking-overview works!</p>
+<h2 class="mt-0 ml-4">{{ 'my-bookings' | translate }}</h2>
+<div class="w-full flex justify-content-center mt-5">
+  <div style="width: 90%">
+    @for (booking of bookings; track booking; let i = $index) {
+      <div class="mb-7" (click)="openDynamicDialogDetails(booking)">
+        <p-card class="flex-column flex">
+          <div class="flex flex-column">
+            <div class="flex justify-content-between">
+              <h3 class="mt-0">{{ 'booking'|translate }}: #AF{{ booking.id }}</h3>
+              <i class="pi pi-external-link"></i>
+            </div>
+            <p-divider></p-divider>
+            <div class="flex justify-content-between mt-2 mb-4">
+              <p class="font-bold m-0">{{ 'outgoing-flight' | translate }}</p>
+              <span
+                *ngIf="booking.bookingFlightMappings[0]?.category?.name as categoryName"
+                [ngClass]="categoryName + '-span'">{{ booking.bookingFlightMappings[0].category.name }}</span>
+            </div>
+            <div class="flex w-full justify-content-between align-items-center">
+              <div class="flex flex-column" style="font-size: 1.1rem;">
+                <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[0].flight.departureAirport.code }}</p>
+                <p
+                  class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[0].flight.departureTime | date: 'HH:mm' }}</p>
+              </div>
+              <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+                <p
+                  class="m-0">{{ getTimeDifference(booking.bookingFlightMappings[0].flight.departureTime, booking.bookingFlightMappings[0].flight.arrivalTime) }}
+                  h</p>
+                <p-divider class="w-full p-flight-divider"/>
+                <p class="m-0">Nonstop</p>
+              </div>
+              <div class="flex flex-column" style="font-size: 1.1rem;">
+                <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[0].flight.arrivalAirport.code }}</p>
+                <p
+                  class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[0].flight.arrivalTime | date: 'HH:mm' }}</p>
+              </div>
+            </div>
+            @if (booking.bookingFlightMappings.length > 1) {
+              <p-divider></p-divider>
+              <div class="flex justify-content-between mt-2 mb-4">
+                <p class="font-bold m-0">{{ 'return-flight' | translate }}</p>
+                <span
+                  *ngIf="booking.bookingFlightMappings[1]?.category?.name as categoryName"
+                  [ngClass]="categoryName + '-span'">{{ booking.bookingFlightMappings[1].category.name }}</span>
+              </div>
+              <div class="flex w-full justify-content-between align-items-center">
+                <div class="flex flex-column" style="font-size: 1.1rem;">
+                  <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[1].flight.departureAirport.code }}</p>
+                  <p
+                    class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[1].flight.departureTime | date: 'HH:mm' }}</p>
+                </div>
+                <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+                  <p
+                    class="m-0">{{ getTimeDifference(booking.bookingFlightMappings[1].flight.departureTime, booking.bookingFlightMappings[1].flight.arrivalTime) }}
+                    h</p>
+                  <p-divider class="w-full p-flight-divider"/>
+                  <p class="m-0">Nonstop</p>
+                </div>
+                <div class="flex flex-column" style="font-size: 1.1rem;">
+                  <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[1].flight.arrivalAirport.code }}</p>
+                  <p
+                    class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[1].flight.arrivalTime | date: 'HH:mm' }}</p>
+                </div>
+              </div>
+            }
+          </div>
+        </p-card>
+      </div>
+    }
+  </div>
+</div>
+@if (bookings.length === 0) {
+  <div class="flex justify-content-center mt-5">
+      <p class="text-center">{{ 'no-bookings-found' | translate }}</p>
+  </div>
+}
+
+

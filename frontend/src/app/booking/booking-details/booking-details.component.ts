@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, Optional} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BookingService} from "../booking.service";
 import {Booking} from "../booking.model";
@@ -34,13 +34,13 @@ import {FieldsetModule} from "primeng/fieldset";
 export class BookingDetailsComponent implements OnInit {
   @Input() bookingIdFromSuccessPage!: number;
   booking!: Booking;
-  isFromAdminPage!: boolean;
+  isFromOverviewPage!: boolean;
 
   constructor(
-    private dynamicDialogConfig: DynamicDialogConfig,
+    @Optional() private dynamicDialogConfig: DynamicDialogConfig,
     private bookingService: BookingService,
     private router: Router,
-    private dynamicDialogRef: DynamicDialogRef,
+    @Optional() private dynamicDialogRef: DynamicDialogRef,
   ) {
   }
 
@@ -48,15 +48,14 @@ export class BookingDetailsComponent implements OnInit {
     let bookingIdToTake: number;
     if (this.bookingIdFromSuccessPage) {
       bookingIdToTake = this.bookingIdFromSuccessPage; //From success page after ordering
-      this.isFromAdminPage = true;
+      this.isFromOverviewPage = false;
     } else {
       bookingIdToTake = this.dynamicDialogConfig.data.bookingId //From BookingOverview
-      this.isFromAdminPage = false;
+      this.isFromOverviewPage = true;
     }
     this.bookingService.getById(bookingIdToTake).subscribe({
       next: (booking: Booking) => {
         this.booking = booking;
-        console.log(booking);
       },
       error: () => {
         this.dynamicDialogRef.close();
@@ -123,6 +122,9 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   calculateTotal(){
+    if(this.booking.bookingFlightMappings.length === 1){
+      return this.calculateTotalOutgoingPrice();
+    }
     return this.calculateTotalOutgoingPrice() + this.calculateTotalReturnPrice();
   }
 }

@@ -1,11 +1,12 @@
 import {Injectable} from "@angular/core";
 import {AbstractCrudService} from "../common/service/abstract-crud.service";
 import {Booking} from "./booking.model";
-import {Subject} from "rxjs";
+import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BookingForInsert} from "./booking-for-insert.model";
 import {Passenger} from "../passenger/passenger.model";
 import {FormGroup} from "@angular/forms";
+import {map} from "rxjs/operators";
 
 
 @Injectable({providedIn: 'root'})
@@ -94,6 +95,12 @@ export class BookingService extends AbstractCrudService<Booking> {
     localStorage.removeItem('current_step_description');
     localStorage.removeItem('passengers');
     localStorage.removeItem('travel_insurance');
+  }
+
+  getAllByUser(): Observable<Booking[]> {
+    return this.httpClient
+      .get<Booking[]>(this.URL_FOR_TYPE + '/get-all-by-user')
+      .pipe(map((dtos: Booking[]) => dtos.map((json: any) => this.jsonToDto(json))));
   }
 
 }
