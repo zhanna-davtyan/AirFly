@@ -4,7 +4,6 @@ import {Booking} from "./booking.model";
 import {Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BookingForInsert} from "./booking-for-insert.model";
-import {Passenger} from "../passenger/passenger.model";
 import {FormGroup} from "@angular/forms";
 import {map} from "rxjs/operators";
 
@@ -15,14 +14,6 @@ export class BookingService extends AbstractCrudService<Booking> {
   numberOfSteps: Subject<number> = new Subject<number>();
   currentStep: Subject<number> = new Subject<number>();
   currentStepDescription: Subject<string> = new Subject<string>();
-
-  travelInsurance!: boolean;
-  passengers!: Passenger[];
-  selectedOutwardFlightId!: number;
-  selectedOutwardCategoryId!: number;
-  selectedReturnFlightId!: number;
-  selectedReturnCategoryId!: number;
-
 
   constructor(httpClient: HttpClient) {
     super(httpClient, "bookings");
@@ -40,12 +31,12 @@ export class BookingService extends AbstractCrudService<Booking> {
 
   submitOrder(billingAddressForm: FormGroup) {
     let booking = new BookingForInsert(
-      this.travelInsurance,
-      this.passengers,
-      this.selectedOutwardFlightId,
-      this.selectedOutwardCategoryId,
-      this.selectedReturnFlightId,
-      this.selectedReturnCategoryId,
+      Boolean(localStorage.getItem('travel_insurance')),
+      JSON.parse(localStorage.getItem('passengers')!),
+      Number(localStorage.getItem('outward_flight_id')),
+      Number(localStorage.getItem('outward_category_id')),
+      Number(localStorage.getItem('return_flight_id')),
+      Number(localStorage.getItem('return_category_id')),
       billingAddressForm.get('billingFirstname')?.value,
       billingAddressForm.get('billingLastname')?.value,
       billingAddressForm.get('billingPostcode')?.value,

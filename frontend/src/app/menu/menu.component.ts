@@ -1,21 +1,22 @@
-import { CommonModule } from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import { SidebarModule } from 'primeng/sidebar';
+import {CommonModule} from '@angular/common';
+import {Component, Input, OnInit, ViewChild} from '@angular/core';
+import {SidebarModule} from 'primeng/sidebar';
 import {Router, RouterModule} from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { DropdownModule } from 'primeng/dropdown';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import {FormsModule} from '@angular/forms';
+import {DropdownModule} from 'primeng/dropdown';
+import {TranslateModule, TranslateService} from '@ngx-translate/core';
 import {SelectItem} from 'primeng/api';
-import { take } from 'rxjs';
-import { TooltipModule } from 'primeng/tooltip';
+import {take} from 'rxjs';
+import {TooltipModule} from 'primeng/tooltip';
 import {OverlayPanel, OverlayPanelModule} from 'primeng/overlaypanel';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputSwitchModule } from 'primeng/inputswitch';
-import { ToggleButtonModule } from 'primeng/togglebutton';
-import { ToolbarModule } from 'primeng/toolbar';
-import { ThemeService } from '../common/service/theme.service';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputSwitchModule} from 'primeng/inputswitch';
+import {ToggleButtonModule} from 'primeng/togglebutton';
+import {ToolbarModule} from 'primeng/toolbar';
+import {ThemeService} from '../common/service/theme.service';
 import {DividerModule} from "primeng/divider";
 import {MenubarModule} from "primeng/menubar";
+import {AvatarModule} from "primeng/avatar";
 
 @Component({
   selector: 'app-menu',
@@ -35,11 +36,16 @@ import {MenubarModule} from "primeng/menubar";
     ToolbarModule,
     DividerModule,
     MenubarModule,
+    AvatarModule,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
+
+  @Input() currentStep!: number;
+  @Input() currentStepDescription!: string;
+
   languageOptions: SelectItem[] = [];
   protected selectedLanguage: string | null = localStorage.getItem('lng');
   private readonly availableLanguages = ['de', 'en'];
@@ -56,7 +62,8 @@ export class MenuComponent implements OnInit {
     private themeService: ThemeService,
     private translateService: TranslateService,
     private router: Router
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.translateService.addLangs(this.availableLanguages);
@@ -125,14 +132,18 @@ export class MenuComponent implements OnInit {
     this.router.navigate(['my-bookings']);
   }
 
-  navigateToAllFlights(){
+  navigateToAllFlights() {
     this.toggleSidebar();
     this.router.navigate(['all-flights']);
   }
 
-  navigateToAllBookings(){
+  navigateToAllBookings() {
     this.toggleSidebar();
     this.router.navigate(['all-bookings']);
+  }
+
+  showBorderBottom() {
+    return this.router.url !== '/book-flight';
   }
 
 }

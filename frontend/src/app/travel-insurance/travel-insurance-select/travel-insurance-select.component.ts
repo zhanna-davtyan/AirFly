@@ -59,7 +59,6 @@ export class TravelInsuranceSelectComponent extends BaseComponent implements OnI
     this.bookingService.updateCurrentStep(this.currentStep);
     this.bookingService.updateCurrentStepDescription('checkout')
     localStorage.setItem('travel_insurance', String(this.travelInsurance));
-    this.bookingService.travelInsurance = this.travelInsurance;
   }
 
   isContinueButtonDisabled(): boolean {

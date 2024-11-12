@@ -1,22 +1,4 @@
-<header class="flex justify-content-between align-items-center flight-select-header">
-  <div class="flex justify-content-center align-items-center" routerLink="">
-    <img src="/assets/img/AirFly_Logo1.png" class="mt-4" style="width: 80px; height: 80px" alt="">
-  </div>
-  @if (!bookingId) {
-    <div class="flex align-items-center mr-4 mt-2">
-      <p-avatar
-        label="{{currentStep}}"
-        styleClass="mr-2"
-        [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
-      <p class="m-0 p-0 font-bold" style="font-size:1.2em">
-        {{ currentStepDescription | translate }}
-      </p>
-    </div>
-  }
-  <div class="mr-3 mt-2">
-    <i style="font-size: 30px;" class="pi pi-user"></i>
-  </div>
-</header>
+<app-menu [currentStep]="currentStep" [currentStepDescription]="currentStepDescription"></app-menu>
 @if (bookingId) {
   <app-booking-details [bookingIdFromSuccessPage]="bookingId"></app-booking-details>
 } @else {

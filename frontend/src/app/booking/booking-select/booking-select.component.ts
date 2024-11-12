@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {AvatarModule} from "primeng/avatar";
 import {NgForOf, NgIf, NgStyle} from "@angular/common";
-import {NavigationStart, Router, RouterLink} from "@angular/router";
+import {Router, RouterLink} from "@angular/router";
 import {TabViewModule} from "primeng/tabview";
 import {TranslateModule} from "@ngx-translate/core";
-import {Subscription, takeUntil} from "rxjs";
+import {takeUntil} from "rxjs";
 import {BookingService} from "../booking.service";
 import {BaseComponent} from "../../common/components/base/base.component";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -21,6 +21,7 @@ import {PaginatorModule} from "primeng/paginator";
 import {ButtonDirective} from "primeng/button";
 import {toNumber} from "lodash";
 import {BookingDetailsComponent} from "../booking-details/booking-details.component";
+import {MenuComponent} from "../../menu/menu.component";
 
 @Component({
   selector: 'app-booking-select',
@@ -43,7 +44,8 @@ import {BookingDetailsComponent} from "../booking-details/booking-details.compon
     PaginatorModule,
     ButtonDirective,
     BookingDetailsComponent,
-    NgStyle
+    NgStyle,
+    MenuComponent
   ],
   templateUrl: './booking-select.component.html',
   styleUrl: './booking-select.component.css'

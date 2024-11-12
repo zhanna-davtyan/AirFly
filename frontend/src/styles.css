@@ -190,12 +190,7 @@ html {
 }
 
 .modify-flight{
-  box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
   z-index: 3;
-}
-
-.modify-flight .p-accordion-content{
-  box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
 }
 
 .flight-select-holder .p-card{
@@ -260,7 +255,7 @@ footer {
   height: 3.5em;
 }
 
-.p-component-overlay {
+.p-sidebar-mask {
   background-color: rgba(0, 0, 0, 0.5);
   backdrop-filter: blur(5px);
 }

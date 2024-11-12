@@ -1,4 +1,4 @@
-<div class="flex justify-content-between" style="border-bottom: 1px solid #8080d7">
+<div class="flex justify-content-between" [ngClass]="{'header-border': showBorderBottom()}">
   <div routerLink="">
     <img
       class="mt-4"
@@ -6,6 +6,17 @@
       src="assets/img/AirFly_Logo1.png"
       alt=""/>
   </div>
+  @if (currentStepDescription && currentStep) {
+    <div class="flex align-items-center mr-4 mt-2">
+      <p-avatar
+        label="{{currentStep}}"
+        styleClass="mr-2"
+        [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
+      <p class="m-0 p-0 font-bold" style="font-size:1.2em">
+        {{ currentStepDescription | translate }}
+      </p>
+    </div>
+  }
   <div class="flex align-items-center">
     <div>
       <i class="pi pi-user" style="font-size: 30px" routerLink="app-signup-register"></i>

@@ -183,7 +183,6 @@ export class PassengerSelectComponent extends BaseComponent implements OnInit {
       )
     });
     localStorage.setItem('passengers', JSON.stringify(passengerArray));
-    this.bookingService.passengers = passengerArray;
     this.bookingService.updateCurrentStepDescription('travel-insurance');
   }
 

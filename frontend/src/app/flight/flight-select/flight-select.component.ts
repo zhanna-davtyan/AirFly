@@ -214,10 +214,6 @@ export class FlightSelectComponent extends BaseComponent implements OnInit {
   }
 
   goForward() {
-    this.bookingService.selectedOutwardFlightId = this.selectedOutwardFlightId;
-    this.bookingService.selectedOutwardCategoryId = this.selectedOutwardCategoryId;
-    this.bookingService.selectedReturnFlightId = this.selectedReturnFlightId;
-    this.bookingService.selectedReturnCategoryId = this.selectedReturnCategoryId;
     if (this.currentStep === 1) {
       this.currentStep++;
       this.bookingService.updateCurrentStep(this.currentStep);

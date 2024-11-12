@@ -13,3 +13,11 @@ app-flight-search{
 ::ng-deep .billingAddress .p-fieldset {
   width:90%;
 }
+
+::ng-deep .p-tabview-nav-content {
+  height: 4px;
+}
+
+::ng-deep .p-tabview-nav {
+  display: flex;
+}
