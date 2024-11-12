@@ -6,7 +6,7 @@
       src="assets/img/AirFly_Logo1.png"
       alt=""/>
   </div>
-  @if (currentStepDescription && currentStep) {
+  @if (currentStepDescription && currentStepDescription != "" && currentStep && currentStep != 0) {
     <div class="flex align-items-center mr-4 mt-2">
       <p-avatar
         label="{{currentStep}}"

@@ -143,7 +143,12 @@ export class MenuComponent implements OnInit {
   }
 
   showBorderBottom() {
-    return this.router.url !== '/book-flight';
+    if(this.currentStep && this.currentStepDescription){
+      if(this.currentStep != 0 && this.currentStepDescription != ""){
+        return false;
+      }
+    }
+    return true;
   }
 
 }

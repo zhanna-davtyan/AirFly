@@ -1,6 +1,11 @@
 <app-menu [currentStep]="currentStep" [currentStepDescription]="currentStepDescription"></app-menu>
 @if (bookingId) {
-  <app-booking-details [bookingIdFromSuccessPage]="bookingId"></app-booking-details>
+  <div class="w-full flex justify-content-center align-items-center flex-column">
+    <h2 class="ml-6 mt-6 w-full">{{'thank-you-for-order' | translate }}: #AF{{bookingId}}</h2>
+    <div style="width: 90%;" class="mt-3">
+      <app-booking-details [bookingIdFromSuccessPage]="bookingId"></app-booking-details>
+    </div>
+  </div>
 } @else {
   <p-tabView [activeIndex]="currentStep - 1">
     <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
@@ -19,7 +24,7 @@
     <div class="w-full billingAddress">
       <p-fieldset legend="{{'billing-address' | translate}}" class="flex justify-content-center mt-5"
                   [formGroup]="billingAddressForm">
-        <div>
+        <div class="mt-3">
           <p-floatLabel>
             <input class="w-full" id="billingFirstname" type="text" pInputText formControlName="billingFirstname"/>
             <label for="billingFirstname">{{ "firstname" | translate }}</label>

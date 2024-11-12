@@ -52,9 +52,9 @@ import {MenuComponent} from "../../menu/menu.component";
 })
 export class BookingSelectComponent extends BaseComponent implements OnInit {
 
-  currentStep!: number;
+  currentStep: number = 0;
   numberOfSteps!: number;
-  currentStepDescription!: string;
+  currentStepDescription: string = "";
   billingAddressForm!: FormGroup;
   bookingId!: number;
 
@@ -131,6 +131,8 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
     this.bookingService.submitOrder(this.billingAddressForm).subscribe({
       next: (bookingId: number) => {
         this.bookingId = bookingId;
+        this.currentStepDescription = "";
+        this.currentStep = 0;
       },
       error: () => {
         this.router.navigate(['/error'])

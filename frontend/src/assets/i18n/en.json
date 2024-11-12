@@ -123,6 +123,6 @@
   "category": "Category",
   "plane-ticket": "Plane ticket",
   "booking": "Booking",
-  "no-bookings-found": "No bookings found"
-
+  "no-bookings-found": "No bookings found",
+  "thank-you-for-order": "Thank you for your order"
 }

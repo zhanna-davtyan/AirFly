@@ -5,8 +5,8 @@ export class BookingForInsert {
   passengers: Passenger[];
   outwardFlightId: number;
   outwardCategoryId: number;
-  returnFlightId: number;
-  returnCategoryId: number;
+  returnFlightId: number | null;
+  returnCategoryId: number | null;
   billingFirstname: string;
   billingLastname: string;
   billingPostcode: string;
@@ -19,8 +19,8 @@ export class BookingForInsert {
     passengers: Passenger[],
     outwardFlightId: number,
     outwardCategoryId: number,
-    returnFlightId: number,
-    returnCategoryId: number,
+    returnFlightId: number | null,
+    returnCategoryId: number | null,
     billingFirstname: string,
     billingLastname: string,
     billingPostcode: string,
