@@ -35,6 +35,9 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   public formGroup: any;
+  StrongPasswordRegx: RegExp =
+    /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
+
   constructor(
     public formBuilder: FormBuilder,
     protected translateService: TranslateService,
@@ -47,7 +50,10 @@ export class RegisterComponent implements OnInit {
       firstName: ['', [Validators.required]],
       lastName: ['', [Validators.required]],
       email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
+      password: [
+        '',
+        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
+      ],
     });
   }
 
