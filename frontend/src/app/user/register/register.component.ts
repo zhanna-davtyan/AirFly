@@ -14,6 +14,7 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PasswordModule } from 'primeng/password';
 import { SignUpModel } from '../signup.model';
 import { UserService } from '../user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -37,7 +38,8 @@ export class RegisterComponent implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     protected translateService: TranslateService,
-    protected userService: UserService
+    protected userService: UserService,
+    protected router: Router
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +60,7 @@ export class RegisterComponent implements OnInit {
     );
     this.userService.register(signUpModel).subscribe((user) => {
       this.userService.setToken(user.token);
+      this.router.navigate(['']);
     });
   }
 }

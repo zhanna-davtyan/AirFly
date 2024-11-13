@@ -1,5 +1,6 @@
 package com.airfly.backend.config;
 
+import com.airfly.backend.user.User;
 import com.airfly.backend.user.UserDto;
 import com.airfly.backend.user.UserService;
 import com.auth0.jwt.JWT;
@@ -49,8 +50,7 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        UserDto user = userService.findByEmail(decoded.getSubject());
-        user.setToken(token);
+        User user = userService.findByEmail(decoded.getSubject());
 
         return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
     }

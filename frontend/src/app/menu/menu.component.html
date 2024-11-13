@@ -28,12 +28,11 @@
   </div>
   }
   <div class="flex align-items-center">
-    <div>
-      <i
-        class="pi pi-user"
-        style="font-size: 30px"
-        routerLink="app-signup-register"
-      ></i>
+    <div *ngIf="!isLoggedIn" (click)="isLogInMenuVisible = true">
+      <i class="pi pi-user" style="font-size: 30px"></i>
+    </div>
+    <div *ngIf="isLoggedIn" (click)="logOut()">
+      <i class="pi pi-sign-out" style="font-size: 30px"></i>
     </div>
     <div class="mx-4" (click)="toggleSidebar()">
       <i class="pi pi-bars" style="font-size: 30px"></i>
@@ -100,3 +99,8 @@
   </p-overlayPanel>
 </div>
 }
+
+<app-login
+  [open]="isLogInMenuVisible"
+  (closeSideBar)="closeSidebar()"
+></app-login>

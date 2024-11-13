@@ -18,6 +18,7 @@ import { DividerModule } from 'primeng/divider';
 import { MenubarModule } from 'primeng/menubar';
 import { AvatarModule } from 'primeng/avatar';
 import { UserService } from '../user/user.service';
+import { LoginComponent } from '../user/login/login.component';
 
 @Component({
   selector: 'app-menu',
@@ -38,6 +39,7 @@ import { UserService } from '../user/user.service';
     DividerModule,
     MenubarModule,
     AvatarModule,
+    LoginComponent,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
@@ -54,6 +56,7 @@ export class MenuComponent implements OnInit {
   darkTheme!: boolean;
   private authSubscription!: Subscription;
   isLoggedIn = false;
+  isLogInMenuVisible: boolean = false;
 
   isSidebarVisible: boolean = false;
   @ViewChild('adminOp') adminOp!: OverlayPanel;
@@ -89,7 +92,6 @@ export class MenuComponent implements OnInit {
 
     this.authSubscription = this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
-      console.log('Login-Status hat sich geändert:', status);
     });
   }
 
@@ -162,5 +164,14 @@ export class MenuComponent implements OnInit {
       }
     }
     return true;
+  }
+
+  closeSidebar() {
+    this.isLogInMenuVisible = false;
+  }
+
+  logOut() {
+    this.authService.deleteToken();
+    this.router.navigate(['']);
   }
 }

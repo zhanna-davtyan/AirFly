@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   FormBuilder,
@@ -14,9 +14,10 @@ import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { PasswordModule } from 'primeng/password';
 import { UserService } from '../user.service';
 import { LoginModel } from '../login.model';
+import { SidebarModule } from 'primeng/sidebar';
 
 @Component({
-  selector: 'app-register',
+  selector: 'app-login',
   standalone: true,
   imports: [
     FormsModule,
@@ -24,6 +25,7 @@ import { LoginModel } from '../login.model';
     ButtonDirective,
     InputTextModule,
     ReactiveFormsModule,
+    SidebarModule,
     TooltipModule,
     PasswordModule,
     TranslateModule,
@@ -33,6 +35,9 @@ import { LoginModel } from '../login.model';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
+  @Input() public open!: boolean;
+  @Output() closeSideBar = new EventEmitter<boolean>();
+
   public formGroup: any;
   constructor(
     public formBuilder: FormBuilder,
@@ -54,6 +59,11 @@ export class LoginComponent implements OnInit {
     );
     this.userService.login(loginModel).subscribe((user) => {
       this.userService.setToken(user.token);
+      this.close();
     });
+  }
+
+  close() {
+    this.closeSideBar.emit();
   }
 }
