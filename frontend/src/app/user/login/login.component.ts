@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       this.formGroup.get('password')?.value
     );
     this.userService.login(loginModel).subscribe((user) => {
-      localStorage.setItem('authToken', user.token);
+      this.userService.setToken(user.token);
     });
   }
 }

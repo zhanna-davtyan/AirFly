@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
       this.formGroup.get('password')?.value
     );
     this.userService.register(signUpModel).subscribe((user) => {
-      localStorage.setItem('authToken', user.token);
+      this.userService.setToken(user.token);
     });
   }
 }

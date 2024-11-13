@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { RouterModule } from '@angular/router';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { SelectItem } from 'primeng/api';
-import { take } from 'rxjs';
+import { Subscription, take } from 'rxjs';
 import { TooltipModule } from 'primeng/tooltip';
 import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputTextModule } from 'primeng/inputtext';
@@ -16,6 +16,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ThemeService } from '../common/service/theme.service';
+import { UserService } from '../user/user.service';
 
 @Component({
   selector: 'app-menu',
@@ -37,18 +38,21 @@ import { ThemeService } from '../common/service/theme.service';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   @ViewChild('op') op!: OverlayPanel;
   languageOptions: SelectItem[] = [];
   visibleSidebar: boolean = false;
   protected selectedLanguage: string | null = localStorage.getItem('lng');
   theme: string | null = localStorage.getItem('theme');
   darkTheme!: boolean;
+  private authSubscription!: Subscription;
+  isLoggedIn = false;
 
   constructor(
     private menuSideBarService: MenuSidebarService,
     private themeService: ThemeService,
-    private router: Router
+    private router: Router,
+    private authService: UserService
   ) {}
 
   ngOnInit() {
@@ -72,6 +76,17 @@ export class MenuComponent implements OnInit {
     this.translateService.use(this.selectedLanguage);
     this.updateTranslations();
     this.updateMenu();
+
+    this.authSubscription = this.authService.isLoggedIn$.subscribe((status) => {
+      this.isLoggedIn = status;
+      console.log('Login-Status hat sich geändert:', status);
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
   }
 
   private readonly availableLanguages = ['de', 'en'];
