@@ -98,19 +98,13 @@ CREATE TABLE IF NOT EXISTS `${flyway:defaultSchema}`.bookings
     id                        bigint                   NOT NULL PRIMARY KEY AUTO_INCREMENT,
     user_id                   bigint                   NOT NULL,
     total_price               decimal(10, 2)           NOT NULL,
-    category_id               bigint                   NOT NULL,
     travel_insurance          boolean                  NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES `${flyway:defaultSchema}`.users (id) ON DELETE CASCADE,
-    FOREIGN KEY (category_id) REFERENCES `${flyway:defaultSchema}`.categories (id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES `${flyway:defaultSchema}`.users (id) ON DELETE CASCADE
     );
 
 -- Indexes
 CREATE INDEX idx_foreign_key_user_id_on_bookings
     ON `${flyway:defaultSchema}`.bookings (user_id);
-
-CREATE INDEX idx_foreign_key_category_id_on_bookings
-    ON `${flyway:defaultSchema}`.bookings (category_id);
-
 
 
 -- Table: booking_flight_mappings
@@ -119,8 +113,10 @@ CREATE TABLE IF NOT EXISTS `${flyway:defaultSchema}`.booking_flight_mappings
     id            bigint                   NOT NULL PRIMARY KEY AUTO_INCREMENT,
     booking_id    bigint                   NOT NULL,
     flight_id     bigint                   NOT NULL,
+    category_id   bigint                   NOT NULL,
     FOREIGN KEY (booking_id) REFERENCES `${flyway:defaultSchema}`.bookings (id) ON DELETE CASCADE,
-    FOREIGN KEY (flight_id) REFERENCES `${flyway:defaultSchema}`.flights (id) ON DELETE CASCADE
+    FOREIGN KEY (flight_id) REFERENCES `${flyway:defaultSchema}`.flights (id) ON DELETE CASCADE,
+    FOREIGN KEY (category_id) REFERENCES `${flyway:defaultSchema}`.categories (id) ON DELETE CASCADE
     );
 
 -- Indexes
@@ -129,6 +125,10 @@ CREATE INDEX idx_foreign_key_booking_id_on_booking_flights
 
 CREATE INDEX idx_foreign_key_flight_id_on_booking_flights
     ON `${flyway:defaultSchema}`.booking_flight_mappings (flight_id);
+
+CREATE INDEX idx_foreign_key_category_id_on_booking_flights
+    ON `${flyway:defaultSchema}`.booking_flight_mappings (category_id);
+
 
 
 

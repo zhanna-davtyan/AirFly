@@ -50,4 +50,10 @@ public class DefaultExceptionHandler {
         return ResponseEntity.notFound().build();
     }
 
+    @ExceptionHandler(UnauthorizedException.class) // Thrown by the service if CANCEL fails
+    public ResponseEntity<?> handleIllegalAccessException(final UnauthorizedException exception, final HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return ResponseEntity.status(403).build();
+    }
+
 }

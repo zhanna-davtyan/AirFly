@@ -22,4 +22,8 @@ public class CategoryService {
             throw new EntityNotFoundException("Could not find flights", e);
         }
     }
+
+    public Category getById(long id) {
+        return categoryRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Could not find Category"));
+    }
 }

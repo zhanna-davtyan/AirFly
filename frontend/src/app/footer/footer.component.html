@@ -1,7 +1,18 @@
-<footer class="footer p-5 d-flex justify-content-between mb-3 border-top">
-  <span class="text-light fw-bold">Über uns</span>
-  <span class="text-light fw-bold">AGB</span>
-  <span class="text-light fw-bold">Impressum</span>
-  <span class="text-light fw-bold">Datenschutz</span>
-  <span class="text-light fw-bold">Kontakt</span>
+<footer class="footer p-5 px-6 flex flex-column" style="height: 100px;">
+  <div class="flex justify-content-between">
+    <div class="flex flex-column">
+      <span class="font-bold mb-5">{{ 'about-us' | translate }}</span>
+      <span class="font-bold mb-5">{{ 'terms-of-use' | translate }}</span>
+      <span class="font-bold mb-5">{{ 'imprint' | translate }}</span>
+      <span class="font-bold mb-5">{{ 'privacy-policy' | translate }}</span>
+      <span class="font-bold">{{ 'contact' | translate }}</span>
+    </div>
+    <div class="flex" style="font-size: 30px;">
+      <i class="fa-brands fa-cc-apple-pay mr-4"></i>
+      <i class="fa-brands fa-paypal mr-4"></i>
+      <i class="fa-brands fa-cc-visa mr-4"></i>
+      <i class="fa-brands fa-cc-mastercard"></i>
+    </div>
+  </div>
+  <p class="w-full text-center" style="font-size: 15px;">&copy; 2024 AirFly</p>
 </footer>

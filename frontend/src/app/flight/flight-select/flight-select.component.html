@@ -1,29 +1,13 @@
-<header class="flex justify-content-between align-items-center">
-  <div>
-    <img src="/assets/img/AirFlyLogo.png" style="width: 80px; height: 80px;" alt="t">
-  </div>
-  <div class="flex align-items-center mr-6">
-    <p-avatar
-      label="{{currentStep}}"
-      styleClass="mr-2"
-      [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
-    <p class="m-0 p-0 font-bold" style="font-size:1.2em;">
-      {{ currentStepDescription | translate }}
-    </p>
-  </div>
-  <div class="mr-3">
-    Account
-  </div>
-</header>
-<p-tabView [activeIndex]="currentStep - 1">
-  <p-tabPanel *ngFor="let i of [].constructor(numberOfSteps); let index = index">
-  </p-tabPanel>
-</p-tabView>
+<p-sidebar styleClass="h-auto" position="bottom">
+  <ng-template pTemplate="header">
+    <h2 class="w-full text-center">{{ 'passengers'|translate }}</h2>
+  </ng-template>
+</p-sidebar>
 @if (currentStep === 1) {
   <div class="w-full modify-flight">
     <p-accordion>
       <p-accordionTab header="{{'change-search' | translate }}">
-        <div class="w-full flex justify-content-center mt-5">
+        <div class="w-full flex justify-content-center pt-5">
           <app-flight-search></app-flight-search>
         </div>
       </p-accordionTab>
@@ -135,8 +119,8 @@
                           type="radio"
                           [name]="flight.id + category.id"
                           [value]="{ flightId: flight.id, categoryId: category.id }"
-                          [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
-                          (change)="onDepartureFlightSelection(flight.id, category.id)"
+                          [checked]="selectedOutwardFlightId === flight.id && selectedOutwardCategoryId === category.id"
+                          (change)="onOutwardFlightSelection(flight.id, category.id)"
                           style="transform: scale(1.8);"
                         />
                         <p class="font-bold"
@@ -155,8 +139,17 @@
     }
   </div>
 }
-@if(currentStep === 2){
-  <div class="w-full flex flex-column align-items-center bg-gray-100 flight-select-holder">
+@if (currentStep === 2 && numberOfSteps === 5) {
+  <div class="w-full modify-flight">
+    <p-accordion>
+      <p-accordionTab header="{{'change-search' | translate }}">
+        <div class="w-full flex justify-content-center mt-5">
+          <app-flight-search></app-flight-search>
+        </div>
+      </p-accordionTab>
+    </p-accordion>
+  </div>
+  <div class="w-full flex flex-column align-items-center flight-select-holder">
     @for (flight of returnFlights; track returnFlights; let i = $index) {
       <p-card class="mt-5">
         <div class="flex w-full justify-content-between align-items-center">
@@ -183,7 +176,7 @@
                   <span>{{ "flight-from" | translate }}</span>
                   <br/>
                   <span class="mt-1"
-                        style="color: black; font-size:1.7em;">{{ flight.price + (categories!.at(0)?.price ?? 0)  | currency: 'EUR' }}</span>
+                        style="font-size:1.7em;">{{ flight.price + (categories!.at(0)?.price ?? 0)  | currency: 'EUR' }}</span>
                 </div>
               </ng-template>
               <div class="category-holder mt-5">
@@ -262,7 +255,7 @@
                           type="radio"
                           [name]="flight.id + category.id"
                           [value]="{ flightId: flight.id, categoryId: category.id }"
-                          [checked]="selectedDepartureFlightId === flight.id && selectedDepartureCategoryId === category.id"
+                          [checked]="selectedReturnFlightId === flight.id && selectedReturnCategoryId === category.id"
                           (change)="onReturnFlightSelection(flight.id, category.id)"
                           style="transform: scale(1.8);"
                         />
@@ -284,10 +277,18 @@
 }
 <div class="continue">
   <button
-    style="font-size: 1.1em;"
+    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
     pButton
-    label="{{'continue' | translate }}"
+    (click)="goBack()"
+    [disabled]="currentStep === 1"
+  >
+    <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+  </button>
+  <button
+    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
+    pButton
     [disabled]="isContinueButtonDisabled()"
-    (click)="submit()">
+    (click)="goForward()">
+    <i style="font-size: 2rem" class="pi pi-angle-right"></i>
   </button>
 </div>

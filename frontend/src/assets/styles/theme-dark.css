@@ -78,52 +78,12 @@ body {
   background-color: #120F2B;
 }
 
-footer {
-  border-color: #836EEE !important;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
-  border-top: #836EEE solid;
-  font-size: 14px;
-  color: white;
+h2, h1, i, h3{
+  color: #dddddd;
 }
 
-.menu-icon {
-  font-size: 200px;
-  cursor: pointer;
-  color: #ffffff;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.custom-sidebar {
-  width: 280px;
-  background-color: #473e80;
-  color: #733333;
-  padding: 20px;
-}
-
-.menu-list li {
-  padding: 15px 0;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: #6d4d4d;
-}
-
-.header-icons .account-icon path {
-  fill: white !important;
-}
-
-.header-icons svg path {
-  fill: white;
-}
-
-.main-page-design span, .main-page-tickets span{
-  font-weight: bold; font-size: 18px; color: white;
+footer{
+  color: #dddddd;
 }
 
 .continue{
@@ -138,27 +98,68 @@ footer {
   background: #1f2937;
 }
 
-.flight-select-holder .header-div{
-  color: white;
+.flight-select-holder .header-div, .header-div span{
+  color: #dddddd;
 }
 
 .flight-select-holder .p-accordion p-card .p-card-body{
   background: #131922;
 }
 
-.flight-select-holder .p-card .basic-background{
-  background: gray;
-  color: white;
-}
-
-.flight-select-holder .standard-background{
+.standard-background{
   background: #3B82F6;
-  color: white;
+  color: #dddddd;
 }
-.flight-select-holder .p-card .premium-background{
+
+.premium-background{
   background: #891b55;
-  color: white;
+  color: #dcdcdc;
 }
 
+.basic-background{
+  background: #dddddd;
+  color: #303030;
+}
 
+.BASIC-span{
+  background: #dddddd;
+  color: #303030;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
 
+.STANDARD-span{
+  background: #3B82F6;
+  color: #dddddd;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.PREMIUM-span{
+  background: #891b55;
+  color: #dcdcdc;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.flight-select-header{
+  color: #dddddd;
+}
+
+.continue i {
+  color: #303030;
+}
+
+.header-border{
+  border-bottom: 1px solid #8080d7;
+}
+
+::ng-deep .total-price .p-panel .p-panel-content{
+  border-top: 1px solid #424b57;
+}

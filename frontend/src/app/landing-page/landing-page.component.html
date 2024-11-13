@@ -1,39 +1,55 @@
 <main>
-  <div class="main-page-design">
-    <h2>{{ 'book-direct-flights' | translate }}</h2>
+  <div class="flex justify-content-center m-5 mt-0">
+    <h2 class="mb-0 mt-6">{{ 'book-direct-flights' | translate }}</h2>
     <img src="assets/img/Planet.png" alt="Planet Erde" style="height: 180px; width: 180px;">
   </div>
-  <div class="main-page-tickets">
-    <img src="assets/img/Ticket.png" alt="Flugticket" style="height: 70px; width: 70px;">
-    <span class="ms-5">{{ 'book-tickets' | translate }}</span>
-  </div>
+
 
   <div class="p-card-container">
     <div style="width: 90%;">
-        <p-card>
-            <app-flight-search></app-flight-search>
-        </p-card>
+      <p-card>
+        <div class="flex justify-content-center align-items-center font-bold mb-5">
+          <img src="assets/img/Ticket.png" alt="Flugticket" style="height: 40px; width: 40px;">
+          <h3 class="ml-3">{{ 'book-tickets' | translate }}</h3>
+        </div>
+        <app-flight-search></app-flight-search>
+      </p-card>
     </div>
   </div>
 
+  <h2 class="text-center mt-6 mb-0">{{ 'recommended-destinations' | translate }}</h2>
 
-  <div class="card-container">
-    <div class="card">
-      <div class="card-header">{{ 'recommended-destinations' | translate }}</div>
-      <div class="carousel">
-      <p-carousel [value]="destinations" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
-        <ng-template let-destination pTemplate="item">
-          <div class="destination-item">
-            <img [src]="destination.image" [alt]="destination.name" class="destination-image" />
-            <div class="destination-details">
-              <div class="destination-name">{{ destination.name }}</div>
-              <div class="destination-price">ab {{ destination.price }} €</div>
-            </div>
-          </div>
-        </ng-template>
-      </p-carousel>
-    </div>
-    </div>
-  </div>
+
+  <p-carousel
+    [value]="destinations"
+    [numVisible]="1"
+    [numScroll]="1"
+    [circular]="true"
+    [autoplayInterval]="5000">
+    <ng-template let-destination pTemplate="item">
+      <div class="destination-item">
+        <img [src]="destination.image" [alt]="destination.name" class="destination-image"/>
+        <div class="destination-details">
+          <div class="destination-name">{{ destination.name }}</div>
+          <div class="destination-price">ab {{ destination.price }} €</div>
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+
+
+  @if (showContinueBooking) {
+    <p-avatar size="xlarge" (click)="op.toggle($event)">
+      <i class="fa-solid fa-plane-departure"></i>
+    </p-avatar>
+    <p-overlayPanel #op [style]="{ width: '250px', height: '100px' }" [showCloseIcon]="true">
+      <ng-template pTemplate="content">
+        <div class="w-full flex flex-column justify-content-center">
+          <p class="mt-0 text-center">You still have an open booking!</p>
+          <button pButton label="Continue booking" [routerLink]="'/book-flight'"></button>
+        </div>
+      </ng-template>
+    </p-overlayPanel>
+  }
 
 </main>

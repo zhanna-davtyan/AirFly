@@ -1,6 +1,7 @@
 package com.airfly.backend.passenger;
 
 import com.airfly.backend.booking.Booking;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +16,12 @@ import java.sql.Timestamp;
 public class Passenger {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
+
+    @Column(name = "type")
+    private String type;
 
     @Column(name = "first_name")
     private String firstname;
@@ -28,6 +33,7 @@ public class Passenger {
     private Timestamp dateOfBirth;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "booking_id")
     private Booking booking;
 }

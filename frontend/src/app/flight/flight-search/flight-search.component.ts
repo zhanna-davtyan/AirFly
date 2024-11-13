@@ -13,9 +13,10 @@ import {FlightService} from "../flight.service";
 import {AirportService} from "../../airport/airport.service";
 import {Airport} from "../../airport/airport.model";
 import {Flight} from "../flight.model";
-import {FlightSearch} from "../flight-search.model";
+import {OutwardFlightSearch} from "../outward-flight-search.model";
 import {Router} from "@angular/router";
 import {toNumber} from "lodash";
+import {ReturnFlightSearch} from "../return-flight-search.model";
 
 @Component({
   selector: 'app-flight-search',
@@ -90,6 +91,7 @@ export class FlightSearchComponent implements OnInit {
   ngOnInit(): void {
     this.maxDate.setDate(this.maxDate.getDate() + 60);
     this.minDate.setHours(0,0,0,0);
+
     this.formGroup = this.formBuilder.group({
       departureAirportId: [null, [Validators.required]],
       arrivalAirportId: [null, [Validators.required]],
@@ -99,6 +101,7 @@ export class FlightSearchComponent implements OnInit {
       children: [0],
       babies: [0]
     });
+
     this.formGroup.get('adults')?.valueChanges.subscribe(adultsCount => {
       const babiesControl = this.formGroup.get('babies');
       babiesControl?.setValidators([
@@ -106,6 +109,7 @@ export class FlightSearchComponent implements OnInit {
       ]);
       babiesControl?.updateValueAndValidity(); // Refresh validation
     });
+
     this.airportService.getAll().subscribe({
       next: (airports: Airport[]) => {
         this.airportOptions = airports.map(airport => ({
@@ -123,7 +127,8 @@ export class FlightSearchComponent implements OnInit {
         this.formGroup.get('arrivalAirportId')?.valueChanges.subscribe(() => {
           this.updateFilteredOptions();
         });
-        if (this.router.url.includes('/select-flight')) {
+
+        if (this.router.url.includes('/book-flight')) {
           this.formGroup.get('departureAirportId')?.setValue(toNumber(localStorage.getItem("departure_airport_id")));
           this.formGroup.get('arrivalAirportId')?.setValue(toNumber(localStorage.getItem("arrival_airport_id")));
           this.formGroup.get('outwardFlightTime')?.setValue(new Date(toNumber(localStorage.getItem("outward_flight_time")!)));
@@ -142,16 +147,13 @@ export class FlightSearchComponent implements OnInit {
   updateFilteredOptions() {
     const selectedDepartureId = this.formGroup.get('departureAirportId')?.value;
     const selectedArrivalId = this.formGroup.get('arrivalAirportId')?.value;
-
     this.filteredArrivalOptions = this.airportOptions.filter(
       airport => airport.value !== selectedDepartureId
     );
-
     this.filteredDepartureOptions = this.airportOptions.filter(
       airport => airport.value !== selectedArrivalId
     );
     this.changeDetectorRef.detectChanges();
-    this.changeDetectorRef.markForCheck();
   }
 
   submit() {
@@ -159,15 +161,17 @@ export class FlightSearchComponent implements OnInit {
     const now = new Date();
     outwardFlightTime.setHours(now.getHours(), now.getMinutes(), now.getSeconds());
 
-
     localStorage.setItem("departure_airport_id", this.formGroup.get('departureAirportId')?.value);
     localStorage.setItem("arrival_airport_id", this.formGroup.get('arrivalAirportId')?.value);
     localStorage.setItem("outward_flight_time", outwardFlightTime.getTime().toString());
-    if (this.formGroup.get('returnFlightTime')?.value != null) {
+    if (this.formGroup.get('returnFlightTime')?.value) {
       const returnFlightTimeValue = this.formGroup.get('returnFlightTime')?.value;
       const returnFlightDate = new Date(returnFlightTimeValue);
       returnFlightDate.setHours(23, 59, 59);
       localStorage.setItem("return_flight_time", returnFlightDate.getTime().toString());
+    }
+    else{
+      localStorage.removeItem("return_flight_time");
     }
     localStorage.setItem("adults", this.formGroup.get('adults')?.value);
     localStorage.setItem("children", this.formGroup.get('children')?.value);
@@ -175,16 +179,16 @@ export class FlightSearchComponent implements OnInit {
     localStorage.setItem("current_step", "1");
     localStorage.setItem("current_step_description", "outgoing-flight")
 
-    localStorage.removeItem("departure_flight_id");
-    localStorage.removeItem("departure_category_id");
+    localStorage.removeItem("outward_flight_id");
+    localStorage.removeItem("outward_category_id");
     localStorage.removeItem("return_flight_id");
     localStorage.removeItem("return_category_id");
-    localStorage.removeItem("return_flight_time")
     localStorage.removeItem("travel_insurance");
-    if(this.router.url.includes('/select-flight')){
+    localStorage.removeItem("passengers");
+    if(this.router.url.includes('/book-flight')){
       window.location.reload()
     }
-    this.router.navigate(['/select-flight']);
+    this.router.navigate(['/book-flight']);
   }
 
   checkFieldsAndShowPassengers() {
@@ -201,8 +205,8 @@ export class FlightSearchComponent implements OnInit {
     const numberOfPassengers = this.formGroup.get('adults')?.value + this.formGroup.get('children')?.value;
     if (numberOfPassengers != 0) {
       if (departureAirportId && arrivalAirportId) {
-        this.flightService.getByFlightSearch(
-          new FlightSearch(
+        this.flightService.getByOutwardFlightSearch(
+          new OutwardFlightSearch(
             departureAirportId,
             arrivalAirportId,
             numberOfPassengers
@@ -211,12 +215,23 @@ export class FlightSearchComponent implements OnInit {
           this.invalidOutwardFlightDateOptions = [];
           this.createInvalidDatesArray(response, this.invalidOutwardFlightDateOptions);
         });
+      }
+    }
+  }
 
-        this.flightService.getByFlightSearch(
-          new FlightSearch(
+  onOutwardFlightTimeSelect(){
+    const departureAirportId = this.formGroup.get('departureAirportId')?.value;
+    const arrivalAirportId = this.formGroup.get('arrivalAirportId')?.value;
+    const numberOfPassengers = this.formGroup.get('adults')?.value + this.formGroup.get('children')?.value;
+    const minDepartureTime = this.formGroup.get('outwardFlightTime')?.value;
+    if (numberOfPassengers != 0) {
+      if (departureAirportId && arrivalAirportId) {
+        this.flightService.getByReturnFlightSearch(
+          new ReturnFlightSearch(
             arrivalAirportId,
             departureAirportId,
-            numberOfPassengers
+            numberOfPassengers,
+            minDepartureTime
           )
         ).subscribe((response: Flight[]) => {
           this.invalidReturnFlightDateOptions = [];

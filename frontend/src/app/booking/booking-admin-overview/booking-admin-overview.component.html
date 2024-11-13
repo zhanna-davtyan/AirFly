@@ -1,0 +1,134 @@
+<h2 class="mt-0 ml-3">{{'all-bookings' | translate }}</h2>
+<p-toolbar class="mr-2" [style]="{ width: '95%', margin: '0 auto' }">
+    <span class="p-input-icon-left" style="width: 90vw;">
+      <i class="pi pi-search"></i>
+      <input
+        pInputText
+        style="width: 100%;"
+        type="text"
+        [(ngModel)]="filter"
+        (input)="applyFilterGlobal($event, 'contains')"
+        placeholder="{{'table.search' | translate }}"
+      />
+    </span>
+  <div class="flex justify-content-between w-full mt-2">
+    <span>
+      <button
+        pButton
+        type="button"
+        class="p-button-text"
+        icon="pi pi-sync"
+        tooltipPosition="top"
+        pTooltip="{{'table.refresh-table' | translate }}"
+        (click)="refreshData()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        class="p-button-text"
+        icon="pi pi-filter-slash"
+        tooltipPosition="top"
+        pTooltip="{{'table.clear-sorting-and-filters' | translate }}"
+        (click)="clearTableWithMultiSort(table)"
+      ></button>
+    </span>
+  </div>
+</p-toolbar>
+
+<p-table
+  [value]="dtos"
+  #table
+  [autoLayout]="true"
+  [columns]="columns"
+  sortMode="multiple"
+  [paginator]="true"
+  [rowHover]="true"
+  paginatorPosition="bottom"
+  [rows]="10"
+  [rowsPerPageOptions]="[5, 10, 15, 20, 25]"
+  [showCurrentPageReport]="true"
+  currentPageReportTemplate=""
+>
+  <ng-template pTemplate="header">
+    <tr>
+      <th pSortableColumn="id">
+        <p>
+          ID
+          <p-sortIcon field="id"></p-sortIcon>
+        </p>
+      </th>
+      <th pSortableColumn="user.email" class="flex align-items-center">
+        <p>
+          {{'e-mail' | translate}}
+          <p-sortIcon field="user.email"></p-sortIcon>
+          <p-columnFilter
+            field="departureAirport.code"
+            matchMode="in"
+            display="menu"
+            [hideOnClear]="true"
+            [showOperator]="false"
+            [showAddButton]="false"
+            [showMatchModes]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="emailOptions"
+                placeholder="All"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+                optionValue="value"
+                appendTo="body"
+              >
+                <ng-template let-option pTemplate="item">
+                  <span>{{ option.label }}</span>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </p>
+      </th>
+      <th pSortableColumn="totalPrice">
+        <p>
+          {{ 'total-price' | translate }}
+          <p-sortIcon field="totalPrice"></p-sortIcon>
+          <p-columnFilter
+            field="totalPrice"
+            matchMode="in"
+            display="menu"
+            [hideOnClear]="true"
+            [showOperator]="false"
+            [showAddButton]="false"
+            [showMatchModes]="false"
+          >
+            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+              <p-multiSelect
+                [ngModel]="value"
+                [options]="priceOptions"
+                placeholder="All"
+                (onChange)="filter($event.value)"
+                optionLabel="label"
+                optionValue="value"
+                appendTo="body"
+              >
+                <ng-template let-option pTemplate="item">
+                  <span>{{ option.label }}</span>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </p>
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-row let-columns="columns">
+    <tr [pSelectableRow]="row">
+      <td *ngFor="let column of columns" [ngSwitch]="column.field"
+          (click)="this.openDynamicDialogDetails(row)">
+        <span *ngSwitchCase="'id'">#AF{{ row.id }}</span>
+        <span *ngSwitchCase="'user.email'">{{ row.user?.email }}</span>
+        <span *ngSwitchCase="'totalPrice'">{{ row.totalPrice }}</span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>

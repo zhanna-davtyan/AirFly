@@ -1,4 +1,4 @@
-export class FlightSearch {
+export class OutwardFlightSearch {
   departureAirportId: number;
   arrivalAirportId: number;
   numberOfPassengers: number;

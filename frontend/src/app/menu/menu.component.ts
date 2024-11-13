@@ -1,9 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
-import { RouterModule } from '@angular/router';
-import { Router } from '@angular/router';
-import { MenuSidebarService } from './menu-sidebar.service';
+import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -16,6 +14,9 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { ToggleButtonModule } from 'primeng/togglebutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ThemeService } from '../common/service/theme.service';
+import { DividerModule } from 'primeng/divider';
+import { MenubarModule } from 'primeng/menubar';
+import { AvatarModule } from 'primeng/avatar';
 import { UserService } from '../user/user.service';
 
 @Component({
@@ -34,36 +35,46 @@ import { UserService } from '../user/user.service';
     InputSwitchModule,
     ToggleButtonModule,
     ToolbarModule,
+    DividerModule,
+    MenubarModule,
+    AvatarModule,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
-  @ViewChild('op') op!: OverlayPanel;
+export class MenuComponent implements OnInit {
+  @Input() currentStep!: number;
+  @Input() currentStepDescription!: string;
+
   languageOptions: SelectItem[] = [];
-  visibleSidebar: boolean = false;
   protected selectedLanguage: string | null = localStorage.getItem('lng');
+  private readonly availableLanguages = ['de', 'en'];
+
   theme: string | null = localStorage.getItem('theme');
   darkTheme!: boolean;
   private authSubscription!: Subscription;
   isLoggedIn = false;
 
+  isSidebarVisible: boolean = false;
+  @ViewChild('adminOp') adminOp!: OverlayPanel;
+  @ViewChild('languageOp') languageOp!: OverlayPanel;
+
   constructor(
-    private menuSideBarService: MenuSidebarService,
     private themeService: ThemeService,
     private router: Router,
-    private authService: UserService
+    private authService: UserService,
+    private translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    this.menuSideBarService.isSidebarVisible$.subscribe((value) => {
-      this.visibleSidebar = value;
-    });
     this.translateService.addLangs(this.availableLanguages);
     if (this.selectedLanguage == null) {
       this.selectedLanguage = 'en'; // Default
       localStorage.setItem('lng', this.selectedLanguage);
     }
+    this.translateService.use(this.selectedLanguage);
+    this.updateTranslations();
+
     if (this.theme == null) {
       this.theme = 'theme-dark'; // Default
       localStorage.setItem('theme', 'theme-dark');
@@ -75,7 +86,6 @@ export class MenuComponent implements OnInit, OnDestroy {
     this.darkTheme = !this.theme || this.theme === 'theme-dark';
     this.translateService.use(this.selectedLanguage);
     this.updateTranslations();
-    this.updateMenu();
 
     this.authSubscription = this.authService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
@@ -89,29 +99,11 @@ export class MenuComponent implements OnInit, OnDestroy {
     }
   }
 
-  private readonly availableLanguages = ['de', 'en'];
-  translateService = inject(TranslateService);
-  items: any[] = [];
-
-  private updateMenu() {
-    this.translateService
-      .get(['book', 'my-trip', 'checkIn'])
-      .subscribe((translations) => {
-        this.items = [
-          { label: translations['book'], id: 'flight-search-section' },
-          { label: translations['my-trip'], id: 'my-trip' },
-          { label: translations['checkIn'], id: 'checkIn' },
-        ];
-      });
-  }
-
-  protected onChangeLanguage(event: any) {
+  protected onLanguageChange(event: any) {
     const newLanguage = event.value;
     localStorage.setItem('lng', newLanguage);
-
     this.translateService.use(newLanguage).subscribe(() => {
       this.updateTranslations();
-      this.updateMenu();
     });
   }
 
@@ -128,11 +120,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   }
 
   toggleSidebar() {
-    this.visibleSidebar = !this.visibleSidebar;
-    this.menuSideBarService.toggleSidebar();
-    setTimeout(() => {
-      document.getElementById('main-content')?.focus();
-    });
+    this.isSidebarVisible = !this.isSidebarVisible;
   }
 
   changeTheme(event: any) {
@@ -146,19 +134,33 @@ export class MenuComponent implements OnInit, OnDestroy {
       this.darkTheme = false;
     }
   }
-  navigateAndCloseSidebar(elementId: string) {
-    this.visibleSidebar = false;
-    this.menuSideBarService.toggleSidebar();
-    const element = document.getElementById(elementId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+
+  navigateToBookNewFlight() {
+    this.toggleSidebar();
+    this.router.navigate(['search-flight']);
   }
 
-  goToLandingPage() {
-    this.router.navigate(['']);
+  navigateToMyBookings() {
+    this.toggleSidebar();
+    this.router.navigate(['my-bookings']);
   }
-  goToSignUpRegister() {
-    this.router.navigate(['login']);
+
+  navigateToAllFlights() {
+    this.toggleSidebar();
+    this.router.navigate(['all-flights']);
+  }
+
+  navigateToAllBookings() {
+    this.toggleSidebar();
+    this.router.navigate(['all-bookings']);
+  }
+
+  showBorderBottom() {
+    if (this.currentStep && this.currentStepDescription) {
+      if (this.currentStep != 0 && this.currentStepDescription != '') {
+        return false;
+      }
+    }
+    return true;
   }
 }

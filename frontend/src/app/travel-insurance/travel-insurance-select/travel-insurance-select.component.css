@@ -1,0 +1,15 @@
+::ng-deep .travel-insurance-holder p-card{
+  width: 90%;
+}
+
+::ng-deep .travel-insurance-holder .p-card-content{
+  padding-top: 0;
+}
+
+::ng-deep .insurance-info .pi {
+  font-weight: bold;
+  color: #00875A;
+  background: rgba(0, 135, 90, 0.2);
+  padding: 5px;
+  border-radius: 100%;
+}

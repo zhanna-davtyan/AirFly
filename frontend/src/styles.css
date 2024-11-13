@@ -93,16 +93,6 @@ html {
   visibility: hidden !important;
 }
 
-.p-dynamic-dialog > .p-dialog-header *{
-  display: none;
-}
-
-.p-dynamic-dialog > .p-dialog-header{
-  padding: 0;
-  height: 8px;
-  border-bottom: none;
-}
-
 .close-icon {
   cursor: pointer;
   padding: 5px;
@@ -116,7 +106,7 @@ html {
 .p-messages {
   position: fixed;
   bottom: 5px;
-  z-index: 99999;
+  z-index: 3;
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
@@ -196,15 +186,11 @@ html {
 }
 
 .modify-flight .p-accordion-content {
-  position: absolute;
-  top: 179px;
   width: 100%;
-  z-index: 1;
 }
 
 .modify-flight{
-  box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
-  z-index: 555;
+  z-index: 3;
 }
 
 .flight-select-holder .p-card{
@@ -221,12 +207,16 @@ html {
 
 .flight-select .p-icon-wrapper{
   padding:10px;
-  background: #3b82f6;
+  background: #8B5CF6;
   border-radius: 6px;
 }
 
 .p-tabview-panels{
   padding: 0;
+}
+
+input[type='radio'] {
+  accent-color: #8B5CF6;
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link{
@@ -243,3 +233,33 @@ html {
   border-radius: 7px 7px 0 0;
 }
 
+footer {
+  border-top: #836EEE solid;
+  font-size: 14px;
+  height: 100px;
+}
+
+.continue{
+  width: 100vw;
+  height: 9vh;
+  position: fixed;
+  bottom: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.continue button {
+  width: 90%;
+  height: 3.5em;
+}
+
+.p-sidebar-mask {
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+}
+
+.width-90 div{
+  width: 90%;
+}

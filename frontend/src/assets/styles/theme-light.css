@@ -105,52 +105,12 @@ body {
   background-color: #f8f8f8;
 }
 
-footer {
-  border-color: #836EEE !important;
-  padding: 5px;
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 3px;
-  border-top: #836EEE solid;
-  font-size: 14px;
-  color: black;
+h2, h1, i, h3{
+  color: #303030;
 }
 
-.menu-icon {
-  font-size: 200px;
-  cursor: pointer;
-  color: black;
-  display: flex;
-  justify-content: flex-end;
-}
-
-.custom-sidebar {
-  width: 280px;
-  background-color: #473e80;
-  color: #733333;
-  padding: 20px;
-}
-
-.menu-list li {
-  padding: 15px 0;
-  font-size: 18px;
-  font-weight: bold;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  color: #6d4d4d;
-}
-
-.header-icons .account-icon path {
-  fill: black !important;
-}
-
-.header-icons svg path {
-  fill: black;
-}
-
-.main-page-design span, .main-page-tickets span{
-  font-weight: bold; font-size: 18px; color: black;
+footer{
+  color: #303030;
 }
 
 .continue{
@@ -158,5 +118,63 @@ footer {
 }
 
 .flight-select-holder .header-div{
-  color: black;
+  color: #303030;
+}
+
+.standard-background{
+  background: #3B82F6;
+  color: #ffffff;
+}
+
+.premium-background{
+  background: #891b55;
+  color: #ffffff;
+}
+
+.basic-background{
+  background: #dddddd;
+  color: #303030;
+}
+
+.BASIC-span{
+  background: #dddddd;
+  color: #303030;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.STANDARD-span{
+  background: #3B82F6;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.PREMIUM-span{
+  background: #891b55;
+  color: #ffffff;
+  border-radius: 5px;
+  padding: 5px;
+  margin-left: 5px;
+  font-weight: bold;
+}
+
+.flight-select-header{
+  color: #303030;
+}
+
+.continue i {
+  color: #ffffff;
+}
+
+.header-border, .modify-flight{
+  box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
+}
+
+::ng-deep .total-price .p-panel .p-panel-content{
+  border-top: 1px solid #e5e7eb;
 }

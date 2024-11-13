@@ -3,8 +3,42 @@
   height: 37.5px;
 }
 
-@media (max-width: 400px) {
-  .p-dropdown {
-    max-width: 290px;
+@media (max-width: 450px) {
+  ::ng-deep .p-dropdown, ::ng-deep .p-inputtext {
+    max-width: 300px;
   }
+}
+
+@media (max-width: 400px) {
+  ::ng-deep .p-dropdown, ::ng-deep .p-inputtext {
+    max-width: 270px;
+  }
+}
+
+@media (max-width: 370px) {
+  ::ng-deep .p-dropdown, ::ng-deep .p-inputtext {
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 350px) {
+  ::ng-deep .p-dropdown, ::ng-deep .p-inputtext {
+    max-width: 220px;
+  }
+}
+
+@media (max-width: 315px) {
+  ::ng-deep .p-dropdown, ::ng-deep .p-inputtext {
+    max-width: 200px;
+  }
+}
+
+::ng-deep .p-dynamic-dialog > .p-dialog-header *{
+  display: none;
+}
+
+::ng-deep .p-dynamic-dialog > .p-dialog-header{
+  padding: 0;
+  height: 8px;
+  border-bottom: none;
 }

@@ -1,0 +1,78 @@
+<div class="passenger-info-holder w-full">
+  <form [formGroup]="passengerFormGroup">
+    <div formArrayName="passengers" class="passenger-info-card">
+      <div class="w-full flex justify-content-center mt-5"
+           *ngFor="let passenger of passengerFormArray.controls; let i = index"
+           [formGroupName]="i">
+        <p-card>
+          <h3 class="mt-0">{{ 'passenger' | translate }} {{ i + 1 }}:
+            <span>{{ passenger.get('type')?.value | translate }}</span></h3>
+          <div class="w-full mt-6">
+            <p-floatLabel>
+              <input class="w-full" id="firstname-{{i}}" type="text" pInputText formControlName="firstname"/>
+              <label for="firstname-{{i}}">{{ "firstname" | translate }}</label>
+            </p-floatLabel>
+            <div style="min-height: 20px;">
+              <small *ngIf="passenger.get('firstname')?.invalid && passenger.get('firstname')?.touched"
+                     class="p-error ml-2">{{ "firstname-required" | translate }}</small>
+            </div>
+          </div>
+
+          <div class="w-full mt-4">
+            <p-floatLabel class="w-full">
+              <input class="w-full" id="lastname-{{i}}" type="text" pInputText formControlName="lastname"/>
+              <label for="lastname-{{i}}"> {{ "lastname" | translate }}</label>
+            </p-floatLabel>
+            <div style="min-height: 20px;">
+              <small *ngIf="passenger.get('lastname')?.invalid && passenger.get('lastname')?.touched"
+                     class="p-error ml-2">{{ "lastname-required" | translate }}</small>
+            </div>
+          </div>
+
+          <div class="mt-4">
+            <p-floatLabel>
+              <p-calendar
+                [maxDate]="maxBirthdayDate"
+                [style]="{ width: '100%'}"
+                formControlName="dateOfBirth"
+                dateFormat="dd.mm.yy"
+                class="w-full"
+                [touchUI]="true"
+                id="dateOfBirth-{{i}}"
+                [showButtonBar]="true"
+                inputId="dateOfBirth-{{i}}"/>
+              <label for="dateOfBirth-{{i}}">{{ "date-of-birth" | translate }}</label>
+            </p-floatLabel>
+            <div style="min-height: 20px;">
+              <small *ngIf="passenger.get('dateOfBirth')?.invalid && passenger.get('dateOfBirth')?.touched"
+                     class="p-error ml-2">{{ "date-of-birth-required" | translate }}</small>
+              <small *ngIf="passenger.errors?.['notAdult'] && passenger.get('dateOfBirth')?.touched"
+                     class="p-error ml-2">{{ "date-of-birth-adults" | translate }}</small>
+              <small *ngIf="passenger.errors?.['notChild'] && passenger.get('dateOfBirth')?.touched"
+                     class="p-error ml-2">{{ "date-of-birth-children" | translate }}</small>
+              <small *ngIf="passenger.errors?.['notBaby'] && passenger.get('dateOfBirth')?.touched"
+                     class="p-error ml-2">{{ "date-of-birth-babies" | translate }}</small>
+            </div>
+          </div>
+        </p-card>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="continue">
+  <button
+    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
+    pButton
+    (click)="goBack()"
+    [disabled]="currentStep === 1"
+  >
+    <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+  </button>
+  <button
+    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
+    pButton
+    [disabled]="isContinueButtonDisabled()"
+    (click)="goForward()">
+    <i style="font-size: 2rem" class="pi pi-angle-right"></i>
+  </button>
+</div>

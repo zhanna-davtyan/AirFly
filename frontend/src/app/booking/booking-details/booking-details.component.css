@@ -1,0 +1,7 @@
+::ng-deep .total-price .p-panel-header{
+  display: none;
+}
+
+::ng-deep .total-price .p-panel .p-panel-content:last-child{
+  border-radius: 6px
+}

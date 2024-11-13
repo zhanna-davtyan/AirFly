@@ -1,0 +1,216 @@
+@if (booking) {
+  <div class="w-full mt-2">
+    <p-panel [toggleable]="true" header="{{'outgoing-flight' | translate}}">
+      <div class="flex w-full justify-content-between align-items-center">
+        <div class="flex flex-column" style="font-size: 1.1rem;">
+          <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[0].flight.departureAirport.code }}</p>
+          <p class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[0].flight.departureTime | date: 'HH:mm' }}</p>
+        </div>
+        <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+          <p
+            class="m-0">{{ getTimeDifference(booking.bookingFlightMappings[0].flight.departureTime, booking.bookingFlightMappings[0].flight.arrivalTime) }}
+            h</p>
+          <p-divider class="w-full p-flight-divider"/>
+          <p class="m-0">Nonstop</p>
+        </div>
+        <div class="flex flex-column" style="font-size: 1.1rem;">
+          <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[0].flight.arrivalAirport.code }}</p>
+          <p class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[0].flight.arrivalTime | date: 'HH:mm' }}</p>
+        </div>
+      </div>
+      <p-divider></p-divider>
+      <div class="flex flex-column">
+        <p><b>{{ 'flight-number' | translate }}:</b> #FN{{ booking.bookingFlightMappings[0].flight.flightNumber }}</p>
+        <p><b>{{ 'airplane' | translate }}:</b> {{ booking.bookingFlightMappings[0].flight.airplane.model }}</p>
+        <p><b>{{ 'departure-airport' | translate }}
+          :</b> {{ booking.bookingFlightMappings[0].flight.departureAirport.name }}
+          - {{ booking.bookingFlightMappings[0].flight.departureAirport.code }},
+          {{ booking.bookingFlightMappings[0].flight.departureAirport.country }}
+          , {{ booking.bookingFlightMappings[0].flight.departureAirport.city }}
+        </p>
+        <p><b>{{ 'arrival-airport' | translate }}
+          :</b> {{ booking.bookingFlightMappings[0].flight.arrivalAirport.name }}
+          - {{ booking.bookingFlightMappings[0].flight.arrivalAirport.code }},
+          {{ booking.bookingFlightMappings[0].flight.arrivalAirport.country }}
+          , {{ booking.bookingFlightMappings[0].flight.arrivalAirport.city }}
+        </p>
+        <p><b>{{ 'departure-time' | translate }}
+          :</b> {{ booking.bookingFlightMappings[0].flight.departureTime | date:'dd.MM.yyyy HH:mm' }}</p>
+        <p><b>{{ 'arrival-time' | translate }}
+          :</b> {{ booking.bookingFlightMappings[0].flight.arrivalTime | date:'dd.MM.yyyy HH:mm' }}</p>
+        <p><b>{{ 'category' | translate }}:</b><span
+          *ngIf="booking.bookingFlightMappings[0]?.category?.name as categoryName"
+          [ngClass]="categoryName + '-span'">{{ booking.bookingFlightMappings[0].category.name }}</span>
+        </p>
+      </div>
+    </p-panel>
+  </div>
+  @if (booking.bookingFlightMappings[1]) {
+    <div class="w-full mt-4">
+      <p-panel [toggleable]="true" header="{{'return-flight' | translate}}">
+        <div class="flex w-full justify-content-between align-items-center">
+          <div class="flex flex-column" style="font-size: 1.1rem;">
+            <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[1].flight.departureAirport.code }}</p>
+            <p
+              class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[1].flight.departureTime | date: 'HH:mm' }}</p>
+          </div>
+          <div class="w-full flex flex-column align-items-center mx-7 flight-time">
+            <p
+              class="m-0">{{ getTimeDifference(booking.bookingFlightMappings[1].flight.departureTime, booking.bookingFlightMappings[1].flight.arrivalTime) }}
+              h</p>
+            <p-divider class="w-full p-flight-divider"/>
+            <p class="m-0">Nonstop</p>
+          </div>
+          <div class="flex flex-column" style="font-size: 1.1rem;">
+            <p class="m-0 font-semibold">{{ booking.bookingFlightMappings[1].flight.arrivalAirport.code }}</p>
+            <p class="m-0 mt-2 font-bold">{{ booking.bookingFlightMappings[1].flight.arrivalTime | date: 'HH:mm' }}</p>
+          </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="flex flex-column">
+          <p><b>{{ 'flight-number' | translate }}:</b> #FN{{ booking.bookingFlightMappings[1].flight.flightNumber }}</p>
+          <p><b>{{ 'airplane' | translate }}:</b> {{ booking.bookingFlightMappings[1].flight.airplane.model }}</p>
+          <p><b>{{ 'departure-airport' | translate }}
+            :</b> {{ booking.bookingFlightMappings[1].flight.departureAirport.name }}
+            - {{ booking.bookingFlightMappings[1].flight.departureAirport.code }},
+            {{ booking.bookingFlightMappings[1].flight.departureAirport.country }}
+            , {{ booking.bookingFlightMappings[1].flight.departureAirport.city }}
+          </p>
+          <p><b>{{ 'arrival-airport' | translate }}
+            :</b> {{ booking.bookingFlightMappings[1].flight.arrivalAirport.name }}
+            - {{ booking.bookingFlightMappings[1].flight.arrivalAirport.code }},
+            {{ booking.bookingFlightMappings[1].flight.arrivalAirport.country }}
+            , {{ booking.bookingFlightMappings[1].flight.arrivalAirport.city }}
+          </p>
+          <p><b>{{ 'departure-time' | translate }}
+            :</b> {{ booking.bookingFlightMappings[1].flight.departureTime | date:'dd.MM.yyyy HH:mm' }}</p>
+          <p><b>{{ 'arrival-time' | translate }}
+            :</b> {{ booking.bookingFlightMappings[1].flight.arrivalTime | date:'dd.MM.yyyy HH:mm' }}</p>
+          <p><b>{{ 'category' | translate }}:</b><span
+            [ngClass]="booking.bookingFlightMappings[1].category.name + '-span'">{{ booking.bookingFlightMappings[1].category.name }}</span>
+          </p>
+        </div>
+      </p-panel>
+    </div>
+  }
+  <div class="mt-4 w-full">
+    <p-panel [toggleable]="true" header="{{'passengers'|translate}}">
+      <div class="flex flex-column">
+        @for (passenger of booking.passengers; track passenger; let i = $index) {
+          @if (i != 0) {
+            <p-divider></p-divider>
+          }
+          <p style="font-size:15px;" class="font-bold mt-0 mb-3">{{ 'passenger'|translate }} {{ i + 1 }}
+            - {{ passenger.type | translate }}</p>
+          <p class="mt-0 mb-3"><span class="font-bold">{{ 'firstname'|translate }}:</span> {{ passenger.firstname }}</p>
+          <p class="mt-0 mb-3"><span class="font-bold">{{ 'lastname'|translate }}:</span> {{ passenger.lastname }}</p>
+          <p class="mt-0 mb-3"><span class="font-bold">{{ 'date-of-birth'|translate }}
+            :</span> {{ passenger.dateOfBirth | date: 'dd.MM.yyyy' }}</p>
+        }
+      </div>
+    </p-panel>
+  </div>
+  <div class="mt-4 w-full">
+    <p-panel [toggleable]="true" header="{{'billing-address'|translate}}">
+      <div class="flex flex-column">
+        <p class="mt-0 mb-3"><span class="font-bold">{{ 'firstname'|translate }}:</span> {{ booking.billingFirstname }}
+        </p>
+        <p class="mt-0 mb-3"><span class="font-bold">{{ 'lastname'|translate }}:</span> {{ booking.billingLastname }}
+        </p>
+        <p class="mt-0 mb-3"><span class="font-bold">{{ 'postcode'|translate }}
+          :</span> {{ booking.billingStreet }} {{ booking.billingHousenumber }} </p>
+        <p class="mt-0 mb-3"><span class="font-bold">{{ 'postcode'|translate }}:</span> {{ booking.billingPostcode }}
+          , {{ booking.billingCity }} </p>
+      </div>
+    </p-panel>
+  </div>
+  <div class="mt-4 w-full">
+    <p-panel [toggleable]="true" header="{{'travel-insurance'|translate}}">
+      <div class="flex justify-content-between">
+        <p>{{ 'travel-insurance' | translate }}
+          : {{ booking.travelInsurance ? ('base.yes' | translate) : ('base.no' | translate) }}</p>
+        <img style="width: 90px; height: auto;" src="assets/img/LVM_Versicherung_2010_logo.svg.png" alt="">
+      </div>
+    </p-panel>
+  </div>
+  <div class="mt-4 w-full">
+    <p-panel [toggleable]="true" header="{{'total-price'|translate}}">
+      <p-fieldset legend="{{'outgoing-flight' | translate}}">
+        <div class="flex justify-content-between">
+          <div class="flex-column">
+            <p>
+              {{ getNumberOfAdults() }} x {{ 'adult-special'|translate }} {{ 'plane-ticket'|translate }}:
+            </p>
+            <p>
+              {{ getNumberOfChildren() }} x {{ 'children'|translate }} {{ 'plane-ticket'|translate }}:
+            </p>
+            <p>
+              {{ getNumberOfBabies() }} x {{ 'baby'|translate }} {{ 'plane-ticket'|translate }}:
+            </p>
+          </div>
+          <div class="flex-column">
+            <p>
+              {{ (getNumberOfAdults() * (booking.bookingFlightMappings[0].flight.price + booking.bookingFlightMappings[0].category.price)) | currency : '€' }}
+            </p>
+            <p>
+              {{ (getNumberOfChildren() * (booking.bookingFlightMappings[0].flight.price + booking.bookingFlightMappings[0].category.price)) | currency : '€' }}
+            </p>
+            <p>
+              {{ 0 | currency: '€' }}
+            </p>
+          </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="flex flex-row-reverse">
+          <p class="font-bold m-0">
+            {{ calculateTotalOutgoingPrice() | currency: '€' }}
+          </p>
+        </div>
+      </p-fieldset>
+      @if (booking.bookingFlightMappings.length > 1) {
+        <div class="mt-3">
+          <p-fieldset legend="{{'return-flight' | translate}}">
+            <div class="flex justify-content-between">
+              <div class="flex-column">
+                <p>
+                  {{ getNumberOfAdults() }} x {{ 'adult-special'|translate }} {{ 'plane-ticket'|translate }}:
+                </p>
+                <p>
+                  {{ getNumberOfChildren() }} x {{ 'children'|translate }} {{ 'plane-ticket'|translate }}:
+                </p>
+                <p>
+                  {{ getNumberOfBabies() }} x {{ 'baby'|translate }} {{ 'plane-ticket'|translate }}:
+                </p>
+              </div>
+              <div class="flex-column">
+                <p>
+                  {{ (getNumberOfAdults() * (booking.bookingFlightMappings[1].flight.price + booking.bookingFlightMappings[1].category.price)) | currency : '€' }}
+                </p>
+                <p>
+                  {{ (getNumberOfChildren() * (booking.bookingFlightMappings[1].flight.price + booking.bookingFlightMappings[1].category.price)) | currency : '€' }}
+                </p>
+                <p>
+                  {{ 0 | currency: '€' }}
+                </p>
+              </div>
+            </div>
+            <p-divider></p-divider>
+            <div class="flex flex-row-reverse">
+              <p class="font-bold m-0">
+                {{ calculateTotalReturnPrice() | currency: '€' }}
+              </p>
+            </div>
+          </p-fieldset>
+        </div>
+      }
+      <div class="mt-3 total-price">
+        <p-panel>
+          <div class="flex justify-content-between" style="font-size: 18px;">
+            <p class="m-0 font-bold">{{ 'total-price' | translate }}</p>
+            <p class="m-0 font-bold">{{ calculateTotal() | currency: '€' }}</p>
+          </div>
+        </p-panel>
+      </div>
+    </p-panel>
+  </div>
+}
