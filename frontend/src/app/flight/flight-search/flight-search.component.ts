@@ -136,8 +136,8 @@ export class FlightSearchComponent implements OnInit {
           this.formGroup.get('adults')?.setValue(toNumber(localStorage.getItem("adults")));
           this.formGroup.get('children')?.setValue(toNumber(localStorage.getItem("children")));
           this.formGroup.get('babies')?.setValue(toNumber(localStorage.getItem("babies")));
-          this.onOutwardFlightTimeSelect();
           this.onPassengerHide()
+          this.onOutwardFlightTimeSelect();
           this.changeDetectorRef.detectChanges();
         }
       }
