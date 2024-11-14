@@ -60,6 +60,13 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   billingAddressForm!: FormGroup;
   bookingId!: number;
 
+  billingFirstname!: string;
+  billingLastname!: string;
+  billingPostcode!: string;
+  billingCity!: string;
+  billingStreet!: string;
+  billingHousenumber!: string;
+
   constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router) {
     super()
   }
@@ -109,13 +116,32 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
     this.bookingService.updateCurrentStep(toNumber(localStorage.getItem('current_step')!));
     this.bookingService.updateCurrentStepDescription(localStorage.getItem('current_step_description')!);
 
+    if(localStorage.getItem('billing_firstname')) {
+      this.billingFirstname = localStorage.getItem('billing_firstname')!;
+    }
+    if(localStorage.getItem('billing_lastname')) {
+      this.billingLastname = localStorage.getItem('billing_lastname')!;
+    }
+    if(localStorage.getItem('billing_postcode')) {
+      this.billingPostcode = localStorage.getItem('billing_postcode')!;
+    }
+    if(localStorage.getItem('billing_city')) {
+      this.billingCity = localStorage.getItem('billing_city')!;
+    }
+    if(localStorage.getItem('billing_street')) {
+      this.billingStreet = localStorage.getItem('billing_street')!;
+    }
+    if(localStorage.getItem('billing_housenumber')) {
+      this.billingHousenumber = localStorage.getItem('billing_housenumber')!;
+    }
+
     this.billingAddressForm = this.formBuilder.group({
-      billingFirstname: [null, Validators.required],
-      billingLastname: [null, Validators.required],
-      billingPostcode: [null, Validators.required],
-      billingCity: [null, Validators.required],
-      billingStreet: [null, Validators.required],
-      billingHousenumber: [null, Validators.required],
+      billingFirstname: [this.billingFirstname ? this.billingFirstname : null, Validators.required],
+      billingLastname: [this.billingLastname ? this.billingLastname : null, Validators.required],
+      billingPostcode: [this.billingPostcode ? this.billingPostcode : null, Validators.required],
+      billingCity: [this.billingCity ? this.billingCity : null, Validators.required],
+      billingStreet: [this.billingCity ? this.billingCity : null, Validators.required],
+      billingHousenumber: [this.billingHousenumber ? this.billingHousenumber : null, Validators.required],
     })
   }
 
@@ -130,7 +156,13 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   }
 
   submitOrder() {
-    this.bookingService.submitOrder(this.billingAddressForm).subscribe({
+    localStorage.setItem('billing_firstname', this.billingAddressForm.get('billingFirstname')?.value);
+    localStorage.setItem('billing_lastname', this.billingAddressForm.get('billingLastname')?.value);
+    localStorage.setItem('billing_postcode', this.billingAddressForm.get('billingPostcode')?.value);
+    localStorage.setItem('billing_city', this.billingAddressForm.get('billingCity')?.value);
+    localStorage.setItem('billing_street', this.billingAddressForm.get('billingStreet')?.value);
+    localStorage.setItem('billing_housenumber', this.billingAddressForm.get('billingHousenumber')?.value);
+    this.bookingService.submitOrder().subscribe({
       next: (bookingId: number) => {
         this.bookingId = bookingId;
         this.currentStepDescription = "";

@@ -185,6 +185,12 @@ export class FlightSearchComponent implements OnInit {
     localStorage.removeItem("return_category_id");
     localStorage.removeItem("travel_insurance");
     localStorage.removeItem("passengers");
+    localStorage.removeItem('billing_firstname');
+    localStorage.removeItem('billing_lastname');
+    localStorage.removeItem('billing_postcode');
+    localStorage.removeItem('billing_city');
+    localStorage.removeItem('billing_street');
+    localStorage.removeItem('billing_housenumber');
     if(this.router.url.includes('/book-flight')){
       window.location.reload()
     }

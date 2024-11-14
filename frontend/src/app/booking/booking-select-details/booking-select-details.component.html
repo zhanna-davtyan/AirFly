@@ -21,12 +21,14 @@
           <span class="font-bold ml-2 text-xl">{{'outgoing-flight' | translate }}</span>
         </div>
       </ng-template>
+      @if(outwardFlight){
       <div class="flex flex-column pl-5">
         <span class="font-bold">{{outwardFlight.departureAirport.city + '(' + outwardFlight.departureAirport.code + ')' + ' - ' + outwardFlight.arrivalAirport.city + '(' + outwardFlight.arrivalAirport.code + ')'}}</span>
         <span>{{outwardFlight.departureTime | date: 'dd.MM.yyyy'}} | {{outwardFlight.departureTime | date: 'HH:mm'}} - {{outwardFlight.arrivalTime | date: 'HH:mm'}}</span>
         <span>{{'flight-duration'|translate}}: {{getTimeDifference(outwardFlight.departureTime, outwardFlight.arrivalTime)}}h</span>
         <span>#FN{{outwardFlight.flightNumber}} | {{outwardFlight.airplane.model}}</span>
       </div>
+      }
     </p-accordionTab>
     <p-accordionTab>
         <ng-template pTemplate="header">

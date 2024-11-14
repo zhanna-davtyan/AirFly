@@ -160,6 +160,6 @@ footer{
   border-bottom: 1px solid #8080d7;
 }
 
-::ng-deep .total-price .p-panel .p-panel-content{
+.total-price .p-panel-content{
   border-top: 1px solid #424b57;
 }

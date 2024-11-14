@@ -175,6 +175,6 @@ footer{
   box-shadow: 0 6px 6px 0 rgba(0,0,0,.18);
 }
 
-::ng-deep .total-price .p-panel .p-panel-content{
-  border-top: 1px solid #e5e7eb;
+.total-price .p-panel-content{
+  border-top: 1px solid #e5e7eb !important;
 }

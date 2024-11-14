@@ -29,7 +29,7 @@ export class BookingService extends AbstractCrudService<Booking> {
     localStorage.setItem('current_step_description', currentStepDescription);
   }
 
-  submitOrder(billingAddressForm: FormGroup) {
+  submitOrder() {
     let booking = new BookingForInsert(
       Boolean(localStorage.getItem('travel_insurance')),
       JSON.parse(localStorage.getItem('passengers')!),
@@ -37,12 +37,12 @@ export class BookingService extends AbstractCrudService<Booking> {
       Number(localStorage.getItem('outward_category_id')),
       localStorage.getItem('return_flight_id') ? Number(localStorage.getItem('return_flight_id')) : null,
       localStorage.getItem('return_category_id') ? Number(localStorage.getItem('return_category_id')) : null,
-      billingAddressForm.get('billingFirstname')?.value,
-      billingAddressForm.get('billingLastname')?.value,
-      billingAddressForm.get('billingPostcode')?.value,
-      billingAddressForm.get('billingCity')?.value,
-      billingAddressForm.get('billingStreet')?.value,
-      billingAddressForm.get('billingHousenumber')?.value,
+      localStorage.getItem('billing_firstname')!,
+      localStorage.getItem('billing_lastname')!,
+      localStorage.getItem('billing_postcode')!,
+      localStorage.getItem('billing_city')!,
+      localStorage.getItem('billing_street')!,
+      localStorage.getItem('billing_housenumber')!
     )
     this.deleteBookingDataFromLocalStorage();
     return this.httpClient
@@ -86,6 +86,13 @@ export class BookingService extends AbstractCrudService<Booking> {
     localStorage.removeItem('current_step_description');
     localStorage.removeItem('passengers');
     localStorage.removeItem('travel_insurance');
+
+    localStorage.removeItem('billing_firstname');
+    localStorage.removeItem('billing_lastname');
+    localStorage.removeItem('billing_postcode');
+    localStorage.removeItem('billing_city');
+    localStorage.removeItem('billing_street');
+    localStorage.removeItem('billing_housenumber');
   }
 
   getAllByUser(): Observable<Booking[]> {
