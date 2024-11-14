@@ -15,6 +15,7 @@ import { PasswordModule } from 'primeng/password';
 import { SignUpModel } from '../signup.model';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
+import { DividerModule } from 'primeng/divider';
 
 @Component({
   selector: 'app-register',
@@ -25,6 +26,7 @@ import { Router } from '@angular/router';
     ButtonDirective,
     InputTextModule,
     ReactiveFormsModule,
+    DividerModule,
     TooltipModule,
     PasswordModule,
     TranslateModule,

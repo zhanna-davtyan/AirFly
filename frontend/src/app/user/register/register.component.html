@@ -1,5 +1,5 @@
-<div [formGroup]="formGroup" class="flex justify-content-center">
-  <div class="container">
+<div [formGroup]="formGroup" class="flex justify-content-center w-full">
+  <div class="container w-full">
     <div class="row">
       <div class="col">
         <h2>Register</h2>
@@ -75,8 +75,24 @@
             formControlName="password"
             [toggleMask]="true"
             [feedback]="false"
-            class="w-full"
-          />
+            styleClass="w-full"
+            [style]="{ width: '100%' }"
+            [inputStyle]="{ width: '100%' }"
+          >
+            <ng-template pTemplate="header">
+              <h6>Pick a password</h6>
+            </ng-template>
+            <ng-template pTemplate="footer">
+              <p-divider />
+              <p class="mt-2">Suggestions</p>
+              <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                <li>At least one lowercase</li>
+                <li>At least one uppercase</li>
+                <li>At least one numeric</li>
+                <li>Minimum 8 characters</li>
+              </ul>
+            </ng-template></p-password
+          >
           <div style="min-height: 20px">
             <small *ngIf="!formGroup.get('password')!.valid" class="p-error">{{
               "enter-valid-value" | translate

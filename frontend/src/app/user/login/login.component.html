@@ -8,7 +8,7 @@
     <div><p class="font-bold text-xl">Login</p></div>
   </ng-template>
   <div [formGroup]="formGroup" class="flex justify-content-center">
-    <div class="container">
+    <div class="container w-full">
       <div class="row">
         <div class="col">
           <div>
@@ -39,7 +39,9 @@
               formControlName="password"
               [toggleMask]="true"
               [feedback]="false"
-              class="w-full"
+              styleClass="w-full"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
             />
             <div style="min-height: 20px">
               <small
