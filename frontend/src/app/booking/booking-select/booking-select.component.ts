@@ -22,6 +22,7 @@ import {ButtonDirective} from "primeng/button";
 import {toNumber} from "lodash";
 import {BookingDetailsComponent} from "../booking-details/booking-details.component";
 import {MenuComponent} from "../../menu/menu.component";
+import {BookingSelectDetailsComponent} from "../booking-select-details/booking-select-details.component";
 
 @Component({
   selector: 'app-booking-select',
@@ -45,7 +46,8 @@ import {MenuComponent} from "../../menu/menu.component";
     ButtonDirective,
     BookingDetailsComponent,
     NgStyle,
-    MenuComponent
+    MenuComponent,
+    BookingSelectDetailsComponent
   ],
   templateUrl: './booking-select.component.html',
   styleUrl: './booking-select.component.css'

@@ -1,0 +1,96 @@
+<div class="flex justify-content-between align-items-center">
+  <div class="flex align-items-center justify-content-center mt-3 mb-2">
+    <i (click)="flightInfoSidebar = true" style="font-size: 19px;" class="pi pi-angle-up"></i>
+    <p class="m-0 ml-3">{{ 'total-price' | translate }}</p>
+  </div>
+  @if (outwardFlight) {
+      <h3 class="m-0 mt-3">{{ calculateTotal() }}€</h3>
+  }
+</div>
+<p-sidebar styleClass="h-auto" appendTo="body" [(visible)]="flightInfoSidebar" position="bottom">
+  <ng-template pTemplate="header">
+            <span class="font-bold text-2xl">
+                {{'booking-overview' | translate }}
+            </span>
+  </ng-template>
+  <p-accordion [multiple]="true" [activeIndex]="[0,1,2,3]">
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="flex font-bold align-items-center">
+          <i style="width: 20px"  class="fa-solid fa-plane-departure"></i>
+          <span class="font-bold ml-2 text-xl">{{'outgoing-flight' | translate }}</span>
+        </div>
+      </ng-template>
+      <div class="flex flex-column pl-5">
+        <span class="font-bold">{{outwardFlight.departureAirport.city + '(' + outwardFlight.departureAirport.code + ')' + ' - ' + outwardFlight.arrivalAirport.city + '(' + outwardFlight.arrivalAirport.code + ')'}}</span>
+        <span>{{outwardFlight.departureTime | date: 'dd.MM.yyyy'}} | {{outwardFlight.departureTime | date: 'HH:mm'}} - {{outwardFlight.arrivalTime | date: 'HH:mm'}}</span>
+        <span>{{'flight-duration'|translate}}: {{getTimeDifference(outwardFlight.departureTime, outwardFlight.arrivalTime)}}h</span>
+        <span>#FN{{outwardFlight.flightNumber}} | {{outwardFlight.airplane.model}}</span>
+      </div>
+    </p-accordionTab>
+    <p-accordionTab>
+        <ng-template pTemplate="header">
+          <div class="flex font-bold align-items-center">
+            <i style="width: 20px"  class="fa-solid fa-plane-arrival"></i>
+            <span class="font-bold ml-2 text-xl">{{'return-flight' | translate }}</span>
+          </div>
+        </ng-template>
+      @if(returnFlight){
+        <div class="flex flex-column pl-5">
+          <span class="font-bold">{{returnFlight.departureAirport.city + '(' + returnFlight.departureAirport.code + ')' + ' - ' + returnFlight.arrivalAirport.city + '(' + returnFlight.arrivalAirport.code + ')'}}</span>
+          <span>{{outwardFlight.departureTime | date: 'dd.MM.yyyy'}} | {{returnFlight.departureTime | date: 'HH:mm'}} - {{returnFlight.arrivalTime | date: 'HH:mm'}}</span>
+          <span>{{'flight-duration'|translate}}: {{getTimeDifference(returnFlight.departureTime, returnFlight.arrivalTime)}}</span>
+          <span>#FN{{returnFlight.flightNumber}} | {{returnFlight.airplane.model}}</span>
+        </div>
+      }
+      @else{
+        <div class="flex flex-column pl-5">
+          <span>{{ 'no-return-flight-selected' | translate }}</span>
+        </div>
+        }
+    </p-accordionTab>
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="flex font-bold align-items-center">
+          <i style="width: 20px"  class="fa-solid fa-user"></i>
+          <span class="font-bold ml-2 text-xl">{{'passengers' | translate }}</span>
+        </div>
+      </ng-template>
+      @if(passengers){
+        <div class="flex flex-column pl-5">
+          @for(passenger of passengers; track passengers; let i = $index){
+            <span class="font-bold">{{'passenger'| translate}} {{i+1}}: {{passenger.type | translate}}</span>
+            <span>{{passenger.firstname}} {{passenger.lastname}}, {{passenger.dateOfBirth | date: 'dd.MM.yyyy'}}</span>
+          }
+        </div>
+      }
+      @else{
+        <div class="flex flex-column pl-5">
+          <span>{{ adults }} x {{ (adults === 1 ? 'adult' : 'adults') | translate }}</span>
+          <span>{{ children }} x {{ (children === 1 ? 'child' : 'children') | translate }}</span>
+          <span>{{ babies }} x {{ (babies === 1 ? 'baby' : 'babies') | translate }}</span>
+        </div>
+      }
+    </p-accordionTab>
+    <p-accordionTab>
+      <ng-template pTemplate="header">
+        <div class="flex font-bold align-items-center">
+          <i style="width: 20px" class="fa-solid fa-shield"></i>
+          <span class="font-bold ml-2 text-xl">{{'travel-insurance' | translate }}</span>
+        </div>
+      </ng-template>
+      <div class="flex flex-column pl-5">
+        @if(travelInsurance){
+          {{'base.yes'|translate}}
+        }
+        @else{
+          {{'base.no'|translate}}
+        }
+      </div>
+    </p-accordionTab>
+  </p-accordion>
+  <div class="pt-5 flex justify-content-between">
+    <span class="font-semibold text-2xl">{{'total-price' | translate}}:</span>
+    <span class="font-semibold text-2xl">{{calculateTotal() | currency: '€'}}</span>
+  </div>
+</p-sidebar>

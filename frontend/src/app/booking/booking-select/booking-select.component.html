@@ -88,24 +88,29 @@
         </div>
       </p-fieldset>
     </div>
-    <div class="w-full flex justify-content-center mt-5">
+    <div class="w-full flex justify-content-center mt-5 padding-for-continue-button-with-details">
       <button (click)="submitOrder()" pButton style="width: 90%;" label="{{'pay-now' | translate }}"
               [disabled]="billingAddressForm.invalid"></button>
     </div>
-    <div class="continue">
-      <button
-        style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-        pButton
-        (click)="goBack()"
-      >
-        <i style="font-size: 2rem" class="pi pi-angle-left"></i>
-      </button>
-      <button
-        style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-        pButton
-        [disabled]="isContinueButtonDisabled()">
-        <i style="font-size: 2rem" class="pi pi-angle-right"></i>
-      </button>
+    <div class="continue flex flex-column align-items-center continue-button-with-details">
+      <div style="width: 90%">
+        <app-booking-select-details></app-booking-select-details>
+      </div>
+      <div style="width: 90%" class="flex justify-content-between align-items-center">
+        <button
+          style="font-weight: bold; display: flex; justify-content: center; align-items: center;"
+          pButton
+          (click)="goBack()"
+        >
+          <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+        </button>
+        <button
+          style="font-weight: bold; display: flex; justify-content: center; align-items: center;"
+          pButton
+          [disabled]="isContinueButtonDisabled()">
+          <i style="font-size: 2rem" class="pi pi-angle-right"></i>
+        </button>
+      </div>
     </div>
   }
 }

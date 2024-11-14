@@ -124,5 +124,8 @@
   "plane-ticket": "Plane ticket",
   "booking": "Booking",
   "no-bookings-found": "No bookings found",
-  "thank-you-for-order": "Thank you for your order"
+  "thank-you-for-order": "Thank you for your order",
+  "booking-overview": "Booking overview",
+  "flight-duration": "Flight duration",
+  "no-return-flight-selected": "No return flight selected"
 }

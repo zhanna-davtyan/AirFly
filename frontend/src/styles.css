@@ -105,11 +105,12 @@ html {
 
 .p-messages {
   position: fixed;
-  bottom: 5px;
+  top: 5px;
   z-index: 3;
   left: 50%;
   transform: translateX(-50%);
   width: 90vw;
+
 }
 
 .p-message.p-message-error {
@@ -117,6 +118,11 @@ html {
   border: solid #ff5757;
   border-width: 0 0 0 6px;
   color: #ff5757;
+}
+
+.p-message.p-message-success{
+  opacity: 1;
+  background: rgba(228, 248, 240)
 }
 
 .p-inputnumber-buttons-horizontal .p-inputnumber-input {
@@ -241,18 +247,30 @@ footer {
 
 .continue{
   width: 100vw;
-  height: 9vh;
   position: fixed;
   bottom: 0;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .continue button {
-  width: 90%;
-  height: 3.5em;
+  width: 45%;
+  padding: 0.8em;
+}
+
+.continue-button-without-details{
+  height: 9em
+}
+
+.continue-button-with-details{
+  height: 9em;
+}
+
+.padding-for-continue-button-without-details{
+  padding-bottom: 13em;
+}
+
+.padding-for-continue-button-with-details{
+  padding-bottom: 14em;
 }
 
 .p-sidebar-mask {

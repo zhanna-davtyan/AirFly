@@ -208,7 +208,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
           this.messageService.add({
             severity: 'success',
             summary: this.translateService.instant('the-flight-with-id') + ' ' + dtoToInsertOrUpdate.id + ' ' + this.translateService.instant('was-updated-successfully'),
-            life: 6000
+            life: 2000
           });
         },
         error: (error: any) => {
@@ -219,7 +219,7 @@ export class FlightDetailsComponent extends BaseDetailComponent<Flight, FlightFo
           this.messageService.add({
             severity: 'error',
             summary: this.translateService.instant('the-flight-with-id') + ' ' + dtoToInsertOrUpdate.id + ' ' + this.translateService.instant('was-not-updated-successfully'),
-            life: 6000
+            life: 2000
           });
         },
         complete: () => {

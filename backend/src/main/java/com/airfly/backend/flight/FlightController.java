@@ -88,4 +88,9 @@ public class FlightController {
         }
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<Flight> getById(@PathVariable("id") final long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(flightService.getById(id));
+    }
+
 }

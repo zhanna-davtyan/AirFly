@@ -152,7 +152,7 @@ footer{
   color: #dddddd;
 }
 
-.continue i {
+.continue .pi-angle-left, .continue .pi-angle-right {
   color: #303030;
 }
 

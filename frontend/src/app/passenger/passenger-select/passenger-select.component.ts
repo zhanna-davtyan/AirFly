@@ -18,6 +18,7 @@ import {FloatLabelModule} from "primeng/floatlabel";
 import {CalendarModule} from "primeng/calendar";
 import {InputTextModule} from "primeng/inputtext";
 import {NgForOf, NgIf} from "@angular/common";
+import {BookingSelectDetailsComponent} from "../../booking/booking-select-details/booking-select-details.component";
 
 @Component({
   selector: 'app-passenger-select',
@@ -30,7 +31,8 @@ import {NgForOf, NgIf} from "@angular/common";
     CalendarModule,
     InputTextModule,
     NgForOf,
-    NgIf
+    NgIf,
+    BookingSelectDetailsComponent
   ],
   templateUrl: './passenger-select.component.html',
   styleUrl: './passenger-select.component.css'

@@ -1,4 +1,4 @@
-<div class="travel-insurance-holder flex justify-content-center align-items-center mt-5 w-full">
+<div class="travel-insurance-holder flex justify-content-center align-items-center mt-5 w-full padding-for-continue-button-with-details">
   <p-card>
     <div class="flex justify-content-between">
       <img style="width: 95px; height: auto;" src="/assets/img/LVM_Versicherung_2010_logo.svg.png" alt="">
@@ -7,7 +7,7 @@
         style="font-size: 1.3em;" class="pi pi-info-circle"></i></a>
     </div>
     <div class="flex align-items-center mt-4">
-      <i class="pi pi-shield mr-4" style="font-size: 1.7em;"></i>
+      <i class="fa-solid fa-shield mr-4" style="font-size: 1.7em;"></i>
       <div>
         <h2 class="mb-1 mt-0">LVM {{ "travel-insurance"|translate }}</h2>
         <p class="m-0">{{ "travel-insurance-slogan"|translate }}</p>
@@ -47,20 +47,25 @@
     </div>
   </p-card>
 </div>
-<div class="continue">
-  <button
-    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-    pButton
-    (click)="goBack()"
-    [disabled]="currentStep === 1"
-  >
-    <i style="font-size: 2rem" class="pi pi-angle-left"></i>
-  </button>
-  <button
-    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-    pButton
-    [disabled]="isContinueButtonDisabled()"
-    (click)="goForward()">
-    <i style="font-size: 2rem" class="pi pi-angle-right"></i>
-  </button>
+<div class="continue flex flex-column align-items-center continue-button-with-details">
+  <div style="width: 90%">
+    <app-booking-select-details></app-booking-select-details>
+  </div>
+  <div style="width: 90%" class="flex justify-content-between align-items-center">
+    <button
+      style="font-weight: bold; display: flex; justify-content: center; align-items: center;"
+      pButton
+      (click)="goBack()"
+      [disabled]="currentStep === 1"
+    >
+      <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+    </button>
+    <button
+      style="font-weight: bold; display: flex; justify-content: center; align-items: center;"
+      pButton
+      [disabled]="isContinueButtonDisabled()"
+      (click)="goForward()">
+      <i style="font-size: 2rem" class="pi pi-angle-right"></i>
+    </button>
+  </div>
 </div>

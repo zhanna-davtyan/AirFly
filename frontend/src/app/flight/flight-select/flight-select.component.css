@@ -19,12 +19,3 @@
 ::ng-deep .p-accordion-tab-active .header-div{
   display: none;
 }
-
-.flight-select-holder{
-  padding-bottom: 13vh;
-}
-
-app-flight-search .p-sidebar{
-  z-index: 9999;
-  position: relative;
-}

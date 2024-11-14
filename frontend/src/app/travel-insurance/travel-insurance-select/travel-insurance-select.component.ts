@@ -7,6 +7,7 @@ import {CheckboxModule} from "primeng/checkbox";
 import {FormsModule} from "@angular/forms";
 import {ButtonDirective} from "primeng/button";
 import {toNumber} from "lodash";
+import {BookingSelectDetailsComponent} from "../../booking/booking-select-details/booking-select-details.component";
 
 @Component({
   selector: 'app-travel-insurance-select',
@@ -16,7 +17,8 @@ import {toNumber} from "lodash";
     CardModule,
     CheckboxModule,
     FormsModule,
-    ButtonDirective
+    ButtonDirective,
+    BookingSelectDetailsComponent
   ],
   templateUrl: './travel-insurance-select.component.html',
   styleUrl: './travel-insurance-select.component.css'
