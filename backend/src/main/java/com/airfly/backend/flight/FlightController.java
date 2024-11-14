@@ -93,4 +93,10 @@ public class FlightController {
         return ResponseEntity.status(HttpStatus.OK).body(flightService.getById(id));
     }
 
+    @PostMapping("check-availability")
+    public ResponseEntity<Void> checkAvailability(@RequestBody final CheckFlightAvailability checkFlightAvailability) {
+        flightService.checkFlightAvailability(checkFlightAvailability.getFlightId(), checkFlightAvailability.getNumberOfPassengers());
+        return ResponseEntity.ok().build();
+    }
+
 }

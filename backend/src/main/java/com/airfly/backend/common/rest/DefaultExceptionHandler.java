@@ -56,4 +56,11 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(403).build();
     }
 
+
+    @ExceptionHandler(FlightUnavailableException.class) // Thrown by the service if CANCEL fails
+    public ResponseEntity<?> handleFlightUnavailableException(final FlightUnavailableException exception, final HttpServletResponse response) {
+        LOGGER.error(exception.getMessage(), exception);
+        return ResponseEntity.status(405).build();
+    }
+
 }
