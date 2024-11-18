@@ -28,7 +28,7 @@ public class EmailController {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, StandardCharsets.UTF_8.name());
             helper.setFrom("airfly.bookyourtickets@gmail.com");
-            helper.setTo("airfly.bookyourtickets@gmail.com"); // Todo: emailData.getEmail()
+            helper.setTo(emailData.getEmail());
             helper.setSubject("Ihre AirFly Buchung");
             helper.setText(emailData.getHtmlContent(), true);
 
