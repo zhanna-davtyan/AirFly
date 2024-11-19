@@ -27,6 +27,7 @@ public class BookingController {
             return ResponseEntity.status(HttpStatus.CREATED).body(bookingService.submitOrder(dto));
         }
     }
+
     @GetMapping("{id}")
     public ResponseEntity<Booking> getById(@PathVariable("id") final long id) {
         return ResponseEntity.status(HttpStatus.OK).body(bookingService.getById(id));
@@ -39,7 +40,7 @@ public class BookingController {
 
     @GetMapping("")
     @PreAuthorize("hasRole('Admin')")
-    public ResponseEntity<List<Booking>> getALl() {
+    public ResponseEntity<List<Booking>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAll());
     }
 }

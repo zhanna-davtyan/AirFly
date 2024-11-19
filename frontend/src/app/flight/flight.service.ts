@@ -7,6 +7,7 @@ import {map} from "rxjs/operators";
 import {OutwardFlightSearch} from "./outward-flight-search.model";
 import {FlightSearchWithDate} from "./flight-search-with-date.model";
 import {ReturnFlightSearch} from "./return-flight-search.model";
+import {CheckFlightAvailability} from "./check-flight-availability.model";
 
 @Injectable({providedIn: 'root'})
 export class FlightService extends AbstractCrudService<Flight> {
@@ -19,6 +20,11 @@ export class FlightService extends AbstractCrudService<Flight> {
     return this.httpClient
       .post<Flight[]>(this.URL_FOR_TYPE + '/get-by-outward-flight-search', flightSearch)
       .pipe(map((dtos: Flight[]) => dtos.map((json: any) => this.jsonToDto(json))));
+  }
+
+  checkFlightAvailability(checkFlightAvailability: CheckFlightAvailability): Observable<Boolean> {
+    return this.httpClient
+      .post<Boolean>(this.URL_FOR_TYPE + '/check-availability', checkFlightAvailability)
   }
 
   getByReturnFlightSearch(flightSearch: ReturnFlightSearch): Observable<Flight[]> {

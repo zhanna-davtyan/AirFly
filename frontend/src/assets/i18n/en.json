@@ -137,5 +137,11 @@
   "Minimum-8-characters": "Minimum 8 characters",
   "Register": "Register",
   "Password-repeat": "Repeat your password",
-  "Password-are-not-same": "The passwords are not the same!"
+  "Password-are-not-same": "The passwords are not the same!",
+  "booking-overview": "Booking overview",
+  "flight-duration": "Flight duration",
+  "no-return-flight-selected": "No return flight selected",
+  "booking-cancelled": "Your booking was cancelled",
+  "booking-cancelled-info": " Either because your session has expired or because one of the selected flights is full. Please try again.",
+  "book-a-flight": "Book a flight"
 }

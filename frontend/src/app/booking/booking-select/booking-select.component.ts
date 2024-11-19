@@ -22,6 +22,9 @@ import {ButtonDirective} from "primeng/button";
 import {toNumber} from "lodash";
 import {BookingDetailsComponent} from "../booking-details/booking-details.component";
 import {MenuComponent} from "../../menu/menu.component";
+import {BookingSelectDetailsComponent} from "../booking-select-details/booking-select-details.component";
+import {FlightService} from "../../flight/flight.service";
+import {CheckFlightAvailability} from "../../flight/check-flight-availability.model";
 
 @Component({
   selector: 'app-booking-select',
@@ -45,7 +48,8 @@ import {MenuComponent} from "../../menu/menu.component";
     ButtonDirective,
     BookingDetailsComponent,
     NgStyle,
-    MenuComponent
+    MenuComponent,
+    BookingSelectDetailsComponent
   ],
   templateUrl: './booking-select.component.html',
   styleUrl: './booking-select.component.css'
@@ -58,7 +62,17 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   billingAddressForm!: FormGroup;
   bookingId!: number;
 
-  constructor(private bookingService: BookingService, private formBuilder: FormBuilder, private router: Router) {
+  billingFirstname!: string;
+  billingLastname!: string;
+  billingPostcode!: string;
+  billingCity!: string;
+  billingStreet!: string;
+  billingHousenumber!: string;
+
+  constructor(private bookingService: BookingService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              private flightService: FlightService) {
     super()
   }
 
@@ -95,8 +109,35 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
     ];
 
     const missingField = requiredFields.find(field => !localStorage.getItem(field));
+
     if (missingField) {
       this.router.navigate(['/']);
+    }
+
+    if (localStorage.getItem('outward_flight_id')) {
+      let checkAvailability = new CheckFlightAvailability(
+        Number(localStorage.getItem('outward_flight_id')!),
+        Number(localStorage.getItem('adults')!) + Number(localStorage.getItem('children')!)
+      );
+
+      this.flightService.checkFlightAvailability(checkAvailability).subscribe({
+        error: () => {
+          this.router.navigate(['/flight-unavailable'])
+        }
+      });
+    }
+
+    if (localStorage.getItem('return_flight_id')) {
+      let checkAvailability = new CheckFlightAvailability(
+        Number(localStorage.getItem('return_flight_id')!),
+        Number(localStorage.getItem('adults')!) + Number(localStorage.getItem('children')!)
+      );
+
+      this.flightService.checkFlightAvailability(checkAvailability).subscribe({
+        error: () => {
+          this.router.navigate(['/flight-unavailable'])
+        }
+      });
     }
 
     if (localStorage.getItem('return_flight_time')) {
@@ -107,13 +148,32 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
     this.bookingService.updateCurrentStep(toNumber(localStorage.getItem('current_step')!));
     this.bookingService.updateCurrentStepDescription(localStorage.getItem('current_step_description')!);
 
+    if (localStorage.getItem('billing_firstname')) {
+      this.billingFirstname = localStorage.getItem('billing_firstname')!;
+    }
+    if (localStorage.getItem('billing_lastname')) {
+      this.billingLastname = localStorage.getItem('billing_lastname')!;
+    }
+    if (localStorage.getItem('billing_postcode')) {
+      this.billingPostcode = localStorage.getItem('billing_postcode')!;
+    }
+    if (localStorage.getItem('billing_city')) {
+      this.billingCity = localStorage.getItem('billing_city')!;
+    }
+    if (localStorage.getItem('billing_street')) {
+      this.billingStreet = localStorage.getItem('billing_street')!;
+    }
+    if (localStorage.getItem('billing_housenumber')) {
+      this.billingHousenumber = localStorage.getItem('billing_housenumber')!;
+    }
+
     this.billingAddressForm = this.formBuilder.group({
-      billingFirstname: [null, Validators.required],
-      billingLastname: [null, Validators.required],
-      billingPostcode: [null, Validators.required],
-      billingCity: [null, Validators.required],
-      billingStreet: [null, Validators.required],
-      billingHousenumber: [null, Validators.required],
+      billingFirstname: [this.billingFirstname ? this.billingFirstname : null, Validators.required],
+      billingLastname: [this.billingLastname ? this.billingLastname : null, Validators.required],
+      billingPostcode: [this.billingPostcode ? this.billingPostcode : null, Validators.required],
+      billingCity: [this.billingCity ? this.billingCity : null, Validators.required],
+      billingStreet: [this.billingCity ? this.billingCity : null, Validators.required],
+      billingHousenumber: [this.billingHousenumber ? this.billingHousenumber : null, Validators.required],
     })
   }
 
@@ -128,7 +188,13 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   }
 
   submitOrder() {
-    this.bookingService.submitOrder(this.billingAddressForm).subscribe({
+    localStorage.setItem('billing_firstname', this.billingAddressForm.get('billingFirstname')?.value);
+    localStorage.setItem('billing_lastname', this.billingAddressForm.get('billingLastname')?.value);
+    localStorage.setItem('billing_postcode', this.billingAddressForm.get('billingPostcode')?.value);
+    localStorage.setItem('billing_city', this.billingAddressForm.get('billingCity')?.value);
+    localStorage.setItem('billing_street', this.billingAddressForm.get('billingStreet')?.value);
+    localStorage.setItem('billing_housenumber', this.billingAddressForm.get('billingHousenumber')?.value);
+    this.bookingService.submitOrder().subscribe({
       next: (bookingId: number) => {
         this.bookingId = bookingId;
         this.currentStepDescription = "";

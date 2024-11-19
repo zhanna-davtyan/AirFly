@@ -1,8 +1,3 @@
-<p-sidebar styleClass="h-auto" position="bottom">
-  <ng-template pTemplate="header">
-    <h2 class="w-full text-center">{{ 'passengers'|translate }}</h2>
-  </ng-template>
-</p-sidebar>
 @if (currentStep === 1) {
   <div class="w-full modify-flight">
     <p-accordion>
@@ -13,7 +8,7 @@
       </p-accordionTab>
     </p-accordion>
   </div>
-  <div class="w-full flex flex-column align-items-center flight-select-holder">
+  <div class="w-full flex flex-column align-items-center flight-select-holder padding-for-continue-button-without-details">
     @for (flight of outwardFlights; track outwardFlights; let i = $index) {
       <p-card class="mt-5">
         <div class="flex w-full justify-content-between align-items-center">
@@ -149,7 +144,7 @@
       </p-accordionTab>
     </p-accordion>
   </div>
-  <div class="w-full flex flex-column align-items-center flight-select-holder">
+  <div class="w-full flex flex-column align-items-center flight-select-holder padding-for-continue-button-without-details">
     @for (flight of returnFlights; track returnFlights; let i = $index) {
       <p-card class="mt-5">
         <div class="flex w-full justify-content-between align-items-center">
@@ -275,20 +270,23 @@
     }
   </div>
 }
-<div class="continue">
-  <button
-    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-    pButton
-    (click)="goBack()"
-    [disabled]="currentStep === 1"
-  >
-    <i style="font-size: 2rem" class="pi pi-angle-left"></i>
-  </button>
-  <button
-    style="font-weight: bold; display: flex; justify-content: center; align-items: center; width: 30%;"
-    pButton
-    [disabled]="isContinueButtonDisabled()"
-    (click)="goForward()">
-    <i style="font-size: 2rem" class="pi pi-angle-right"></i>
-  </button>
+
+<div class="continue flex align-items-center justify-content-center continue-button-without-details">
+  <div style="width: 90%" class="flex justify-content-between">
+    <button
+      style="font-weight: bold; display: flex; justify-content: center; align-items: center;"
+      pButton
+      (click)="goBack()"
+      [disabled]="currentStep === 1"
+    >
+      <i style="font-size: 2rem" class="pi pi-angle-left"></i>
+    </button>
+    <button
+      style="font-weight: bold; display: flex; justify-content: center; align-items: center;"
+      pButton
+      [disabled]="isContinueButtonDisabled()"
+      (click)="goForward()">
+      <i style="font-size: 2rem" class="pi pi-angle-right"></i>
+    </button>
+  </div>
 </div>

@@ -128,5 +128,11 @@
   "plane-ticket": "Flugticket",
   "booking": "Buchung",
   "no-bookings-found": "Keine Buchungen gefunden",
-  "thank-you-for-order": "Danke für Ihre Bestellung"
+  "thank-you-for-order": "Danke für Ihre Bestellung",
+  "booking-overview": "Buchungsübersicht",
+  "flight-duration": "Flugdauer",
+  "no-return-flight-selected": "Kein Rückflug ausgewählt",
+  "booking-cancelled": "Ihr Buchung wurde abgebrochen",
+  "booking-cancelled-info": "Entweder weil ihre Sitzung abgelaufen ist, oder weil eines der ausgewählten Flüge voll ist. Bitte versuchen Sie er erneut.",
+  "book-a-flight": "Flug buchen"
 }

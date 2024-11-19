@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, Optional} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, Optional, ViewChild, AfterViewInit} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BookingService} from "../booking.service";
 import {Booking} from "../booking.model";
@@ -11,6 +11,10 @@ import {DividerModule} from "primeng/divider";
 import {CardModule} from "primeng/card";
 import {PanelModule} from "primeng/panel";
 import {FieldsetModule} from "primeng/fieldset";
+import {EmailService} from "../../email/email.service";
+import {EmailData} from "../../email/email-data";
+import {HttpErrorResponse} from "@angular/common/http";
+import {EmailContentComponent} from "../../email/email-content/email-content.component";
 
 @Component({
   selector: 'app-booking-details',
@@ -26,12 +30,16 @@ import {FieldsetModule} from "primeng/fieldset";
     PanelModule,
     NgClass,
     NgIf,
-    FieldsetModule
+    FieldsetModule,
+    EmailContentComponent
   ],
   templateUrl: './booking-details.component.html',
   styleUrl: './booking-details.component.css'
 })
-export class BookingDetailsComponent implements OnInit {
+export class BookingDetailsComponent implements OnInit, AfterViewInit {
+  @ViewChild(EmailContentComponent, {static: false}) emailContentComponent!: EmailContentComponent;
+  @ViewChild('emailContent', {static: false}) emailContent!: ElementRef;
+
   @Input() bookingIdFromSuccessPage!: number;
   booking!: Booking;
   isFromOverviewPage!: boolean;
@@ -41,6 +49,7 @@ export class BookingDetailsComponent implements OnInit {
     private bookingService: BookingService,
     private router: Router,
     @Optional() private dynamicDialogRef: DynamicDialogRef,
+    private emailService: EmailService
   ) {
   }
 
@@ -62,6 +71,34 @@ export class BookingDetailsComponent implements OnInit {
         this.router.navigate(['/error'])
       }
     })
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.sendEmail();
+    }, 200);
+  }
+
+  private sendEmail() {
+    if (this.emailContentComponent && this.emailContent && this.booking) {
+      const emailContentHtml = this.emailContent.nativeElement.innerHTML;
+
+      const emailData: EmailData = {
+        bookingId: this.booking.id,
+        firstname: this.booking.billingFirstname,
+        lastname: this.booking.billingLastname,
+        htmlContent: emailContentHtml
+      };
+
+      this.emailService.sendEmail(emailData).subscribe({
+        next: (response) => {
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Fehler beim Senden der E-Mail:', error.message);
+          console.error('Antwort:', error.error);
+        },
+      });
+    }
   }
 
   getTimeDifference(departureTime: any, arrivalTime: any): string {
@@ -86,7 +123,7 @@ export class BookingDetailsComponent implements OnInit {
   getNumberOfAdults(): number {
     let numberOfAdults = 0;
     this.booking.passengers.forEach(passenger => {
-      if(passenger.type === 'adult'){
+      if (passenger.type === 'adult') {
         numberOfAdults++;
       }
     })
@@ -96,7 +133,7 @@ export class BookingDetailsComponent implements OnInit {
   getNumberOfChildren(): number {
     let numberOfChildren = 0;
     this.booking.passengers.forEach(passenger => {
-      if(passenger.type === 'child'){
+      if (passenger.type === 'child') {
         numberOfChildren++;
       }
     })
@@ -106,23 +143,23 @@ export class BookingDetailsComponent implements OnInit {
   getNumberOfBabies(): number {
     let numberOfBabies = 0;
     this.booking.passengers.forEach(passenger => {
-      if(passenger.type === 'baby'){
+      if (passenger.type === 'baby') {
         numberOfBabies++;
       }
     })
     return numberOfBabies;
   }
 
-  calculateTotalOutgoingPrice(){
+  calculateTotalOutgoingPrice() {
     return (this.getNumberOfAdults() + this.getNumberOfChildren()) * this.booking.bookingFlightMappings[0].flight.price
   }
 
-  calculateTotalReturnPrice(){
+  calculateTotalReturnPrice() {
     return (this.getNumberOfAdults() + this.getNumberOfChildren()) * this.booking.bookingFlightMappings[1].flight.price
   }
 
-  calculateTotal(){
-    if(this.booking.bookingFlightMappings.length === 1){
+  calculateTotal() {
+    if (this.booking.bookingFlightMappings.length === 1) {
       return this.calculateTotalOutgoingPrice();
     }
     return this.calculateTotalOutgoingPrice() + this.calculateTotalReturnPrice();

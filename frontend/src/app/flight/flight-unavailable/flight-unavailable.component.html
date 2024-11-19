@@ -1,1 +1,8 @@
-<p>The flight you have been looking for has been cancelled or is unavailable</p>
+<div class="w-full flex justify-content-center align-items-center">
+  <div style="width: 90%">
+    <h3>{{ "booking-cancelled" | translate }}</h3>
+    <p>{{ "booking-cancelled-info" | translate }}</p>
+
+    <button pButton label="{{'book-a-flight'| translate}}" routerLink="/search-flight"></button>
+  </div>
+</div>
