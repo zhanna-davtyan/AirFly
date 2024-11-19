@@ -38,9 +38,10 @@ public class UserAuthenticationProvider {
     public String createToken(String email) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + validityInMilliseconds);
+        boolean isAdmin = userService.findByEmail(email).getRole().equals("ADMIN");
 
         Algorithm algorithm = Algorithm.HMAC256(secretKey);
-        return JWT.create().withSubject(email).withIssuedAt(now).withExpiresAt(validity).sign(algorithm);
+        return JWT.create().withSubject(email).withIssuedAt(now).withExpiresAt(validity).withClaim("isAdmin", isAdmin) .sign(algorithm);
     }
 
     public Authentication validateToken(String token) {

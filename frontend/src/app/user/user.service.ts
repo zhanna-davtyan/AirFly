@@ -5,6 +5,7 @@ import { User } from './user';
 import { SignUpModel } from './signup.model';
 import { LoginModel } from './login.model';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { jwtDecode } from 'jwt-decode';
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends AbstractCrudService<User> {
@@ -51,5 +52,12 @@ export class UserService extends AbstractCrudService<User> {
 
   isLoggedIn(): boolean {
     return this.isLoggedInSubject.value;
+  }
+
+  isAdmin(): boolean {
+    const token = localStorage.getItem('AuthToken');
+    if (!token) return false;
+    const decode: any = jwtDecode(token);
+    return decode.isAdmin;
   }
 }

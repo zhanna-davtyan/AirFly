@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   FormBuilder,
+  FormGroup,
   FormsModule,
   ReactiveFormsModule,
   Validators,
@@ -16,6 +17,8 @@ import { SignUpModel } from '../signup.model';
 import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { DividerModule } from 'primeng/divider';
+import { MessageModule } from 'primeng/message';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +39,7 @@ import { DividerModule } from 'primeng/divider';
   styleUrl: './register.component.css',
 })
 export class RegisterComponent implements OnInit {
-  public formGroup: any;
+  public formGroup!: FormGroup;
   StrongPasswordRegx: RegExp =
     /^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=\D*\d).{8,}$/;
 
@@ -44,7 +47,8 @@ export class RegisterComponent implements OnInit {
     public formBuilder: FormBuilder,
     protected translateService: TranslateService,
     protected userService: UserService,
-    protected router: Router
+    protected router: Router,
+    protected messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -56,19 +60,39 @@ export class RegisterComponent implements OnInit {
         '',
         [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
       ],
+      password_rep: [
+        '',
+        [Validators.required, Validators.pattern(this.StrongPasswordRegx)],
+      ],
     });
   }
 
   register(): void {
+    const password = this.formGroup.get('password')?.value;
+    const password_rep = this.formGroup.get('password_rep')?.value;
+
+    if (password !== password_rep) {
+      this.messageService.add({
+        severity: 'error',
+        summary: this.translateService.instant('Password-are-not-same'),
+        life: 2000,
+      });
+      return;
+    }
+
     const signUpModel = new SignUpModel(
       this.formGroup.get('firstName')?.value,
       this.formGroup.get('lastName')?.value,
       this.formGroup.get('email')?.value,
-      this.formGroup.get('password')?.value
+      password
     );
     this.userService.register(signUpModel).subscribe((user) => {
       this.userService.setToken(user.token);
       this.router.navigate(['']);
     });
+  }
+
+  public isFormValid() {
+    return this.formGroup.valid;
   }
 }

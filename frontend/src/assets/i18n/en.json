@@ -128,5 +128,14 @@
   "plane-ticket": "Plane ticket",
   "booking": "Booking",
   "no-bookings-found": "No bookings found",
-  "thank-you-for-order": "Thank you for your order"
+  "thank-you-for-order": "Thank you for your order",
+  "Pick-a-password": "Pick a password",
+  "At-least-one-lowercase": "At least one lowercase",
+  "Suggestions": "Suggestions",
+  "At-least-one-uppercase": "At least one uppercase",
+  "At-least-one-numeric": "At least one numeric",
+  "Minimum-8-characters": "Minimum 8 characters",
+  "Register": "Register",
+  "Password-repeat": "Repeat your password",
+  "Password-are-not-same": "The passwords are not the same!"
 }
