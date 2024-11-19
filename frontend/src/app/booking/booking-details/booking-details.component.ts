@@ -1,4 +1,4 @@
-import {Component, ElementRef, Input, OnInit, Optional, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, Input, OnInit, Optional} from '@angular/core';
 import {DynamicDialogConfig, DynamicDialogRef} from "primeng/dynamicdialog";
 import {BookingService} from "../booking.service";
 import {Booking} from "../booking.model";
@@ -11,10 +11,6 @@ import {DividerModule} from "primeng/divider";
 import {CardModule} from "primeng/card";
 import {PanelModule} from "primeng/panel";
 import {FieldsetModule} from "primeng/fieldset";
-import {EmailService} from "../../email/email.service";
-import {EmailData} from "../../email/email-data";
-import {HttpErrorResponse} from "@angular/common/http";
-import {EmailContentComponent} from "../../email/email-content/email-content.component";
 
 @Component({
   selector: 'app-booking-details',
@@ -31,14 +27,11 @@ import {EmailContentComponent} from "../../email/email-content/email-content.com
     NgClass,
     NgIf,
     FieldsetModule,
-    EmailContentComponent
   ],
   templateUrl: './booking-details.component.html',
   styleUrl: './booking-details.component.css'
 })
-export class BookingDetailsComponent implements OnInit, AfterViewInit {
-  @ViewChild(EmailContentComponent, {static: false}) emailContentComponent!: EmailContentComponent;
-  @ViewChild('emailContent', {static: false}) emailContent!: ElementRef;
+export class BookingDetailsComponent implements OnInit {
 
   @Input() bookingIdFromSuccessPage!: number;
   booking!: Booking;
@@ -49,7 +42,6 @@ export class BookingDetailsComponent implements OnInit, AfterViewInit {
     private bookingService: BookingService,
     private router: Router,
     @Optional() private dynamicDialogRef: DynamicDialogRef,
-    private emailService: EmailService
   ) {
   }
 
@@ -71,34 +63,6 @@ export class BookingDetailsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/error'])
       }
     })
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      this.sendEmail();
-    }, 200);
-  }
-
-  private sendEmail() {
-    if (this.emailContentComponent && this.emailContent && this.booking) {
-      const emailContentHtml = this.emailContent.nativeElement.innerHTML;
-
-      const emailData: EmailData = {
-        bookingId: this.booking.id,
-        firstname: this.booking.billingFirstname,
-        lastname: this.booking.billingLastname,
-        htmlContent: emailContentHtml
-      };
-
-      this.emailService.sendEmail(emailData).subscribe({
-        next: (response) => {
-        },
-        error: (error: HttpErrorResponse) => {
-          console.error('Fehler beim Senden der E-Mail:', error.message);
-          console.error('Antwort:', error.error);
-        },
-      });
-    }
   }
 
   getTimeDifference(departureTime: any, arrivalTime: any): string {

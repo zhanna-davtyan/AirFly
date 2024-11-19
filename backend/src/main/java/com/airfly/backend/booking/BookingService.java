@@ -14,6 +14,8 @@ import com.airfly.backend.passenger.Passenger;
 import com.airfly.backend.passenger.PassengerService;
 import com.airfly.backend.user.User;
 import com.airfly.backend.user.UserService;
+import com.airfly.backend.email.EmailService;
+import com.airfly.backend.email.EmailBuilder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -27,23 +29,27 @@ public class BookingService {
     private final FlightService flightService;
     private final BookingRepository bookingRepository;
     private final UserService userService;
+    private final EmailService emailService;
+    private final EmailBuilder bookingEmailBuilder;
     private final CategoryService categoryService;
     private final BookingFlightMappingService bookingFlightMappingService;
 
-    public BookingService(PassengerService passengerService, FlightService flightService, BookingRepository bookingRepository, UserService userService, CategoryService categoryService, BookingFlightMappingService bookingFlightMappingService) {
+    public BookingService(PassengerService passengerService, FlightService flightService, BookingRepository bookingRepository, UserService userService, CategoryService categoryService, BookingFlightMappingService bookingFlightMappingService, EmailService emailService, EmailBuilder bookingEmailBuilder ) {
         this.passengerService = passengerService;
         this.flightService = flightService;
         this.bookingRepository = bookingRepository;
         this.userService = userService;
         this.categoryService = categoryService;
         this.bookingFlightMappingService = bookingFlightMappingService;
+        this.emailService = emailService;
+        this.bookingEmailBuilder = bookingEmailBuilder;
     }
 
     Long submitOrder(BookingForInsert bookingForInsert){
         try {
             passengerService.checkPassengerValidity(bookingForInsert.getPassengers());
             int numberOfPassengersWithoutBabies = 0;
-            for(Passenger passenger : bookingForInsert.getPassengers()){
+            for (Passenger passenger : bookingForInsert.getPassengers()) {
                 if (passenger.getType().equals("adult") || passenger.getType().equals("child")) {
                     numberOfPassengersWithoutBabies++;
                 }
@@ -51,9 +57,10 @@ public class BookingService {
             flightService.checkFlightAvailability(bookingForInsert.getOutwardFlightId(), numberOfPassengersWithoutBabies);
             Flight outwardFlight = flightService.getById(bookingForInsert.getOutwardFlightId());
             outwardFlight.setBookedSeats(outwardFlight.getBookedSeats() + numberOfPassengersWithoutBabies);
-            if(bookingForInsert.getReturnFlightId() != null){
+            Flight returnFlight = null;
+            if (bookingForInsert.getReturnFlightId() != null) {
                 flightService.checkFlightAvailability(bookingForInsert.getReturnFlightId(), numberOfPassengersWithoutBabies);
-                Flight returnFlight = flightService.getById(bookingForInsert.getReturnFlightId());
+                returnFlight = flightService.getById(bookingForInsert.getReturnFlightId());
                 returnFlight.setBookedSeats(returnFlight.getBookedSeats() + numberOfPassengersWithoutBabies);
             }
             Booking booking = new Booking(
@@ -78,9 +85,9 @@ public class BookingService {
                     flightService.getById(bookingForInsert.getOutwardFlightId()),
                     categoryService.getById(bookingForInsert.getOutwardCategoryId()),
                     "outgoing"
-                    );
+            );
             bookingFlightMappingService.insert(outwardBookingFlightMapping);
-            if(bookingForInsert.getReturnFlightId() != null){
+            if (bookingForInsert.getReturnFlightId() != null) {
                 BookingFlightMapping returnBookingFlightMapping = new BookingFlightMapping(
                         booking,
                         flightService.getById(bookingForInsert.getReturnFlightId()),
@@ -89,6 +96,15 @@ public class BookingService {
                 );
                 bookingFlightMappingService.insert(returnBookingFlightMapping);
             }
+            String recipientEmail = userService.getCurrentUser().getEmail();
+            String subject = "Ihre Buchung bei AirFly";
+            String htmlContent = bookingEmailBuilder.buildBookingConfirmationEmail(
+                    insertedBooking,
+                    outwardFlight,
+                    returnFlight,
+                    calculateTotalPrice(bookingForInsert, numberOfPassengersWithoutBabies)
+            );
+            emailService.sendEmail(recipientEmail, subject, htmlContent);
             return insertedBooking.getId();
         } catch (Exception e){
             throw new EntityNotInsertedException("Could not insert booking", e);
