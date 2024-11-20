@@ -2,6 +2,7 @@ package com.airfly.backend.flight;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class FlightController {
     }
 
     @GetMapping
+    @PreAuthorize()
     public ResponseEntity<List<Flight>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(flightService.getAll());
     }

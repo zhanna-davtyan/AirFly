@@ -1,25 +1,38 @@
-<div class="flex justify-content-between" [ngClass]="{'header-border': showBorderBottom()}">
+<div
+  class="flex justify-content-between"
+  [ngClass]="{ 'header-border': showBorderBottom() }"
+>
   <div routerLink="">
     <img
       class="mt-4"
       style="width: 80px; height: 80px"
       src="assets/img/AirFly_Logo1.png"
-      alt=""/>
+      alt=""
+    />
   </div>
-  @if (currentStepDescription && currentStepDescription != "" && currentStep && currentStep != 0) {
-    <div class="flex align-items-center mr-4 mt-2">
-      <p-avatar
-        label="{{currentStep}}"
-        styleClass="mr-2"
-        [style]="{ 'background-color': '#8B5CF6', color: 'white', 'font-weight':'bold' }"/>
-      <p class="m-0 p-0 font-bold" style="font-size:1.2em">
-        {{ currentStepDescription | translate }}
-      </p>
-    </div>
+  @if (currentStepDescription && currentStepDescription != "" && currentStep &&
+  currentStep != 0) {
+  <div class="flex align-items-center mr-4 mt-2">
+    <p-avatar
+      label="{{ currentStep }}"
+      styleClass="mr-2"
+      [style]="{
+        'background-color': '#8B5CF6',
+        color: 'white',
+        'font-weight': 'bold'
+      }"
+    />
+    <p class="m-0 p-0 font-bold" style="font-size: 1.2em">
+      {{ currentStepDescription | translate }}
+    </p>
+  </div>
   }
   <div class="flex align-items-center">
-    <div>
-      <i class="pi pi-user" style="font-size: 30px" routerLink="app-signup-register"></i>
+    <div *ngIf="!isLoggedIn" (click)="isLogInMenuVisible = true">
+      <i class="pi pi-user" style="font-size: 30px"></i>
+    </div>
+    <div *ngIf="isLoggedIn" (click)="logOut()">
+      <i class="pi pi-sign-out" style="font-size: 30px"></i>
     </div>
     <div class="mx-4" (click)="toggleSidebar()">
       <i class="pi pi-bars" style="font-size: 30px"></i>
@@ -27,13 +40,10 @@
   </div>
 </div>
 
-<p-sidebar
-  [(visible)]="isSidebarVisible"
-  position="right"
->
-  <div style="font-size: 18px; font-weight: bold;">
-    <p (click)="navigateToBookNewFlight()">{{ 'book' | translate }}</p>
-    <p (click)="navigateToMyBookings()">{{ 'my-bookings' | translate }}</p>
+<p-sidebar [(visible)]="isSidebarVisible" position="right">
+  <div style="font-size: 18px; font-weight: bold">
+    <p (click)="navigateToBookNewFlight()">{{ "book" | translate }}</p>
+    <p (click)="navigateToMyBookings()">{{ "my-bookings" | translate }}</p>
     <p (click)="adminOp.toggle($event)">Admin</p>
   </div>
   <p-divider></p-divider>
@@ -41,43 +51,63 @@
     <div>
       <i
         class="fw-bold pi pi-globe text-dark"
-        style="font-size: 24px;"
+        style="font-size: 24px"
         (click)="languageOp.toggle($event)"
       ></i>
     </div>
     <div class="flex">
       @if (darkTheme) {
-        <i class="pi pi-moon mr-3" style="font-size: 24px;"></i>
+      <i class="pi pi-moon mr-3" style="font-size: 24px"></i>
       } @else {
-        <i class="pi pi-sun mr-3" style="font-size: 24px;"></i>
+      <i class="pi pi-sun mr-3" style="font-size: 24px"></i>
       }
-      <p-inputSwitch
-        (onChange)="changeTheme($event)"
-        [(ngModel)]="darkTheme"
-      />
+      <p-inputSwitch (onChange)="changeTheme($event)" [(ngModel)]="darkTheme" />
     </div>
   </div>
 </p-sidebar>
 
 @if (isSidebarVisible) {
-  <div>
-    <p-overlayPanel #languageOp>
-      <p-dropdown
-        [(ngModel)]="selectedLanguage"
-        optionLabel="label"
-        optionValue="value"
-        [options]="languageOptions"
-        (onChange)="onLanguageChange($event)">
-      </p-dropdown>
-    </p-overlayPanel>
-  </div>
+<div>
+  <p-overlayPanel #languageOp>
+    <p-dropdown
+      [(ngModel)]="selectedLanguage"
+      optionLabel="label"
+      optionValue="value"
+      [options]="languageOptions"
+      (onChange)="onLanguageChange($event)"
+    >
+    </p-dropdown>
+  </p-overlayPanel>
+</div>
 
-  <div>
-    <p-overlayPanel #adminOp>
-      <div class="flex flex-column">
-        <span class="mb-3 underline" style="font-size: 16px" (click)="navigateToAllFlights()">{{ 'all-flights' | translate }}</span>
-        <span class="underline" style="font-size: 16px" (click)="navigateToAllBookings()">{{ 'all-bookings' | translate }}</span>
-      </div>
-    </p-overlayPanel>
-  </div>
+<div>
+  <p-overlayPanel #adminOp>
+    <div class="flex flex-column">
+      <span
+        class="mb-3 underline"
+        style="font-size: 16px"
+        (click)="navigateToAllFlights()"
+        >{{ "all-flights" | translate }}</span
+      >
+      <span
+        class="underline"
+        style="font-size: 16px"
+        (click)="navigateToAllBookings()"
+        >{{ "all-bookings" | translate }}</span
+      >
+    </div>
+  </p-overlayPanel>
+</div>
 }
+
+<p-sidebar
+  [(visible)]="isLogInMenuVisible"
+  position="bottom"
+  styleClass="p-sidebar-lg"
+  (onHide)="closeSidebar()"
+>
+  <ng-template pTemplate="header">
+    <div><p class="font-bold text-xl">Login</p></div>
+  </ng-template>
+  <app-login></app-login>
+</p-sidebar>

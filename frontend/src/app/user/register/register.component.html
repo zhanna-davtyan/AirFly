@@ -1,0 +1,150 @@
+<form>
+  <div [formGroup]="formGroup" class="flex justify-content-center w-full">
+    <div class="container w-full">
+      <div class="row">
+        <div class="col">
+          <h2>{{ "Register" | translate }}</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">
+              {{ "firstname" | translate }}
+            </p>
+            <input
+              formControlName="firstName"
+              type="text"
+              pInputText
+              class="w-full"
+            />
+            <div style="min-height: 20px">
+              <small
+                *ngIf="!formGroup.get('firstName')!.valid"
+                class="p-error"
+                >{{ "enter-valid-value" | translate }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">
+              {{ "lastname" | translate }}
+            </p>
+            <input
+              formControlName="lastName"
+              type="text"
+              pInputText
+              class="w-full"
+            />
+            <div style="min-height: 20px">
+              <small
+                *ngIf="!formGroup.get('lastName')!.valid"
+                class="p-error"
+                >{{ "enter-valid-value" | translate }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div>
+            <p style="margin: 0 0 7px" class="w-full">
+              {{ "email" | translate }}
+            </p>
+            <input
+              formControlName="email"
+              type="email"
+              pInputText
+              class="w-full"
+            />
+            <div style="min-height: 20px">
+              <small *ngIf="!formGroup.get('email')!.valid" class="p-error">{{
+                "enter-valid-value" | translate
+              }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="w-full">
+            <p style="margin: 0 0 7px" class="w-full">
+              {{ "password" | translate }}
+            </p>
+            <p-password
+              formControlName="password"
+              [toggleMask]="true"
+              styleClass="w-full"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+            >
+              <ng-template pTemplate="header">
+                <h6>{{ "Pick-a-password" | translate }}</h6>
+              </ng-template>
+              <ng-template pTemplate="footer">
+                <p-divider />
+                <p class="mt-2">{{ "Suggestions" | translate }}</p>
+                <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                  <li>{{ "At-least-one-lowercase" | translate }}</li>
+                  <li>{{ "At-least-one-uppercase" | translate }}</li>
+                  <li>{{ "At-least-one-numeric" | translate }}</li>
+                  <li>{{ "Minimum-8-characters" | translate }}</li>
+                </ul>
+              </ng-template></p-password
+            >
+            <div style="min-height: 20px">
+              <small
+                *ngIf="!formGroup.get('password')!.valid"
+                class="p-error"
+                >{{ "enter-valid-value" | translate }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <div class="w-full">
+            <p style="margin: 0 0 7px" class="w-full">
+              {{ "Password-repeat" | translate }}
+            </p>
+            <p-password
+              formControlName="password_rep"
+              [toggleMask]="true"
+              [feedback]="false"
+              styleClass="w-full"
+              [style]="{ width: '100%' }"
+              [inputStyle]="{ width: '100%' }"
+            >
+            </p-password>
+            <div style="min-height: 20px">
+              <small
+                *ngIf="!formGroup.get('password')!.valid"
+                class="p-error"
+                >{{ "enter-valid-value" | translate }}</small
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row text-center">
+        <div class="col">
+          <div class="d-flex justify-content-center">
+            <button
+              [disabled]="!isFormValid()"
+              pButton
+              label="{{ 'register' | translate }}"
+              class="w-full"
+              (click)="register()"
+            ></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -1,13 +1,13 @@
-import {Component} from '@angular/core';
-import {Router, RouterLink, RouterOutlet} from '@angular/router';
-import {CalendarModule} from 'primeng/calendar';
-import {MessageModule} from 'primeng/message';
-import {MessagesModule} from 'primeng/messages';
-import {FlightSearchComponent} from './flight/flight-search/flight-search.component';
-import {LandingPageComponent} from './landing-page/landing-page.component';
-import {CommonModule} from '@angular/common';
-import {FooterComponent} from './footer/footer.component';
-import {MenuComponent} from './menu/menu.component';
+import { Component } from '@angular/core';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { CalendarModule } from 'primeng/calendar';
+import { MessageModule } from 'primeng/message';
+import { MessagesModule } from 'primeng/messages';
+import { FlightSearchComponent } from './flight/flight-search/flight-search.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { CommonModule } from '@angular/common';
+import { FooterComponent } from './footer/footer.component';
+import { MenuComponent } from './menu/menu.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +22,7 @@ import {MenuComponent} from './menu/menu.component';
     FlightSearchComponent,
     LandingPageComponent,
     MenuComponent,
-    FooterComponent
+    FooterComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -30,9 +30,7 @@ import {MenuComponent} from './menu/menu.component';
 export class AppComponent {
   title = 'frontend';
 
-  constructor(
-    private router: Router) {
-  }
+  constructor(private router: Router) {}
 
   shouldShowMenuAndFooter(): boolean {
     return this.router.url !== '/book-flight';

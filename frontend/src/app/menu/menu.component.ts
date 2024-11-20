@@ -1,22 +1,24 @@
-import {CommonModule} from '@angular/common';
-import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {SidebarModule} from 'primeng/sidebar';
-import {Router, RouterModule} from '@angular/router';
-import {FormsModule} from '@angular/forms';
-import {DropdownModule} from 'primeng/dropdown';
-import {TranslateModule, TranslateService} from '@ngx-translate/core';
-import {SelectItem} from 'primeng/api';
-import {take} from 'rxjs';
-import {TooltipModule} from 'primeng/tooltip';
-import {OverlayPanel, OverlayPanelModule} from 'primeng/overlaypanel';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {ToggleButtonModule} from 'primeng/togglebutton';
-import {ToolbarModule} from 'primeng/toolbar';
-import {ThemeService} from '../common/service/theme.service';
-import {DividerModule} from "primeng/divider";
-import {MenubarModule} from "primeng/menubar";
-import {AvatarModule} from "primeng/avatar";
+import { CommonModule } from '@angular/common';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { SidebarModule } from 'primeng/sidebar';
+import { Router, RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { DropdownModule } from 'primeng/dropdown';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { SelectItem } from 'primeng/api';
+import { Subscription, take } from 'rxjs';
+import { TooltipModule } from 'primeng/tooltip';
+import { OverlayPanel, OverlayPanelModule } from 'primeng/overlaypanel';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { ToggleButtonModule } from 'primeng/togglebutton';
+import { ToolbarModule } from 'primeng/toolbar';
+import { ThemeService } from '../common/service/theme.service';
+import { DividerModule } from 'primeng/divider';
+import { MenubarModule } from 'primeng/menubar';
+import { AvatarModule } from 'primeng/avatar';
+import { UserService } from '../user/user.service';
+import { LoginComponent } from '../user/login/login.component';
 
 @Component({
   selector: 'app-menu',
@@ -37,12 +39,12 @@ import {AvatarModule} from "primeng/avatar";
     DividerModule,
     MenubarModule,
     AvatarModule,
+    LoginComponent,
   ],
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
 export class MenuComponent implements OnInit {
-
   @Input() currentStep!: number;
   @Input() currentStepDescription!: string;
 
@@ -52,18 +54,20 @@ export class MenuComponent implements OnInit {
 
   theme: string | null = localStorage.getItem('theme');
   darkTheme!: boolean;
+  private authSubscription!: Subscription;
+  isLoggedIn = false;
+  isLogInMenuVisible: boolean = false;
 
   isSidebarVisible: boolean = false;
   @ViewChild('adminOp') adminOp!: OverlayPanel;
   @ViewChild('languageOp') languageOp!: OverlayPanel;
 
-
   constructor(
     private themeService: ThemeService,
-    private translateService: TranslateService,
-    private router: Router
-  ) {
-  }
+    private router: Router,
+    private authService: UserService,
+    private translateService: TranslateService
+  ) {}
 
   ngOnInit() {
     this.translateService.addLangs(this.availableLanguages);
@@ -83,8 +87,19 @@ export class MenuComponent implements OnInit {
       this.themeService.switchTheme('theme-light');
     }
     this.darkTheme = !this.theme || this.theme === 'theme-dark';
+    this.translateService.use(this.selectedLanguage);
+    this.updateTranslations();
+
+    this.authSubscription = this.authService.isLoggedIn$.subscribe((status) => {
+      this.isLoggedIn = status;
+    });
   }
 
+  ngOnDestroy(): void {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+  }
 
   protected onLanguageChange(event: any) {
     const newLanguage = event.value;
@@ -143,12 +158,20 @@ export class MenuComponent implements OnInit {
   }
 
   showBorderBottom() {
-    if(this.currentStep && this.currentStepDescription){
-      if(this.currentStep != 0 && this.currentStepDescription != ""){
+    if (this.currentStep && this.currentStepDescription) {
+      if (this.currentStep != 0 && this.currentStepDescription != '') {
         return false;
       }
     }
     return true;
   }
 
+  closeSidebar() {
+    this.isLogInMenuVisible = false;
+  }
+
+  logOut() {
+    this.authService.deleteToken();
+    this.router.navigate(['']);
+  }
 }
