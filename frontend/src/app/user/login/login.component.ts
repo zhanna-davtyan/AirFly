@@ -15,6 +15,7 @@ import { PasswordModule } from 'primeng/password';
 import { UserService } from '../user.service';
 import { LoginModel } from '../login.model';
 import { SidebarModule } from 'primeng/sidebar';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -35,20 +36,18 @@ import { SidebarModule } from 'primeng/sidebar';
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
-  @Input() public open!: boolean;
-  @Output() closeSideBar = new EventEmitter<boolean>();
-
   public formGroup: any;
   constructor(
     public formBuilder: FormBuilder,
     protected translateService: TranslateService,
-    protected userService: UserService
+    protected userService: UserService,
+    protected messageService: MessageService
   ) {}
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      email: ['', [Validators.email, Validators.required]],
-      password: ['', [Validators.required]],
+      email: [''],
+      password: [''],
     });
   }
 
@@ -57,13 +56,17 @@ export class LoginComponent implements OnInit {
       this.formGroup.get('email')?.value,
       this.formGroup.get('password')?.value
     );
-    this.userService.login(loginModel).subscribe((user) => {
-      this.userService.setToken(user.token);
-      this.close();
+    this.userService.login(loginModel).subscribe({
+      next: (user) => {
+        this.userService.setToken(user.token);
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translateService.instant('Error'),
+          life: 2000,
+        });
+      },
     });
-  }
-
-  close() {
-    this.closeSideBar.emit();
   }
 }

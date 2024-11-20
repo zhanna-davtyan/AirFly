@@ -18,7 +18,10 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { BookingService } from './booking/booking.service';
-import { authInterceptorFunctional } from './user/auth.interceptor';
+import {
+  authErrorInterceptorFunctional,
+  authInterceptorFunctional,
+} from './user/auth.interceptor';
 
 export function HttpLoaderFactory(httpClient: HttpClient) {
   return new TranslateHttpLoader(httpClient, './assets/i18n/', '.json');
@@ -37,7 +40,12 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimations(),
-    provideHttpClient(withInterceptors([authInterceptorFunctional])),
+    provideHttpClient(
+      withInterceptors([
+        authInterceptorFunctional,
+        authErrorInterceptorFunctional,
+      ])
+    ),
     MessageService,
     DialogService,
     ConfirmationService,

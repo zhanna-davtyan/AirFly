@@ -68,6 +68,7 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
+    if (!this.isFormValid()) return;
     const password = this.formGroup.get('password')?.value;
     const password_rep = this.formGroup.get('password_rep')?.value;
 
@@ -86,9 +87,18 @@ export class RegisterComponent implements OnInit {
       this.formGroup.get('email')?.value,
       password
     );
-    this.userService.register(signUpModel).subscribe((user) => {
-      this.userService.setToken(user.token);
-      this.router.navigate(['']);
+    this.userService.register(signUpModel).subscribe({
+      next: (user) => {
+        this.userService.setToken(user.token);
+        this.router.navigate(['']);
+      },
+      error: (err) => {
+        this.messageService.add({
+          severity: 'error',
+          summary: this.translateService.instant('Error'),
+          life: 2000,
+        });
+      },
     });
   }
 

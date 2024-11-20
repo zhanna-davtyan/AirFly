@@ -53,6 +53,6 @@ public class UserAuthenticationProvider {
 
         User user = userService.findByEmail(decoded.getSubject());
 
-        return new UsernamePasswordAuthenticationToken(user, null, Collections.emptyList());
+        return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 }

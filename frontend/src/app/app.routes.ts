@@ -8,6 +8,7 @@ import { BookingSelectComponent } from './booking/booking-select/booking-select.
 import { BookingAdminOverviewComponent } from './booking/booking-admin-overview/booking-admin-overview.component';
 import { BookingOverviewComponent } from './booking/booking-overview/booking-overview.component';
 import { RegisterComponent } from './user/register/register.component';
+import { LoginComponent } from './user/login/login.component';
 
 export const routes: Routes = [
   { path: 'all-flights', component: FlightOverviewComponent },
@@ -19,6 +20,7 @@ export const routes: Routes = [
   { path: 'my-bookings', component: BookingOverviewComponent },
 
   { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
 
   { path: 'error', component: ErrorComponent },
   { path: '', component: LandingPageComponent },
