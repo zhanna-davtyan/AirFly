@@ -19,7 +19,6 @@ public class FlightController {
     }
 
     @GetMapping
-    @PreAuthorize()
     public ResponseEntity<List<Flight>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(flightService.getAll());
     }

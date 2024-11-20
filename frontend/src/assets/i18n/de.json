@@ -134,5 +134,15 @@
   "no-return-flight-selected": "Kein Rückflug ausgewählt",
   "booking-cancelled": "Ihr Buchung wurde abgebrochen",
   "booking-cancelled-info": "Entweder weil ihre Sitzung abgelaufen ist, oder weil eines der ausgewählten Flüge voll ist. Bitte versuchen Sie er erneut.",
-  "book-a-flight": "Flug buchen"
+  "book-a-flight": "Flug buchen",
+  "Pick-a-password": "Pick a password",
+  "At-least-one-lowercase": "Mindestens ein Kleinbuchstabe",
+  "Suggestions": "Vorschläge",
+  "At-least-one-uppercase": "Mindestens ein Großbuchstabe",
+  "At-least-one-numeric": "Mindestens eine Zahl",
+  "Minimum-8-characters": "Mindestens 8 Zeichen",
+  "Register": "Registrieren",
+  "Password-repeat": "Passwort wiederholen",
+  "Password-are-not-same": "Die Passwörter stimmen nicht überein!",
+  "Error": "Error"
 }

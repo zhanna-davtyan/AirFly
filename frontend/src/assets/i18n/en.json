@@ -143,5 +143,6 @@
   "no-return-flight-selected": "No return flight selected",
   "booking-cancelled": "Your booking was cancelled",
   "booking-cancelled-info": " Either because your session has expired or because one of the selected flights is full. Please try again.",
-  "book-a-flight": "Book a flight"
+  "book-a-flight": "Book a flight",
+  "Error": "Error"
 }
