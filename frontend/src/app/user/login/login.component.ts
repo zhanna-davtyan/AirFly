@@ -71,8 +71,4 @@ export class LoginComponent implements OnInit {
       },
     });
   }
-
-  isLoginRoute(){
-    return this.router.url === '/login';
-  }
 }

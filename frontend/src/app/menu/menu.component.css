@@ -7,3 +7,12 @@
   width: 1.7rem;
   height: 1.7rem;
 }
+
+::ng-deep .loginSidebar app-login .title {
+  display: none;
+}
+
+::ng-deep .loginSidebar .p-sidebar-content {
+  padding-left: 0;
+  padding-right: 0;
+}
