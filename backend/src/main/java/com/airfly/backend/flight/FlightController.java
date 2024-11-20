@@ -19,11 +19,13 @@ public class FlightController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<List<Flight>> getAll() {
         return ResponseEntity.status(HttpStatus.OK).body(flightService.getAll());
     }
 
     @PostMapping("insert")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<Flight> insert(@RequestBody final Flight dto) {
         if (dto == null) {
             return ResponseEntity.badRequest().build();
@@ -36,6 +38,7 @@ public class FlightController {
     }
 
     @PutMapping("update")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<Flight> update(@RequestBody final Flight dto) {
         if (dto == null || dto.getBookedSeats() != 0) {
             return ResponseEntity.badRequest().build();
@@ -53,6 +56,7 @@ public class FlightController {
     }
 
     @DeleteMapping(value = "delete/{id}")
+    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<Void> delete(@PathVariable("id") final long id) {
         if (!flightService.existsById(id)) {
             return ResponseEntity.notFound().build();
