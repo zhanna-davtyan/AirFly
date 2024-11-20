@@ -16,6 +16,7 @@ import { UserService } from '../user.service';
 import { LoginModel } from '../login.model';
 import { SidebarModule } from 'primeng/sidebar';
 import { MessageService } from 'primeng/api';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -41,7 +42,8 @@ export class LoginComponent implements OnInit {
     public formBuilder: FormBuilder,
     protected translateService: TranslateService,
     protected userService: UserService,
-    protected messageService: MessageService
+    protected messageService: MessageService,
+    protected router: Router
   ) {}
 
   ngOnInit(): void {
@@ -68,5 +70,9 @@ export class LoginComponent implements OnInit {
         });
       },
     });
+  }
+
+  isLoginRoute(){
+    return this.router.url === '/login';
   }
 }

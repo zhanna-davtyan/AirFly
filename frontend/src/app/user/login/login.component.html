@@ -1,6 +1,13 @@
 <form>
-  <div [formGroup]="formGroup" class="flex justify-content-center">
+  <div [formGroup]="formGroup" class="flex w-full justify-content-center">
     <div class="container w-full">
+      @if (isLoginRoute()) {
+        <div class="row">
+          <div class="col">
+            <h2>{{ "login" | translate }}</h2>
+          </div>
+        </div>
+      }
       <div class="row">
         <div class="col">
           <div>
@@ -15,8 +22,8 @@
             />
             <div style="min-height: 20px">
               <small *ngIf="!formGroup.get('email')!.valid" class="p-error">{{
-                "enter-valid-value" | translate
-              }}</small>
+                  "enter-valid-value" | translate
+                }}</small>
             </div>
           </div>
         </div>
@@ -39,7 +46,7 @@
               <small
                 *ngIf="!formGroup.get('password')!.valid"
                 class="p-error"
-                >{{ "enter-valid-value" | translate }}</small
+              >{{ "enter-valid-value" | translate }}</small
               >
             </div>
           </div>
@@ -50,7 +57,7 @@
           <div class="d-flex justify-content-center">
             <button
               pButton
-              label="{{ 'register' | translate }}"
+              label="{{ 'login' | translate }}"
               class="w-full"
               (click)="login()"
             ></button>

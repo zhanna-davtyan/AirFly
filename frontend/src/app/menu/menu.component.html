@@ -103,11 +103,12 @@
 <p-sidebar
   [(visible)]="isLogInMenuVisible"
   position="bottom"
-  styleClass="p-sidebar-lg"
+  styleClass="p-sidebar-lg h-auto"
+  class="loginSidebar"
   (onHide)="closeSidebar()"
 >
   <ng-template pTemplate="header">
-    <div><p class="font-bold text-xl">Login</p></div>
+    <h2 class="text-center">{{ 'login'|translate }}</h2>
   </ng-template>
   <app-login></app-login>
 </p-sidebar>
