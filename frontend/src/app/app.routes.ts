@@ -9,15 +9,28 @@ import { BookingAdminOverviewComponent } from './booking/booking-admin-overview/
 import { BookingOverviewComponent } from './booking/booking-overview/booking-overview.component';
 import { RegisterComponent } from './user/register/register.component';
 import { LoginComponent } from './user/login/login.component';
+import { adminGuard, userGuard } from './user/AuthGuard';
 
 export const routes: Routes = [
-  { path: 'all-flights', component: FlightOverviewComponent },
+  {
+    path: 'all-flights',
+    component: FlightOverviewComponent,
+    canActivate: [adminGuard],
+  },
   { path: 'book-flight', component: BookingSelectComponent },
   { path: 'search-flight', component: FlightSearchContainerComponent },
   { path: 'flight-unavailable', component: FlightUnavailableComponent },
 
-  { path: 'all-bookings', component: BookingAdminOverviewComponent },
-  { path: 'my-bookings', component: BookingOverviewComponent },
+  {
+    path: 'all-bookings',
+    component: BookingAdminOverviewComponent,
+    canActivate: [adminGuard],
+  },
+  {
+    path: 'my-bookings',
+    component: BookingOverviewComponent,
+    canActivate: [userGuard],
+  },
 
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
