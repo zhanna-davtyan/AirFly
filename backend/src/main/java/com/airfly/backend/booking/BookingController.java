@@ -1,9 +1,8 @@
 package com.airfly.backend.booking;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -39,8 +38,8 @@ public class BookingController {
     }
 
     @GetMapping("")
-    @PreAuthorize("hasRole('Admin')")
     public ResponseEntity<List<Booking>> getAll() {
+        System.out.println(SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAll());
     }
 }

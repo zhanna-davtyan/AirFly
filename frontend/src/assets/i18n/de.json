@@ -142,5 +142,9 @@
   "Register": "Registrieren",
   "Password-repeat": "Passwort wiederholen",
   "Password-are-not-same": "Die Passwörter stimmen nicht überein!",
-  "Error": "Error"
+  "Error": "Error",
+  "wrong-username-or-password": "Falsche E-Mail oder falsches Passwort",
+  "successfully-logged-in": "Erfolgreich eingeloggt",
+  "successfully-registered": "Erfolgreich registriert",
+  "successfully-logged-out": "Erfolgreich ausgeloggt"
 }

@@ -1,7 +1,7 @@
 import { Passenger } from '../passenger/passenger.model';
 import { Category } from '../category/category.model';
 import { BookingFlightMapping } from '../bookingflightmapping/booking-flight-mapping.model';
-import { User } from '../user/user';
+import { User } from '../user/user.model';
 
 export class Booking {
   id: number;

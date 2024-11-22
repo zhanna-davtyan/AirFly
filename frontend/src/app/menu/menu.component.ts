@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import { SidebarModule } from 'primeng/sidebar';
 import { Router, RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -44,7 +44,7 @@ import { LoginComponent } from '../user/login/login.component';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.css'],
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   @Input() currentStep!: number;
   @Input() currentStepDescription!: string;
 
@@ -56,7 +56,8 @@ export class MenuComponent implements OnInit {
   darkTheme!: boolean;
   private authSubscription!: Subscription;
   isLoggedIn = false;
-  isLogInMenuVisible: boolean = false;
+  isAdmin = false;
+  isLoginSidebarVisible: boolean = false;
 
   isSidebarVisible: boolean = false;
   @ViewChild('adminOp') adminOp!: OverlayPanel;
@@ -65,7 +66,7 @@ export class MenuComponent implements OnInit {
   constructor(
     private themeService: ThemeService,
     private router: Router,
-    private authService: UserService,
+    private userService: UserService,
     private translateService: TranslateService
   ) {}
 
@@ -90,8 +91,9 @@ export class MenuComponent implements OnInit {
     this.translateService.use(this.selectedLanguage);
     this.updateTranslations();
 
-    this.authSubscription = this.authService.isLoggedIn$.subscribe((status) => {
+    this.authSubscription = this.userService.isLoggedIn$.subscribe((status) => {
       this.isLoggedIn = status;
+      this.isAdmin = this.userService.isAdmin();
     });
   }
 
@@ -123,6 +125,10 @@ export class MenuComponent implements OnInit {
 
   toggleSidebar() {
     this.isSidebarVisible = !this.isSidebarVisible;
+  }
+
+  toggleLoginSidebar() {
+    this.isLoginSidebarVisible = !this.isLoginSidebarVisible;
   }
 
   changeTheme(event: any) {
@@ -166,12 +172,12 @@ export class MenuComponent implements OnInit {
     return true;
   }
 
-  closeSidebar() {
-    this.isLogInMenuVisible = false;
+  closeLoginSidebar() {
+    this.isLoginSidebarVisible = false;
   }
 
-  logOut() {
-    this.authService.deleteToken();
+  logout() {
+    this.userService.deleteToken();
     this.router.navigate(['']);
   }
 }

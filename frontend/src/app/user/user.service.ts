@@ -1,15 +1,17 @@
 import { AbstractCrudService } from '../common/service/abstract-crud.service';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { User } from './user';
+import { User } from './user.model';
 import { SignUpModel } from './signup.model';
 import { LoginModel } from './login.model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
+import {MessageService} from "primeng/api";
+import {TranslateService} from "@ngx-translate/core";
 
 @Injectable({ providedIn: 'root' })
 export class UserService extends AbstractCrudService<User> {
-  constructor(httpClient: HttpClient) {
+  constructor(httpClient: HttpClient, protected messageService: MessageService, protected translateService: TranslateService) {
     super(httpClient, '/api');
     const token = localStorage.getItem('AuthToken');
     this.isLoggedInSubject = new BehaviorSubject<boolean>(!!token);
@@ -26,7 +28,6 @@ export class UserService extends AbstractCrudService<User> {
   }
 
   register(signUpModel: SignUpModel): Observable<User> {
-    console.log(signUpModel);
     return this.httpClient.post<User>('/api/register', signUpModel);
   }
 
@@ -48,6 +49,11 @@ export class UserService extends AbstractCrudService<User> {
   deleteToken(): void {
     localStorage.removeItem('AuthToken');
     this.isLoggedInSubject.next(false);
+    this.messageService.add({
+      severity: 'success',
+      summary: this.translateService.instant('successfully-logged-out'),
+      life: 2000,
+    })
   }
 
   isLoggedIn(): boolean {

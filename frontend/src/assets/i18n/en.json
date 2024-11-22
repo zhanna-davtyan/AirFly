@@ -142,5 +142,9 @@
   "booking-cancelled": "Your booking was cancelled",
   "booking-cancelled-info": "Either because your session has expired or because one of the selected flights is full. Please try again.",
   "book-a-flight": "Book a flight",
-  "Error": "Error"
+  "Error": "Error",
+  "wrong-username-or-password": "Wrong e-mail or password",
+  "successfully-logged-in": "Successfully logged in",
+  "successfully-registered": "Successfully registered",
+  "successfully-logged-out": "Successfully logged out"
 }

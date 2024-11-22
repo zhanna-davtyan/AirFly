@@ -9,29 +9,38 @@ public class EmailBuilder {
     public String buildBookingConfirmationEmail(Booking booking, Flight outwardFlight, Flight returnFlight, double totalPrice) {
         StringBuilder htmlContent = new StringBuilder();
 
-        htmlContent.append("<h1>Vielen Dank für Ihre Buchung!</h1>")
-                .append("<p>Hier sind Ihre Buchungsdetails:</p>")
-                .append("<h2>Buchungsnummer: #AF").append(booking.getId()).append("</h2>")
-                .append("<h3>Fluginformationen</h3>")
+        htmlContent.append("<h1>Thank you for your order!</h1>")
+                .append("<p>Here are your booking details:</p>")
+                .append("<h2>Booking number: #AF").append(booking.getId()).append("</h2>")
+                .append("<h3>Outgoing flight</h3>")
                 .append("<ul>")
-                .append("<li><strong>Abflug-Flugnummer:</strong> ").append(outwardFlight.getFlightNumber()).append("</li>")
-                .append("<li><strong>Abflug-Datum:</strong> ").append(outwardFlight.getDepartureTime()).append("</li>")
-                .append("<li><strong>Abflug-Ort:</strong> ").append(outwardFlight.getDepartureAirport().getName()).append("</li>")
-                .append("<li><strong>Ankunft-Ort:</strong> ").append(outwardFlight.getArrivalAirport().getName()).append("</li>");
+                .append("<li><strong>Flight number:</strong> ").append(outwardFlight.getFlightNumber()).append("</li>")
+                .append("<li><strong>Date:</strong> ").append(outwardFlight.getDepartureTime()).append("</li>")
+                .append("<li><strong>Departure destination:</strong> ").append(outwardFlight.getDepartureAirport().getName()).append("</li>")
+                .append("<li><strong>Arrival destination:</strong> ").append(outwardFlight.getArrivalAirport().getName()).append("</li>")
+                .append("</ul>");
 
         if (returnFlight != null) {
-            htmlContent.append("<li><strong>Rückflug-Flugnummer:</strong> ").append(returnFlight.getFlightNumber()).append("</li>")
-                    .append("<li><strong>Rückflug-Datum:</strong> ").append(returnFlight.getDepartureTime()).append("</li>")
-                    .append("<li><strong>Rückflug-Abflug-Ort:</strong> ").append(returnFlight.getDepartureAirport().getName()).append("</li>")
-                    .append("<li><strong>Rückflug-Ankunft-Ort:</strong> ").append(returnFlight.getArrivalAirport().getName()).append("</li>");
+            htmlContent
+                    .append("<h3>Return flight</h3>")
+                    .append("<ul>")
+                    .append("<li><strong>Flight number:</strong> ").append(returnFlight.getFlightNumber()).append("</li>")
+                    .append("<li><strong>Date:</strong> ").append(returnFlight.getDepartureTime()).append("</li>")
+                    .append("<li><strong>Departure destination:</strong> ").append(returnFlight.getDepartureAirport().getName()).append("</li>")
+                    .append("<li><strong>Arrival destination:</strong> ").append(returnFlight.getArrivalAirport().getName()).append("</li>")
+                    .append("</ul>");
         } else {
-            htmlContent.append("<li><strong>Rückflug:</strong> Kein Rückflug gebucht.</li>");
+            htmlContent
+                    .append("<h3>Return flight</h3>")
+                    .append("<ul>")
+                    .append("<li><strong>Return flight:</strong> No return flight booked.</li>")
+                    .append("</ul>");
         }
 
-        htmlContent.append("</ul>")
-                .append("<h3>Preis</h3>")
-                .append("<p>Gesamtpreis: <strong>").append(totalPrice).append(" €</strong></p>")
-                .append("<h3>Reisende</h3>")
+        htmlContent
+                .append("<h3>Price</h3>")
+                .append("<p>Total: <strong>").append(totalPrice).append(" €</strong></p>")
+                .append("<h3>Passengers</h3>")
                 .append("<ul>");
 
         for (Passenger passenger : booking.getPassengers()) {
@@ -40,8 +49,8 @@ public class EmailBuilder {
         }
 
         htmlContent.append("</ul>")
-                .append("<p>Wir wünschen Ihnen eine gute Reise!</p>")
-                .append("<p>Mit freundlichen Grüßen,<br>Ihr AirFly-Team</p>");
+                .append("<p>We wish you a pleasant journey.</p>")
+                .append("<p>Best regards,<br>Your AirFly-Team</p>");
 
         return htmlContent.toString();
     }

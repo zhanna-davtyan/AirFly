@@ -1,10 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {AvatarModule} from "primeng/avatar";
-import {NgForOf, NgIf, NgStyle} from "@angular/common";
-import {Router, RouterLink} from "@angular/router";
+import {NgForOf, NgIf} from "@angular/common";
+import {Router} from "@angular/router";
 import {TabViewModule} from "primeng/tabview";
 import {TranslateModule} from "@ngx-translate/core";
-import {takeUntil} from "rxjs";
+import {Subscription, takeUntil} from "rxjs";
 import {BookingService} from "../booking.service";
 import {BaseComponent} from "../../common/components/base/base.component";
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
@@ -25,6 +25,7 @@ import {MenuComponent} from "../../menu/menu.component";
 import {BookingSelectDetailsComponent} from "../booking-select-details/booking-select-details.component";
 import {FlightService} from "../../flight/flight.service";
 import {CheckFlightAvailability} from "../../flight/check-flight-availability.model";
+import {UserService} from "../../user/user.service";
 
 @Component({
   selector: 'app-booking-select',
@@ -32,7 +33,6 @@ import {CheckFlightAvailability} from "../../flight/check-flight-availability.mo
   imports: [
     AvatarModule,
     NgForOf,
-    RouterLink,
     TabViewModule,
     TranslateModule,
     SidebarModule,
@@ -47,7 +47,6 @@ import {CheckFlightAvailability} from "../../flight/check-flight-availability.mo
     PaginatorModule,
     ButtonDirective,
     BookingDetailsComponent,
-    NgStyle,
     MenuComponent,
     BookingSelectDetailsComponent
   ],
@@ -55,6 +54,8 @@ import {CheckFlightAvailability} from "../../flight/check-flight-availability.mo
   styleUrl: './booking-select.component.css'
 })
 export class BookingSelectComponent extends BaseComponent implements OnInit {
+
+  @ViewChild(MenuComponent) menuComponent!: MenuComponent;
 
   currentStep: number = 0;
   numberOfSteps!: number;
@@ -69,15 +70,22 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   billingStreet!: string;
   billingHousenumber!: string;
 
+  isLoggedIn: boolean = false;
+  private authSubscription!: Subscription;
+
   constructor(private bookingService: BookingService,
               private formBuilder: FormBuilder,
               private router: Router,
-              private flightService: FlightService) {
+              private flightService: FlightService,
+              private userService: UserService) {
     super()
   }
 
 
   ngOnInit() {
+    this.authSubscription = this.userService.isLoggedIn$.pipe(takeUntil(this.garbageCollector)).subscribe((status) => {
+      this.isLoggedIn = status;
+    });
 
     this.bookingService.currentStep
       .pipe(takeUntil(this.garbageCollector))
@@ -188,21 +196,25 @@ export class BookingSelectComponent extends BaseComponent implements OnInit {
   }
 
   submitOrder() {
-    localStorage.setItem('billing_firstname', this.billingAddressForm.get('billingFirstname')?.value);
-    localStorage.setItem('billing_lastname', this.billingAddressForm.get('billingLastname')?.value);
-    localStorage.setItem('billing_postcode', this.billingAddressForm.get('billingPostcode')?.value);
-    localStorage.setItem('billing_city', this.billingAddressForm.get('billingCity')?.value);
-    localStorage.setItem('billing_street', this.billingAddressForm.get('billingStreet')?.value);
-    localStorage.setItem('billing_housenumber', this.billingAddressForm.get('billingHousenumber')?.value);
-    this.bookingService.submitOrder().subscribe({
-      next: (bookingId: number) => {
-        this.bookingId = bookingId;
-        this.currentStepDescription = "";
-        this.currentStep = 0;
-      },
-      error: () => {
-        this.router.navigate(['/error'])
-      }
-    });
+    if (!this.isLoggedIn) {
+      this.menuComponent.toggleLoginSidebar();
+    } else {
+      localStorage.setItem('billing_firstname', this.billingAddressForm.get('billingFirstname')?.value);
+      localStorage.setItem('billing_lastname', this.billingAddressForm.get('billingLastname')?.value);
+      localStorage.setItem('billing_postcode', this.billingAddressForm.get('billingPostcode')?.value);
+      localStorage.setItem('billing_city', this.billingAddressForm.get('billingCity')?.value);
+      localStorage.setItem('billing_street', this.billingAddressForm.get('billingStreet')?.value);
+      localStorage.setItem('billing_housenumber', this.billingAddressForm.get('billingHousenumber')?.value);
+      this.bookingService.submitOrder().subscribe({
+        next: (bookingId: number) => {
+          this.bookingId = bookingId;
+          this.currentStepDescription = "";
+          this.currentStep = 0;
+        },
+        error: () => {
+          this.router.navigate(['/error'])
+        }
+      });
+    }
   }
 }

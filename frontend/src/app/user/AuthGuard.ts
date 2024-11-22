@@ -9,7 +9,7 @@ export const adminGuard: CanActivateFn = () => {
   if (authService.isAdmin()) {
     return true;
   } else {
-    return router.createUrlTree(['']);
+    return router.createUrlTree(['/login']);
   }
 };
 
@@ -20,6 +20,6 @@ export const userGuard: CanActivateFn = () => {
   if (authService.isLoggedIn()) {
     return true;
   } else {
-    return router.createUrlTree(['']);
+    return router.createUrlTree(['/login']);
   }
 };

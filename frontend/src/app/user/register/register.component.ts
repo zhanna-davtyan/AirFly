@@ -90,6 +90,11 @@ export class RegisterComponent implements OnInit {
     this.userService.register(signUpModel).subscribe({
       next: (user) => {
         this.userService.setToken(user.token);
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translateService.instant('successfully-registered'),
+          life: 2000
+        })
         this.router.navigate(['']);
       },
       error: (err) => {

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { DynamicDialogRef } from 'primeng/dynamicdialog';
 import {
   FormBuilder,
@@ -37,6 +37,8 @@ import {Router} from "@angular/router";
   styleUrl: './login.component.css',
 })
 export class LoginComponent implements OnInit {
+  @Output() loginSuccess = new EventEmitter<void>();
+
   public formGroup: any;
   constructor(
     public formBuilder: FormBuilder,
@@ -48,8 +50,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.formGroup = this.formBuilder.group({
-      email: [''],
-      password: [''],
+      email: ['', Validators.required],
+      password: ['', Validators.required],
     });
   }
 
@@ -61,11 +63,17 @@ export class LoginComponent implements OnInit {
     this.userService.login(loginModel).subscribe({
       next: (user) => {
         this.userService.setToken(user.token);
+        this.messageService.add({
+          severity: 'success',
+          summary: this.translateService.instant('successfully-logged-in'),
+          life: 2000,
+        });
+        this.loginSuccess.emit();
       },
       error: (err) => {
         this.messageService.add({
           severity: 'error',
-          summary: this.translateService.instant('Error'),
+          summary: this.translateService.instant('wrong-username-or-password'),
           life: 2000,
         });
       },
