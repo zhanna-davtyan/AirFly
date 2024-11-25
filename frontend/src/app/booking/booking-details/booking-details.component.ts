@@ -115,11 +115,11 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   calculateTotalOutgoingPrice() {
-    return (this.getNumberOfAdults() + this.getNumberOfChildren()) * this.booking.bookingFlightMappings[0].flight.price
+    return (this.getNumberOfAdults() + this.getNumberOfChildren()) * (this.booking.bookingFlightMappings[0].flight.price + this.booking.bookingFlightMappings[0].category.price)
   }
 
   calculateTotalReturnPrice() {
-    return (this.getNumberOfAdults() + this.getNumberOfChildren()) * this.booking.bookingFlightMappings[1].flight.price
+    return (this.getNumberOfAdults() + this.getNumberOfChildren()) * (this.booking.bookingFlightMappings[1].flight.price + this.booking.bookingFlightMappings[0].category.price)
   }
 
   calculateTotal() {
