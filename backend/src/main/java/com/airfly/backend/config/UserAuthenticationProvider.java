@@ -1,7 +1,6 @@
 package com.airfly.backend.config;
 
 import com.airfly.backend.user.User;
-import com.airfly.backend.user.UserDto;
 import com.airfly.backend.user.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -15,7 +14,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
 import java.util.Base64;
-import java.util.Collections;
 import java.util.Date;
 
 @RequiredArgsConstructor
@@ -52,7 +50,6 @@ public class UserAuthenticationProvider {
         DecodedJWT decoded = verifier.verify(token);
 
         User user = userService.findByEmail(decoded.getSubject());
-
         return new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
     }
 }

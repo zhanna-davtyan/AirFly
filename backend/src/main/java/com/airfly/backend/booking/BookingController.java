@@ -39,7 +39,6 @@ public class BookingController {
 
     @GetMapping("")
     public ResponseEntity<List<Booking>> getAll() {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication());
         return ResponseEntity.status(HttpStatus.OK).body(bookingService.getAll());
     }
 }

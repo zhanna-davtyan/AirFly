@@ -31,7 +31,7 @@ public class SecurityConfig {
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((requests) -> requests
                         .requestMatchers("/bookings/get-all-by-user", "bookings/submit-order").authenticated()
-                        .requestMatchers("/bookings", "/flights", "/flights/insert", "/flights/update", "/flights/delete").hasRole("ADMIN")
+                        .requestMatchers("/bookings", "/flights", "/flights/insert", "/flights/update", "/flights/delete").hasAuthority("ADMIN")
                         .anyRequest().permitAll());
         return http.build();
     }
