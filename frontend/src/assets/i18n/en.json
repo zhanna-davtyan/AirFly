@@ -146,5 +146,7 @@
   "wrong-username-or-password": "Wrong e-mail or password",
   "successfully-logged-in": "Successfully logged in",
   "successfully-registered": "Successfully registered",
-  "successfully-logged-out": "Successfully logged out"
+  "successfully-logged-out": "Successfully logged out",
+  "open-booking": "You still haven an open booking!",
+  "continue-booking": "Continue booking"
 }

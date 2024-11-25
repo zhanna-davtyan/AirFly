@@ -41,11 +41,11 @@
     <p-avatar size="xlarge" (click)="op.toggle($event)">
       <i class="fa-solid fa-plane-departure"></i>
     </p-avatar>
-    <p-overlayPanel #op [style]="{ width: '250px', height: '100px' }" [showCloseIcon]="true">
+    <p-overlayPanel #op [style]="{ width: '250px', height: '120px' }" [showCloseIcon]="true">
       <ng-template pTemplate="content">
-        <div class="w-full flex flex-column justify-content-center">
-          <p class="mt-0 text-center">You still have an open booking!</p>
-          <button pButton label="Continue booking" [routerLink]="'/book-flight'"></button>
+        <div class="w-full flex flex-column justify-content-center align-items-center pb-0">
+          <p class="mt-0 text-center">{{ "open-booking" | translate }}</p>
+          <button pButton label="{{'continue-booking' | translate }}" [routerLink]="'/book-flight'"></button>
         </div>
       </ng-template>
     </p-overlayPanel>

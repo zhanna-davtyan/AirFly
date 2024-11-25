@@ -146,5 +146,7 @@
   "wrong-username-or-password": "Falsche E-Mail oder falsches Passwort",
   "successfully-logged-in": "Erfolgreich eingeloggt",
   "successfully-registered": "Erfolgreich registriert",
-  "successfully-logged-out": "Erfolgreich ausgeloggt"
+  "successfully-logged-out": "Erfolgreich ausgeloggt",
+  "open-booking": "Sie haben noch eine offene Buchung!",
+  "continue-booking": "Zur Buchung"
 }
