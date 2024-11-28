@@ -9,6 +9,9 @@ import {SidebarModule} from "primeng/sidebar";
 import {AccordionModule} from "primeng/accordion";
 import {FlightSearchComponent} from "../../flight/flight-search/flight-search.component";
 import {CurrencyPipe, DatePipe} from "@angular/common";
+import {BookingService} from "../booking.service";
+import {takeUntil} from "rxjs";
+import {BaseComponent} from "../../common/components/base/base.component";
 
 @Component({
   selector: 'app-booking-select-details',
@@ -24,7 +27,7 @@ import {CurrencyPipe, DatePipe} from "@angular/common";
   templateUrl: './booking-select-details.component.html',
   styleUrl: './booking-select-details.component.css'
 })
-export class BookingSelectDetailsComponent implements OnInit {
+export class BookingSelectDetailsComponent extends BaseComponent implements OnInit {
 
   outwardFlight!: Flight;
   returnFlight!: Flight;
@@ -36,7 +39,7 @@ export class BookingSelectDetailsComponent implements OnInit {
   children: number = 0;
   babies: number = 0;
 
-  travelInsurance!: boolean;
+  travelInsurance: boolean = false;
   flightInfoSidebar: boolean = false;
 
   passengers!: Passenger[];
@@ -44,7 +47,10 @@ export class BookingSelectDetailsComponent implements OnInit {
   constructor(
     private flightService: FlightService,
     private categoryService: CategoryService,
-  ) {}
+    private bookingService: BookingService
+  ) {
+    super();
+  }
 
   ngOnInit() {
     if(localStorage.getItem('outward_flight_id')){
@@ -88,11 +94,20 @@ export class BookingSelectDetailsComponent implements OnInit {
     }
 
     if(localStorage.getItem('babies')){
-      this.babies = Number(localStorage.getItem('children')!);
+      this.babies = Number(localStorage.getItem('babies')!);
     }
 
+    this.bookingService.travelInsurance.pipe(takeUntil(this.garbageCollector)).subscribe((status: boolean) => {
+      this.travelInsurance = status;
+    })
+
     if(localStorage.getItem('travel_insurance')){
-      this.travelInsurance = Boolean(localStorage.getItem('travel_insurance')!);
+      if(localStorage.getItem('travel_insurance') === "true"){
+        this.travelInsurance = true;
+      }
+      else{
+        this.travelInsurance = false;
+      }
     }
 
     if(localStorage.getItem('passengers')){
@@ -107,6 +122,9 @@ export class BookingSelectDetailsComponent implements OnInit {
     }
     if(this.returnFlight && this.returnFlightCategory){
       total += (this.returnFlight.price + this.returnFlightCategory.price) * (this.adults + this.children);
+    }
+    if(this.travelInsurance){
+      return total + 50;
     }
     return total;
   }

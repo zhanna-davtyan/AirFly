@@ -1,23 +1,41 @@
-import {Injectable} from "@angular/core";
+import {Injectable, OnInit} from "@angular/core";
 import {AbstractCrudService} from "../common/service/abstract-crud.service";
 import {Booking} from "./booking.model";
-import {Observable, Subject} from "rxjs";
+import {BehaviorSubject, Observable, Subject} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {BookingForInsert} from "./booking-for-insert.model";
-import {FormGroup} from "@angular/forms";
 import {map} from "rxjs/operators";
 
 
 @Injectable({providedIn: 'root'})
-export class BookingService extends AbstractCrudService<Booking> {
-
+export class BookingService extends AbstractCrudService<Booking> implements OnInit {
   numberOfSteps: Subject<number> = new Subject<number>();
   currentStep: Subject<number> = new Subject<number>();
   currentStepDescription: Subject<string> = new Subject<string>();
+  travelInsurance: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
   constructor(httpClient: HttpClient) {
     super(httpClient, "bookings");
   }
+
+  ngOnInit(): void {
+    if(localStorage.getItem('travel_insurance')){
+      if(localStorage.getItem('travel_insurance') === "true"){
+        this.travelInsurance.next(true);
+      }
+      else{
+        this.travelInsurance.next(false);
+      }
+    }
+    if (localStorage.getItem('travel_insurance')) {
+    }
+    console.log(Boolean(localStorage.getItem('travel_insurance')));
+  }
+
+  updateTravelInsuranceSubject(status: boolean) {
+    this.travelInsurance.next(status);
+  }
+
 
   updateCurrentStep(currentStep: number) {
     this.currentStep.next(currentStep);

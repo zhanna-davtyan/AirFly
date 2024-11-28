@@ -25,7 +25,7 @@ import {BookingSelectDetailsComponent} from "../../booking/booking-select-detail
 })
 export class TravelInsuranceSelectComponent extends BaseComponent implements OnInit{
 
-  travelInsurance!: boolean;
+  travelInsurance: boolean = false;
   currentStep!: number;
   numberOfSteps!: number;
 
@@ -42,11 +42,19 @@ export class TravelInsuranceSelectComponent extends BaseComponent implements OnI
       this.numberOfSteps = 4;
     }
 
-    if (localStorage.getItem('travel_insurance')) {
-      this.travelInsurance = Boolean(localStorage.getItem('travel_insurance'));
-    } else {
-      this.travelInsurance = false;
+    if(localStorage.getItem('travel_insurance')){
+      if(localStorage.getItem('travel_insurance') === "true"){
+        this.travelInsurance = true;
+      }
+      else{
+        this.travelInsurance = false;
+      }
     }
+  }
+
+  onClick(event: any){
+    this.bookingService.updateTravelInsuranceSubject(event.checked);
+    localStorage.setItem('travel_insurance', String(this.travelInsurance));
   }
 
 
@@ -54,6 +62,8 @@ export class TravelInsuranceSelectComponent extends BaseComponent implements OnI
     this.currentStep--;
     this.bookingService.updateCurrentStep(this.currentStep);
     this.bookingService.updateCurrentStepDescription('passengers')
+    localStorage.setItem('travel_insurance', String(this.travelInsurance));
+    this.bookingService.updateTravelInsuranceSubject(this.travelInsurance);
   }
 
   goForward() {
@@ -61,6 +71,7 @@ export class TravelInsuranceSelectComponent extends BaseComponent implements OnI
     this.bookingService.updateCurrentStep(this.currentStep);
     this.bookingService.updateCurrentStepDescription('checkout')
     localStorage.setItem('travel_insurance', String(this.travelInsurance));
+    this.bookingService.updateTravelInsuranceSubject(this.travelInsurance);
   }
 
   isContinueButtonDisabled(): boolean {
