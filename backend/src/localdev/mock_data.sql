@@ -25,6 +25,3 @@ INSERT INTO airfly_local.categories (name, price) VALUES
                                                       ('BASIC', 19.99),
                                                       ('STANDARD', 29.99),
                                                       ('PREMIUM', 39.99);
-
-INSERT INTO airfly_local.users (email, password, first_name, last_name, role) VALUES 
-                                                        ('test' , 'test', 'test', 'test', 'Admin');

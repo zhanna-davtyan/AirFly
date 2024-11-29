@@ -62,7 +62,7 @@
           {{'e-mail' | translate}}
           <p-sortIcon field="user.email"></p-sortIcon>
           <p-columnFilter
-            field="departureAirport.code"
+            field="user.email"
             matchMode="in"
             display="menu"
             [hideOnClear]="true"
@@ -78,7 +78,6 @@
                 (onChange)="filter($event.value)"
                 optionLabel="label"
                 optionValue="value"
-                appendTo="body"
               >
                 <ng-template let-option pTemplate="item">
                   <span>{{ option.label }}</span>
@@ -109,10 +108,9 @@
                 (onChange)="filter($event.value)"
                 optionLabel="label"
                 optionValue="value"
-                appendTo="body"
               >
                 <ng-template let-option pTemplate="item">
-                  <span>{{ option.label }}</span>
+                  <span>{{ option.label }}€</span>
                 </ng-template>
               </p-multiSelect>
             </ng-template>
@@ -127,7 +125,7 @@
           (click)="this.openDynamicDialogDetails(row)">
         <span *ngSwitchCase="'id'">#AF{{ row.id }}</span>
         <span *ngSwitchCase="'user.email'">{{ row.user?.email }}</span>
-        <span *ngSwitchCase="'totalPrice'">{{ row.totalPrice }}</span>
+        <span *ngSwitchCase="'totalPrice'">{{ row.totalPrice }}€</span>
       </td>
     </tr>
   </ng-template>

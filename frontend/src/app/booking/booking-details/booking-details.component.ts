@@ -11,6 +11,7 @@ import {DividerModule} from "primeng/divider";
 import {CardModule} from "primeng/card";
 import {PanelModule} from "primeng/panel";
 import {FieldsetModule} from "primeng/fieldset";
+import {Big} from "big.js";
 
 @Component({
   selector: 'app-booking-details',
@@ -115,17 +116,38 @@ export class BookingDetailsComponent implements OnInit {
   }
 
   calculateTotalOutgoingPrice() {
-    return (this.getNumberOfAdults() + this.getNumberOfChildren()) * (this.booking.bookingFlightMappings[0].flight.price + this.booking.bookingFlightMappings[0].category.price)
+    return Number(
+      Big(this.getNumberOfAdults())
+        .plus(this.getNumberOfChildren())
+        .times(
+          Big(this.booking.bookingFlightMappings[0].flight.price)
+            .plus(this.booking.bookingFlightMappings[0].category.price)
+        )
+    );
   }
 
   calculateTotalReturnPrice() {
-    return (this.getNumberOfAdults() + this.getNumberOfChildren()) * (this.booking.bookingFlightMappings[1].flight.price + this.booking.bookingFlightMappings[0].category.price)
+    return Number(
+      Big(this.getNumberOfAdults())
+        .plus(this.getNumberOfChildren())
+        .times(
+          Big(this.booking.bookingFlightMappings[1].flight.price)
+            .plus(this.booking.bookingFlightMappings[0].category.price)
+        )
+    );
   }
 
   calculateTotal() {
-    if (this.booking.bookingFlightMappings.length === 1) {
-      return this.calculateTotalOutgoingPrice();
+    let total = Big(0);
+    if(this.booking.travelInsurance){
+      total = total.add(50);
     }
-    return this.calculateTotalOutgoingPrice() + this.calculateTotalReturnPrice();
+    if (this.booking.bookingFlightMappings.length === 1) {
+      return Number(total.add(this.calculateTotalOutgoingPrice()));
+    }
+    return Number(total.add(
+      Big(this.calculateTotalOutgoingPrice()).plus(
+        this.calculateTotalReturnPrice()))
+    );
   }
 }

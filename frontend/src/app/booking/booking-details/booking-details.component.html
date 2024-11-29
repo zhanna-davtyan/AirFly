@@ -203,6 +203,17 @@
           </p-fieldset>
         </div>
       }
+      @if(booking.travelInsurance){
+        <div class="mt-3">
+        <p-fieldset legend="{{'travel-insurance' | translate}}">
+          <div class="flex flex-row-reverse">
+            <p class="m-0 font-bold">
+              €50.00
+            </p>
+          </div>
+        </p-fieldset>
+        </div>
+        }
       <div class="mt-3 total-price">
         <p-panel>
           <div class="flex justify-content-between" style="font-size: 18px;">

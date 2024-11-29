@@ -12,6 +12,7 @@ import {CurrencyPipe, DatePipe} from "@angular/common";
 import {BookingService} from "../booking.service";
 import {takeUntil} from "rxjs";
 import {BaseComponent} from "../../common/components/base/base.component";
+import {Big} from "big.js";
 
 @Component({
   selector: 'app-booking-select-details',
@@ -116,17 +117,25 @@ export class BookingSelectDetailsComponent extends BaseComponent implements OnIn
   }
 
   calculateTotal(): number {
-    let total = 0;
-    if(this.outwardFlight && this.outwardFlightCategory) {
-      total += (this.outwardFlight.price + this.outwardFlightCategory.price) * (this.adults + this.children);
+    let total = Big(0);
+    if (this.outwardFlight && this.outwardFlightCategory) {
+      total = total.plus(
+        Big(this.outwardFlight.price)
+          .plus(this.outwardFlightCategory.price)
+          .times(Big(this.adults).plus(this.children))
+      );
     }
-    if(this.returnFlight && this.returnFlightCategory){
-      total += (this.returnFlight.price + this.returnFlightCategory.price) * (this.adults + this.children);
+    if (this.returnFlight && this.returnFlightCategory) {
+      total = total.plus(
+        Big(this.returnFlight.price)
+          .plus(this.returnFlightCategory.price)
+          .times(Big(this.adults).plus(this.children))
+      );
     }
-    if(this.travelInsurance){
-      return total + 50;
+    if (this.travelInsurance) {
+      return Number(total.plus(50));
     }
-    return total;
+    return Number(total);
   }
 
   getTimeDifference(departureTime: any, arrivalTime: any): string {

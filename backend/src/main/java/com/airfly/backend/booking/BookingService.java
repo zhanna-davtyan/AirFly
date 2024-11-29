@@ -127,7 +127,13 @@ public class BookingService {
             Flight returnFlight = flightService.getById(bookingForInsert.getReturnFlightId());
             Category returnFlightCategory = categoryService.getById(bookingForInsert.getReturnCategoryId());
             BigDecimal returnTotal = (returnFlight.getPrice().add(returnFlightCategory.getPrice())).multiply(new BigDecimal(numberOfPassengersWithoutBabies));
+            if(bookingForInsert.isTravelInsurance()){
+                returnTotal = returnTotal.add(new BigDecimal(50));
+            }
             return (outwardTotal.add(returnTotal).doubleValue());
+        }
+        if(bookingForInsert.isTravelInsurance()){
+            outwardTotal = outwardTotal.add(new BigDecimal(50));
         }
         return (outwardTotal.doubleValue());
     }
@@ -135,7 +141,7 @@ public class BookingService {
     Booking getById(long id){
         User user = userService.getCurrentUser();
         Booking booking = bookingRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Booking with id " + id + " not found"));
-        if(user.getRole().equals("Admin") || booking.getUser().getId().equals(user.getId())){
+        if(user.getRole().equals("ADMIN") || booking.getUser().getId().equals(user.getId())){
             return booking;
         }
         throw new UnauthorizedException("User not permitted to retrieve booking");

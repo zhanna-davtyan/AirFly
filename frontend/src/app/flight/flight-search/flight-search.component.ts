@@ -17,6 +17,7 @@ import {OutwardFlightSearch} from "../outward-flight-search.model";
 import {Router} from "@angular/router";
 import {toNumber} from "lodash";
 import {ReturnFlightSearch} from "../return-flight-search.model";
+import {BookingService} from "../../booking/booking.service";
 
 @Component({
   selector: 'app-flight-search',
@@ -54,7 +55,8 @@ export class FlightSearchComponent implements OnInit {
     protected changeDetectorRef: ChangeDetectorRef,
     protected formBuilder: FormBuilder,
     protected translateService: TranslateService,
-    protected router: Router
+    protected router: Router,
+    protected bookingService: BookingService
   ) {
   }
 
@@ -192,6 +194,7 @@ export class FlightSearchComponent implements OnInit {
     localStorage.removeItem('billing_city');
     localStorage.removeItem('billing_street');
     localStorage.removeItem('billing_housenumber');
+    this.bookingService.updateTravelInsuranceSubject(false);
     if(this.router.url.includes('/book-flight')){
       window.location.reload()
     }

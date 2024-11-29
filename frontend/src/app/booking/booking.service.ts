@@ -29,7 +29,6 @@ export class BookingService extends AbstractCrudService<Booking> implements OnIn
     }
     if (localStorage.getItem('travel_insurance')) {
     }
-    console.log(Boolean(localStorage.getItem('travel_insurance')));
   }
 
   updateTravelInsuranceSubject(status: boolean) {
@@ -111,6 +110,7 @@ export class BookingService extends AbstractCrudService<Booking> implements OnIn
     localStorage.removeItem('billing_city');
     localStorage.removeItem('billing_street');
     localStorage.removeItem('billing_housenumber');
+    this.travelInsurance.next(false);
   }
 
   getAllByUser(): Observable<Booking[]> {
