@@ -1,8 +1,4 @@
-## Running the application with docker
-
-You can alternatively create a run configuration in your IDE.
-
-## Running the application manually
+## Running the application
 
 1. Clone the repository:
    ```shell
