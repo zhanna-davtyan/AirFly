@@ -7,7 +7,7 @@
    ```
 2. Install docker and start the docker engine
 
-3. Start the application:
+3. Start the database:
 
    ```shell
    cd .\backend\
